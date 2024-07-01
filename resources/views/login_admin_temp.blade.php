@@ -10,15 +10,13 @@
     <!--Bootstrap implementation-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-
     <!--CSS overwrite-->
-        <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="{{ mix('style.css') }}">
 </head>
 
 <body>
     <nav class="navbar navbar-expand navbar-light bg-custom">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="{{ route('index') }}">
             <img src="media/logo.png" class="d-inline-block align-top" alt="day care centre logo">
         </a>
 
@@ -29,7 +27,7 @@
                 </b>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="about.html">About Us</a>
+                <a class="nav-link" href="{{ route('about') }}">About Us</a>
             </li>
         </ul>
     </nav>

@@ -1,33 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-@php
-// require_once("init_db.php");
-include_once(app_path('Http/Helpers/helper_userinfo.php'));
-$loggedInFailed = false;
-
-# only run if is set
-if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-    # retrieve post variable
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-    if ($userinfo = verifyUsername($conn, $username)){
-        # verify password
-        if(password_verify($password, $userinfo["password"])){
-            header("Location: login_admin_temp.html");
-            die; # prevent if browser dont respect redirect
-        } else {
-            // incorrect password
-            $loggedInFailed = true;
-        }
-    } else {
-        // no username found
-        $loggedInFailed = true;
-    }
-}
-@endphp
-
 <head>
     <title>Login - Little Smart Day Care Centre</title>
 
@@ -66,7 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
             <div>
                 <h1>Teacher Login</h1>
             </div>
-            <form action="" method="POST">
+            <form action="{{ route('login.submit') }}" method="POST">
+                @csrf
                 <div class="form-group row">
                     <label for="username" class="col-sm-3 col-form-label">Username:</label>
                     <div class="col-sm">
@@ -107,14 +81,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 
     <script>
-        @php
-        // warn if failed to login
-            if ($loggedInFailed) {
-                echo <<< FAILEDLOGIN
-                new Notyf().error("Username or password is incorrect.")
-                FAILEDLOGIN;
-            }
-        @endphp
+        document.addEventListener('DOMContentLoaded', function () {
+            @if ($errors->any())
+                new Notyf().error("{{ $errors->first('login') }}");
+            @endif
+        });
     </script>
 </body>
 

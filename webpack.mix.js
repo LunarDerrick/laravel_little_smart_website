@@ -11,4 +11,5 @@ mix.js('resources/js/app.js', 'public/js')
        'resources/css/bootstrap.min.css',
        'resources/css/graph.css',
        'resources/css/main.css'
-   ], 'public/style.css');
+   ], 'public/style.css')
+   .version();
