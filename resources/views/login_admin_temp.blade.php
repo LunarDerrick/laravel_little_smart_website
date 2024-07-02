@@ -23,7 +23,7 @@
         <ul class="navbar-nav ms-auto">
             <li class="nav-item">
                 <b>
-                <a class="nav-link" href="roster.php">ADMIN</a>
+                <a class="nav-link" href="{{ route('roster') }}">ADMIN</a>
                 </b>
             </li>
             <li class="nav-item">

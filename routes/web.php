@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RosterController;
 
 require __DIR__.'/auth.php';
 
@@ -36,4 +37,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/login_admin_temp', function () {
         return view('login_admin_temp');
     })->name('login_admin_temp');
+
+    // if a page needs to pass variable/fetch from database, include controller in routing like below
+    // index is function name, and the function will be in charge of returning relevant view
+    Route::get('/roster', [RosterController::class, 'index']
+    )->name('roster');
 });

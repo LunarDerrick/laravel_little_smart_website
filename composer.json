@@ -27,8 +27,7 @@
         },
         "files": [
             "app/Http/Helpers/helper_list_roster.php",
-            "app/Http/Helpers/helper_list_score.php",
-            "app/Http/Helpers/helper_userinfo.php"
+            "app/Http/Helpers/helper_list_score.php"
         ]
     },
     "autoload-dev": {
