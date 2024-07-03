@@ -22,7 +22,11 @@
 
         <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('login') }}">Teacher Login</a>
+                @auth
+                    <b><a class="nav-link" href="{{ route('roster') }}">{{ Auth::user()->name }}</a></b>
+                @else
+                    <a class="nav-link" href="{{ route('login') }}">Teacher Login</a>
+                @endauth
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('about') }}">About Us</a>

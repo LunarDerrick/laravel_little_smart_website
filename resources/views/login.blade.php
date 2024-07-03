@@ -69,6 +69,15 @@
         <br>
     </section>
 
+    @todo
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @else
+        <p>no problem here.</p>
+    @endif
+
     <footer>
         <small><i>
             © 2024 Little Smart Day Care Centre

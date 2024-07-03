@@ -222,6 +222,10 @@ a.img-btn {
     float: right;
 }
 
+#logout {
+    display: inline;
+}
+
 footer {
     text-align: center;
 }

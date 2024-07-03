@@ -22,7 +22,11 @@
 
         <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('login') }}">Teacher Login</a>
+                @auth
+                    <b><a class="nav-link" href="{{ route('roster') }}">{{ Auth::user()->name }}</a></b>
+                @else
+                    <a class="nav-link" href="{{ route('login') }}">Teacher Login</a>
+                @endauth
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('about') }}">About Us</a>
@@ -35,7 +39,11 @@
         <p id="tablet">You are now viewing as <b>Tablet</b>.</p>
         <p id="mobile">You are now viewing as <b>Mobile Device</b>.</p>
 
-        <h1>小聪明安亲班 Little Smart Day Care Centre</h1>
+        @auth
+            <h1>Welcome, {{ Auth::user()->name }}.</h1>
+        @else
+            <h1>小聪明安亲班 Little Smart Day Care Centre</h1>
+        @endauth
         <br>
 
         <div class="center">

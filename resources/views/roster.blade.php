@@ -26,9 +26,7 @@ include_once(app_path("Http/Helpers/helper_list_roster.php"));
 
         <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-                <b>
-                <a class="nav-link" href="{{ route('roster') }}">ADMIN</a>
-                </b>
+                <b><a class="nav-link" href="{{ route('roster') }}">{{ Auth::user()->name }}</a></b>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('about') }}">About Us</a>
@@ -45,7 +43,10 @@ include_once(app_path("Http/Helpers/helper_list_roster.php"));
         <button type="button" class="btn btn-primary mobile" onclick="document.location='analysis.php'">Exam Analysis</button>
         <button type="button" class="btn btn-primary mobile" onclick="document.location='feedback.html'">Feedback Inbox</button>
         <button type="button" class="btn btn-primary mobile" onclick="document.location='list_post.html'">Edit Post</button>
-        <button type="button" class="btn btn-primary mobile" onclick="document.location='index.html'">Logout</button>
+        <form method="POST" action="{{ route('logout') }}" id="logout">
+            @csrf
+            <button type="submit" class="btn btn-primary mobile">Logout</button>
+        </form>
         <h1>Tuition Roster</h1>
         <br>
 

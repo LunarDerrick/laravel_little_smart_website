@@ -15,7 +15,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             // Authentication passed
-            return redirect()->intended('login_admin_temp');
+            return redirect()->intended('/');
         }
 
         return back()->withErrors([
