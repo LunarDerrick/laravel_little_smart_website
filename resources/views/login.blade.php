@@ -31,6 +31,12 @@
     </nav>
 
     <section>
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <p id="PC">You are now viewing as <b>Computer</b>.</p>
         <p id="tablet">You are now viewing as <b>Tablet</b>.</p>
         <p id="mobile">You are now viewing as <b>Mobile Device</b>.</p>
@@ -68,15 +74,6 @@
 
         <br>
     </section>
-
-    @todo
-    @if(session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-    @else
-        <p>no problem here.</p>
-    @endif
 
     <footer>
         <small><i>

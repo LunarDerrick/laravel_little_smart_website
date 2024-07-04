@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-use Illuminate\Support\Facades\Log;
-
 class CheckSessionTimeout
 {
     /**
@@ -25,7 +23,9 @@ class CheckSessionTimeout
             $lastActivityTime = $request->session()->get('lastActivityTime', time());
 
             // Calculate session timeout duration in seconds
-            $sessionTimeout = config('session.lifetime') * 60;
+            // because session_lifetime auto logout & clear session data,
+            // the -1 is there to take initiative in handling session timeout before system does.
+            $sessionTimeout = config('session.lifetime') * 60 - 1;
 
             // Check if the session has timed out
             if (time() - $lastActivityTime > $sessionTimeout) {

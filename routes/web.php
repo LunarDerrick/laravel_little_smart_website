@@ -9,18 +9,6 @@ use App\Http\Middleware\CheckSessionTimeout;
 
 require __DIR__.'/auth.php';
 
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
-
-// auth reference
-// Route::get('/login', function () {
-//     return view('auth.login');
-// })->name('login');
-
-Route::post('/login', [LoginController::class, 'login']
-)->name('login.submit');
-
 // Session timeout check wrapper
 Route::middleware([CheckSessionTimeout::class])->group(function () {
 
@@ -33,6 +21,18 @@ Route::middleware([CheckSessionTimeout::class])->group(function () {
     Route::get('/about', function () {
         return view('about');
     })->name('about');
+
+    Route::get('/login', function () {
+        return view('login');
+    })->name('login');
+
+    // auth reference
+    // Route::get('/login', function () {
+    //     return view('auth.login');
+    // })->name('login');
+
+    Route::post('/login', [LoginController::class, 'login']
+    )->name('login.submit');
 
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -52,4 +52,5 @@ Route::middleware([CheckSessionTimeout::class])->group(function () {
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']
         )->name('logout');
     });
+
 });
