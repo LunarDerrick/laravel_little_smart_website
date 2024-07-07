@@ -50,4 +50,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function scopeStudents($query)
+    {
+        return $query->where('role', 'student');
+    }
 }

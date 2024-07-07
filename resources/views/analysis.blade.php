@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php
-require_once("init_db.php");
-include_once "helper_list_score.php";
-?>
+@php
+include_once(app_path("Http/Helpers/helper_list_score.php"));
+@endphp
 
 <head>
     <title>Exam Analysis - Little Smart Day Care Centre</title>
@@ -15,27 +14,23 @@ include_once "helper_list_score.php";
     <!--Bootstrap implementation-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-
     <!--CSS overwrite-->
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/graph.css">
+    <link rel="stylesheet" href="{{ mix('style.css') }}">
 </head>
 
 <body>
     <nav class="navbar navbar-expand navbar-light bg-custom">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="{{ route('index') }}">
             <img src="media/logo.png" class="d-inline-block align-top" alt="day care centre logo">
         </a>
 
         <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-                <b>
-                <a class="nav-link" href="roster.php">ADMIN</a>
-                </b>
+                <b><a class="nav-link" href="{{ route('roster') }}">{{ Auth::user()->name }}</a></b>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="about.html">About Us</a>
+                <a class="nav-link" href="{{ route('about') }}">About Us</a>
+            </li>
         </ul>
     </nav>
 
@@ -44,11 +39,14 @@ include_once "helper_list_score.php";
         <p id="tablet">You are now viewing as <b>Tablet</b>.</p>
         <p id="mobile">You are now viewing as <b>Mobile Device</b>.</p>
 
-        <button type="button" class="btn btn-primary mobile" onclick="document.location='roster.php'">Name List</button>
-        <button type="button" class="btn btn-primary mobile" onclick="document.location='analysis.php'">Exam Analysis</button>
-        <button type="button" class="btn btn-primary mobile" onclick="document.location='feedback.html'">Feedback Inbox</button>
-        <button type="button" class="btn btn-primary mobile" onclick="document.location='list_post.html'">Edit Post</button>
-        <button type="button" class="btn btn-primary mobile" onclick="document.location='index.html'">Logout</button>
+        <button type="button" class="btn btn-primary mobile" onclick="window.location='{{ route('roster') }}'">Name List</button>
+        <button type="button" class="btn btn-primary mobile" onclick="window.location='{{ route('analysis') }}'">Exam Analysis</button>
+        <button type="button" class="btn btn-primary mobile" onclick="window.location='{{ route('feedback') }}'">Feedback Inbox</button>
+        <button type="button" class="btn btn-primary mobile" onclick="window.location='{{ route('list_post') }}'">Edit Post</button>
+        <form method="POST" action="{{ route('logout') }}" id="logout">
+            @csrf
+            <button type="submit" class="btn btn-primary mobile">Logout</button>
+        </form>
         <h1>Exam Analysis</h1>
         <br>
 
@@ -83,10 +81,35 @@ include_once "helper_list_score.php";
                                     <th>Subject</th>
                                     <th>Score</th>
                                 </tr>
-                                <?php
+                                {{-- @php
                                     [$list] = listScore($conn);
                                     buildScore($list);
-                                ?>
+                                @endphp --}}
+                                @isset($scores)
+                                    {{-- @foreach($scores as $score)
+                                    <tr>
+                                        <td>
+                                            <a class="img-btn" href="edit_roster.php?id=$entry->student_id">
+                                                <img src="media/edit_img.png" alt="edit">
+                                            </a>
+                                            <a class="img-btn" href="#" data-bs-target="#deleteModal" data-bs-toggle="modal" data-bs-id="$entry->student_id">
+                                                <img src="media/delete_img.png" alt="delete">
+                                            </a>
+                                        </td>
+                                        <td>{{ $student->name }}</td>
+                                        <td>{{ $student->age }}</td>
+                                        <td>{{ $student->telno }}</td>
+                                        <td>{{ $student->school }}</td>
+                                        <td>{{ $student->standard }}</td>
+                                        <!-- TODO: score table & dynamic fetch -->
+                                        <td>99</td>
+                                        <td>99</td>
+                                        <td>99</td>
+                                        <td>99</td>
+                                        <td>99</td>
+                                    </tr>
+                                    @endforeach --}}
+                                @endisset
                             </table>
                             <div class="card-body">
                                 <h6>Top Scorer for Each Subject</h6>

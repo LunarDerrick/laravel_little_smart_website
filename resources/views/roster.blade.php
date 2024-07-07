@@ -39,10 +39,10 @@ include_once(app_path("Http/Helpers/helper_list_roster.php"));
         <p id="tablet">You are now viewing as <b>Tablet</b>.</p>
         <p id="mobile">You are now viewing as <b>Mobile Device</b>.</p>
 
-        <button type="button" class="btn btn-primary mobile" onclick="document.location='roster.php'">Name List</button>
-        <button type="button" class="btn btn-primary mobile" onclick="document.location='analysis.php'">Exam Analysis</button>
-        <button type="button" class="btn btn-primary mobile" onclick="document.location='feedback.html'">Feedback Inbox</button>
-        <button type="button" class="btn btn-primary mobile" onclick="document.location='list_post.html'">Edit Post</button>
+        <button type="button" class="btn btn-primary mobile" onclick="window.location='{{ route('roster') }}'">Name List</button>
+        <button type="button" class="btn btn-primary mobile" onclick="window.location='{{ route('analysis') }}'">Exam Analysis</button>
+        <button type="button" class="btn btn-primary mobile" onclick="window.location='{{ route('feedback') }}'">Feedback Inbox</button>
+        <button type="button" class="btn btn-primary mobile" onclick="window.location='{{ route('list_post') }}'">Edit Post</button>
         <form method="POST" action="{{ route('logout') }}" id="logout">
             @csrf
             <button type="submit" class="btn btn-primary mobile">Logout</button>
@@ -66,10 +66,6 @@ include_once(app_path("Http/Helpers/helper_list_roster.php"));
                     <th>Mathematics</th>
                     <th>Science</th>
                 </tr>
-                {{-- @php
-                    [$list] = listRoster($conn);
-                    buildRoster($list);
-                @endphp --}}
                 @isset($students)
                     @foreach($students as $student)
                     <tr>
@@ -86,6 +82,7 @@ include_once(app_path("Http/Helpers/helper_list_roster.php"));
                         <td>{{ $student->telno }}</td>
                         <td>{{ $student->school }}</td>
                         <td>{{ $student->standard }}</td>
+                        <!-- TODO: score table & dynamic fetch -->
                         <td>99</td>
                         <td>99</td>
                         <td>99</td>
