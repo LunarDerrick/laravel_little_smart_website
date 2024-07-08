@@ -55,4 +55,9 @@ class User extends Authenticatable
     {
         return $query->where('role', 'student');
     }
+
+    public function scores()
+    {
+        return $this->hasMany(Score::class, 'userid');
+    }
 }

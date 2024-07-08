@@ -46,8 +46,12 @@ Route::middleware([CheckSessionTimeout::class])->group(function () {
         Route::get('/roster', [RosterController::class, 'index']
         )->name('roster');
 
-        Route::get('/analysis', [AnalysisController::class, 'index']
+        Route::get('/analysis', [AnalysisController::class, 'topScore']
         )->name('analysis');
+
+        Route::get('/chart-data-1', [AnalysisController::class, 'getPassingRate']);
+        Route::get('/chart-data-2', [AnalysisController::class, 'getGradeDistribution']);
+        Route::get('/chart-data-3', [AnalysisController::class, 'getAvgScore']);
 
         Route::get('/feedback', function () {
             return view('feedback');

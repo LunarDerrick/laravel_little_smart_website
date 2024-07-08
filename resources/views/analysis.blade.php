@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
-@php
+{{-- @php
 include_once(app_path("Http/Helpers/helper_list_score.php"));
-@endphp
+@endphp --}}
 
 <head>
     <title>Exam Analysis - Little Smart Day Care Centre</title>
@@ -81,34 +81,14 @@ include_once(app_path("Http/Helpers/helper_list_score.php"));
                                     <th>Subject</th>
                                     <th>Score</th>
                                 </tr>
-                                {{-- @php
-                                    [$list] = listScore($conn);
-                                    buildScore($list);
-                                @endphp --}}
-                                @isset($scores)
-                                    {{-- @foreach($scores as $score)
+                                @isset($topScores)
+                                    @foreach($topScores as $topScore)
                                     <tr>
-                                        <td>
-                                            <a class="img-btn" href="edit_roster.php?id=$entry->student_id">
-                                                <img src="media/edit_img.png" alt="edit">
-                                            </a>
-                                            <a class="img-btn" href="#" data-bs-target="#deleteModal" data-bs-toggle="modal" data-bs-id="$entry->student_id">
-                                                <img src="media/delete_img.png" alt="delete">
-                                            </a>
-                                        </td>
-                                        <td>{{ $student->name }}</td>
-                                        <td>{{ $student->age }}</td>
-                                        <td>{{ $student->telno }}</td>
-                                        <td>{{ $student->school }}</td>
-                                        <td>{{ $student->standard }}</td>
-                                        <!-- TODO: score table & dynamic fetch -->
-                                        <td>99</td>
-                                        <td>99</td>
-                                        <td>99</td>
-                                        <td>99</td>
-                                        <td>99</td>
+                                        <td>{{ $topScore['name'] }}</td>
+                                        <td>{{ $topScore['subject'] }}</td>
+                                        <td>{{ $topScore['score'] }}</td>
                                     </tr>
-                                    @endforeach --}}
+                                    @endforeach
                                 @endisset
                             </table>
                             <div class="card-body">
@@ -150,38 +130,20 @@ include_once(app_path("Http/Helpers/helper_list_score.php"));
 
     <script>
         $(document).ready(function() {
-            showGraph();
+            showChart1();
+            showChart2();
+            showChart3();
         });
 
-        const showGraph = () => {
-            $.post("api_analysis.php", function(data) {
+        const showChart1 = () => {
+            // browser "localhost:8000/chart-data-1" to check if js receives datatable
+            $.get("{{ url('/chart-data-1') }}", function(data) {
                 // importing datalabel plugin
                 Chart.register(ChartDataLabels);
 
-                // debug test whether fetch the correct data
-                // console.log(data);
-
-                // Passing Rate Bar Chart
-                const pass_rate = data["pass_data"];
-                const pass_title = [].concat(...pass_rate.map(obj => Object.keys(obj)));
-                const pass_value = [].concat(...pass_rate.map(obj => Object.values(obj)));
-                pass_title.shift();
-                const total = pass_value.shift();
-                let pass = [];
-                for (let i = 0; i < pass_value.length; i++) {
-                    pass.push(pass_value[i] / total);
-                }
-
-                // draw vertical bar chart
                 new Chart("barchart_passingrate", {
-                    type: "bar",
-                    data: {
-                        labels: pass_title,
-                        datasets: [{
-                            backgroundColor: ["#fd7f6f", "#7eb0d5", "#b2e061", "#bd7ebe", "#ffb55a"],
-                            data: pass
-                        }]
-                    },
+                    type: 'bar',
+                    data: data,
                     options: {
                         plugins: {
                             legend: {
@@ -218,22 +180,18 @@ include_once(app_path("Http/Helpers/helper_list_score.php"));
                         }
                     }
                 });
+            })
+        }
 
-                // Science Grade Pie Chart
-                const science_count = data["gradescience_data"];
-                const science_title = [].concat(...science_count.map(obj => Object.keys(obj)));
-                const science_value = [].concat(...science_count.map(obj => Object.values(obj)));
+        const showChart2 = () => {
+            // browser "localhost:8000/chart-data-2" to check if js receives datatable
+            $.get("{{ url('/chart-data-2') }}", function(data) {
+                // importing datalabel plugin
+                Chart.register(ChartDataLabels);
 
-                // draw pie chart
                 new Chart("piechart_gradescience", {
                     type: "pie",
-                    data: {
-                        labels: science_title,
-                        datasets: [{
-                            backgroundColor: ["#0e6573", "#008e89", "#00b680", "#73da5d", "#e0f420",],
-                            data: science_value
-                        }]
-                    },
+                    data: data,
                     options: {
                         plugins: {
                             legend: {
@@ -256,21 +214,23 @@ include_once(app_path("Http/Helpers/helper_list_score.php"));
                         }
                     }
                 });
+            })
+        }
 
-                const avg_score = data["avgscore_data"];
-                const avg_title = [].concat(...avg_score.map(obj => Object.keys(obj)));
-                const avg_value = [].concat(...avg_score.map(obj => Object.values(obj)));
+        const showChart3 = () => {
+            // browser "localhost:8000/chart-data-3" to check if js receives datatable
+            $.get("{{ url('/chart-data-3') }}", function(data) {
+                // importing datalabel plugin
+                Chart.register(ChartDataLabels);
+
+                // const avg_score = data["avgscore_data"];
+                // const avg_title = [].concat(...avg_score.map(obj => Object.keys(obj)));
+                // const avg_value = [].concat(...avg_score.map(obj => Object.values(obj)));
 
                 // draw vertical bar chart
                 new Chart("barchart_avgscore", {
                     type: "bar",
-                    data: {
-                        labels: avg_title,
-                        datasets: [{
-                            backgroundColor: ["#fd7f6f", "#7eb0d5", "#b2e061", "#bd7ebe", "#ffb55a"],
-                            data: avg_value
-                        }]
-                    },
+                    data: data,
                     options: {
                         plugins: {
                             legend: {

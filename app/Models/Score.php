@@ -15,9 +15,8 @@ class Score extends Model
     // If you don't have created_at and updated_at timestamps in your table, disable them:
     public $timestamps = false;
 
-    // database query
-    public function fetchScores()
+    public function user()
     {
-        return User::where('role', 'student')->get();
+        return $this->belongsTo(User::class, 'userid');
     }
 }

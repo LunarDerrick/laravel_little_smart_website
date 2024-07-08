@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
-@php
+{{-- @php
 include_once(app_path("Http/Helpers/helper_list_roster.php"));
-@endphp
+@endphp --}}
 
 <head>
     <title>Roster - Little Smart Day Care Centre</title>
@@ -82,12 +82,14 @@ include_once(app_path("Http/Helpers/helper_list_roster.php"));
                         <td>{{ $student->telno }}</td>
                         <td>{{ $student->school }}</td>
                         <td>{{ $student->standard }}</td>
-                        <!-- TODO: score table & dynamic fetch -->
-                        <td>99</td>
-                        <td>99</td>
-                        <td>99</td>
-                        <td>99</td>
-                        <td>99</td>
+                        {{-- fetch associated data in a separate but nested manner --}}
+                        @foreach($student->scores as $score)
+                            <td>{{ $score->mandarin }}</td>
+                            <td>{{ $score->english }}</td>
+                            <td>{{ $score->malay }}</td>
+                            <td>{{ $score->math }}</td>
+                            <td>{{ $score->science }}</td>
+                        @endforeach
                     </tr>
                     @endforeach
                 @endisset
