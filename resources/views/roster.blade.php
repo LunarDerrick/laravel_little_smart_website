@@ -35,6 +35,12 @@ include_once(app_path("Http/Helpers/helper_list_roster.php"));
     </nav>
 
     <section>
+        @if(session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+        @endif
+
         <p id="PC">You are now viewing as <b>Computer</b>.</p>
         <p id="tablet">You are now viewing as <b>Tablet</b>.</p>
         <p id="mobile">You are now viewing as <b>Mobile Device</b>.</p>
@@ -96,7 +102,7 @@ include_once(app_path("Http/Helpers/helper_list_roster.php"));
             </table>
         </div>
         <br>
-        <button type="button" class="btn btn-primary crud" onclick="document.location='add_roster.php'">ADD</button>
+        <button type="button" class="btn btn-primary crud" onclick="window.location='{{ route('add_roster') }}'">ADD</button>
 
         <!-- delete modal -->
         <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">

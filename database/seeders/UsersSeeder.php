@@ -13,13 +13,18 @@ class UsersSeeder extends Seeder
      */
     public function run(): void
     {
-        // example
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // set admin account
+        User::factory()->create([
+            'id' => 100000,
+            'username' => 'admin',
+            'name' => 'Admin',
+            'role' => 'teacher',
+            'age' => 99,
+            'telno' => '012-3456789',
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('admin'),
+        ]);
 
         User::factory(5)->create();
-        // Score::factory(5)->create();
     }
 }

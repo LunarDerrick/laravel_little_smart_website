@@ -41,10 +41,19 @@ Route::middleware([CheckSessionTimeout::class])->group(function () {
         // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-        // if a page needs to pass variable/fetch from database, include controller in routing like below
-        // index is function name, and the function will be in charge of returning relevant view
+        /**
+         * if a page needs to pass variable/fetch from database, include controller in routing like below
+         * index is function name, and the function will be in charge of returning relevant view
+        */
         Route::get('/roster', [RosterController::class, 'index']
         )->name('roster');
+
+        Route::get('/add_roster', function () {
+            return view('add_roster');
+        })->name('add_roster');
+
+        Route::post('/add_roster', [RosterController::class, 'store']
+        )->name('roster.add');
 
         Route::get('/analysis', [AnalysisController::class, 'topScore']
         )->name('analysis');

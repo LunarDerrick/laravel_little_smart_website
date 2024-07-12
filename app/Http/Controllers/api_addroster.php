@@ -1,7 +1,5 @@
 <?php
-require_once("init_db.php");
-// require_once("init_session.php");
-// require_once("init_check_logged_in.php");
+// require_once("init_db.php");
 require_once("helper/sanitisation.php");
 
 # only run if is post
@@ -87,22 +85,13 @@ $student_id = generateID($finalidlist);
 //prepare insert query
 $query = $conn -> prepare("INSERT INTO students (student_id, student_name, age, telno, school, standard, mandarin, english, malay, math, science) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-$query -> bind_param("isissiiiiii", 
+$query -> bind_param("isissiiiiii",
 $student_id, $postvar["name"], $postvar["age"], $postvar["telno"], $postvar["school"], $postvar["standard"], $postvar["mandarin"], $postvar["english"], $postvar["malay"], $postvar["math"], $postvar["science"]);
 
 if ($query -> execute()){
     // form header for redirect
     header("Location: roster.php?done=1");
 
-    // another method to send POST data
-    // echo '<form id="redirect" action="roster.php" method="post">';
-    // echo '<input type="hidden" name="done" value=1>';
-    // echo <<< TEXT
-    // </form>
-    // <script type="text/javascript">
-    //     document.getElementById('redirect').submit();
-    // </script>
-    // TEXT;
 } else {
     http_response_code(500);
 }
