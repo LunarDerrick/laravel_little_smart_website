@@ -17,7 +17,7 @@
 <body>
     <nav class="navbar navbar-expand navbar-light bg-custom">
         <a class="navbar-brand" href="{{ route('index') }}">
-            <img src="media/logo.png" class="d-inline-block align-top" alt="day care centre logo">
+            <img src="{{ asset('media/logo.png') }}" class="d-inline-block align-top" alt="day care centre logo">
         </a>
 
         <ul class="navbar-nav ms-auto">
@@ -49,7 +49,6 @@
                     <h1>New Entry</h1>
                 </div>
 
-                {{-- <form action="api_addroster.php" method="POST" enctype="multipart/form-data" id="rosterForm"> --}}
                 <form action="{{ route('roster.add') }}" method="POST" enctype="multipart/form-data" id="rosterForm">
                     @csrf
                     <div class="container">

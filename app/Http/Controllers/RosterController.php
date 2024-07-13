@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Models\User;
 
 class RosterController extends Controller
@@ -78,9 +79,72 @@ class RosterController extends Controller
         } catch (\Exception $e) {
             // Rollback the transaction on error
             DB::rollback();
+            Log::info($e->getMessage());
 
             return redirect()->back()->with('error', 'Failed to add new record.');
         }
     }
 
+    public function edit($id)
+    {
+        $student = User::with('scores')->findOrFail($id);
+        return view('edit_roster', compact('student'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validate input
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'age' => 'required|integer|min:1',
+            'telno' => 'required|regex:/^([0-9]{3}-[0-9]{7,8})$/',
+            'school' => 'required|string',
+            'standard' => 'required|integer|min:1|max:6',
+            'mandarin' => 'required|integer|min:0|max:100',
+            'english' => 'required|integer|min:0|max:100',
+            'malay' => 'required|integer|min:0|max:100',
+            'math' => 'required|integer|min:0|max:100',
+            'science' => 'required|integer|min:0|max:100',
+        ]);
+
+        try {
+            // Start transaction
+            DB::beginTransaction();
+
+            // Update users table
+            $student = User::findOrFail($id);
+            $student->update([
+                'name' => $validated['name'],
+                'age' => $validated['age'],
+                'telno' => $validated['telno'],
+                'school' => $validated['school'],
+                'standard' => $validated['standard'],
+            ]);
+
+            // Update scores table
+            $scores = $student->scores;
+            // break down collection into elements (to resolve oneToMany relationship)
+            foreach ($scores as $score) {
+                $score->update([
+                    'mandarin' => $validated['mandarin'],
+                    'english' => $validated['english'],
+                    'malay' => $validated['malay'],
+                    'math' => $validated['math'],
+                    'science' => $validated['science'],
+                ]);
+            }
+
+            // Commit the transaction
+            DB::commit();
+
+            return redirect()->route('roster')->with('status', 'Updated existing record.');
+
+        } catch (\Exception $e) {
+            // Rollback the transaction on error
+            DB::rollback();
+            Log::info($e->getMessage());
+
+            return redirect()->back()->with('error', 'Failed to update record.');
+        }
+    }
 }

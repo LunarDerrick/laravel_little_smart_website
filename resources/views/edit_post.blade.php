@@ -19,7 +19,7 @@
 <body>
     <nav class="navbar navbar-expand navbar-light bg-custom">
         <a class="navbar-brand" href="index.html">
-            <img src="media/logo.png" class="d-inline-block align-top" alt="day care centre logo">
+            <img src="{{ asset('media/logo.png') }}" class="d-inline-block align-top" alt="day care centre logo">
         </a>
 
         <ul class="navbar-nav ms-auto">

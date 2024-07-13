@@ -55,6 +55,12 @@ Route::middleware([CheckSessionTimeout::class])->group(function () {
         Route::post('/add_roster', [RosterController::class, 'store']
         )->name('roster.add');
 
+        Route::get('/edit_roster/{id}', [RosterController::class, 'edit']
+        )->name('roster.edit');
+
+        Route::put('/edit_roster/{id}', [RosterController::class, 'update']
+        )->name('roster.update');
+
         Route::get('/analysis', [AnalysisController::class, 'topScore']
         )->name('analysis');
 

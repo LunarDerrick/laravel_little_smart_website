@@ -76,11 +76,11 @@ include_once(app_path("Http/Helpers/helper_list_roster.php"));
                     @foreach($students as $student)
                     <tr>
                         <td>
-                            <a class="img-btn" href="edit_roster.php?id=$entry->student_id">
-                                <img src="media/edit_img.png" alt="edit">
+                            <a class="img-btn" href="{{ route('roster.edit', ['id' => $student->id]) }}">
+                                <img src="{{ asset('media/edit_img.png') }}" alt="edit">
                             </a>
                             <a class="img-btn" href="#" data-bs-target="#deleteModal" data-bs-toggle="modal" data-bs-id="$entry->student_id">
-                                <img src="media/delete_img.png" alt="delete">
+                                <img src="{{ asset('media/delete_img.png') }}" alt="delete">
                             </a>
                         </td>
                         <td>{{ $student->name }}</td>

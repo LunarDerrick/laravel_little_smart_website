@@ -17,7 +17,7 @@
 <body>
     <nav class="navbar navbar-expand navbar-light bg-custom">
         <a class="navbar-brand" href="{{ route('index') }}">
-            <img src="media/logo.png" class="d-inline-block align-top" alt="day care centre logo">
+            <img src="{{ asset('media/logo.png') }}" class="d-inline-block align-top" alt="day care centre logo">
         </a>
 
         <ul class="navbar-nav ms-auto">
@@ -51,7 +51,7 @@
             <!--one section per post-->
             <section>
                 <p>3 April 2024 18:00</p>
-                <img src="media/children.jpg" alt="a group of children jumping in open field">
+                <img src="{{ asset('media/children.jpg') }}" alt="a group of children jumping in open field">
                 <h3>Title Text</h3>
                 <p>
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
@@ -64,7 +64,7 @@
             <br>
             <section>
                 <p>6 March 2024 15:34</p>
-                <img src="media/children.jpg" alt="a group of children jumping in open field">
+                <img src="{{ asset('media/children.jpg') }}" alt="a group of children jumping in open field">
                 <h3>Title Text 2</h3>
                 <p>
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
