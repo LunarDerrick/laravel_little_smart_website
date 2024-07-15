@@ -147,4 +147,17 @@ class RosterController extends Controller
             return redirect()->back()->with('error', 'Failed to update record.');
         }
     }
+
+    public function destroy($id)
+    {
+        $student = User::findOrFail($id);
+
+        if ($student) {
+            $student->scores()->delete();
+            $student->delete();
+            return response()->json(['success' => 'Entry is deleted.']);
+        }
+
+        return response()->json(['error' => 'Entry not found.'], 404);
+    }
 }

@@ -79,7 +79,7 @@ include_once(app_path("Http/Helpers/helper_list_roster.php"));
                             <a class="img-btn" href="{{ route('roster.edit', ['id' => $student->id]) }}">
                                 <img src="{{ asset('media/edit_img.png') }}" alt="edit">
                             </a>
-                            <a class="img-btn" href="#" data-bs-target="#deleteModal" data-bs-toggle="modal" data-bs-id="$entry->student_id">
+                            <a class="img-btn" href="#" data-bs-target="#deleteModal" data-bs-toggle="modal" data-bs-id="{{ $student->id }}">
                                 <img src="{{ asset('media/delete_img.png') }}" alt="delete">
                             </a>
                         </td>
@@ -234,51 +234,47 @@ include_once(app_path("Http/Helpers/helper_list_roster.php"));
         });
 
         // delete modal handling
-        var deleteModal = document.getElementById('deleteModal')
-        var modalKeepBtn = document.getElementById('modalKeepBtn')
-        var modalDeleteBtn = document.getElementById('modalDeleteBtn')
-        var notyf = new Notyf()
+        var deleteModal = document.getElementById('deleteModal');
+        var modalKeepBtn = document.getElementById('modalKeepBtn');
+        var modalDeleteBtn = document.getElementById('modalDeleteBtn');
+        var notyf = new Notyf();
 
         deleteModal.addEventListener('shown.bs.modal', (event) => {
-            modalKeepBtn.focus()
-            var button = event.relatedTarget
-            //debug
-            console.log("Modal triggered by button:", button);
-            var studentID = button.getAttribute('data-bs-id')
-            //debug
-            console.log("Student ID to delete:", studentID);
-            modalDeleteBtn.setAttribute('data-bs-id', studentID)
+            modalKeepBtn.focus();
+
+            var button = event.relatedTarget;
+            var studentID = button.getAttribute('data-bs-id');
+
+            modalDeleteBtn.setAttribute('data-bs-id', studentID);
         })
 
-        // delete button
-        modalDeleteBtn.onclick = () => {
-            // get deleted post id
-            var studentID = modalDeleteBtn.getAttribute('data-bs-id')
-            // prepare xhttp request
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && parseInt(this.status / 4) == 4) {
-                    //default notyf 2000ms
-                    notyf.error("We encountered an error when deleting the entry.")
-                } else if (this.readyState == 4 && this.status == 200) {
-                    //hide modal
-                    deleteModal.classList.add("d-none")
-                    //default notyf 2000ms
-                    notyf.success("Entry is deleted.")
-                    const redirect = async() => {
-                        //wait 2500ms
-                        await new Promise(res => setTimeout(res, 2500))
-                        // Refresh the page without GET variable
-                        window.location = window.location.href.split(/[?#]/)[0];
-                    }
-                    redirect()
+        modalDeleteBtn.onclick = function () {
+            var studentID = modalDeleteBtn.getAttribute('data-bs-id');
+            var csrfToken = '{{ csrf_token() }}';
+
+            fetch(`/roster/${studentID}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
                 }
-            };
-            // send post request
-            xhttp.open("POST", "api_deleteroster.php", true);
-            xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xhttp.send("id="+studentID);
-        }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    deleteModal.classList.remove('show');
+                    notyf.success(data.success);
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2500);
+                } else {
+                    notyf.error(data.error);
+                }
+            })
+            .catch(error => {
+                notyf.error('We encountered an error when deleting the entry.');
+            });
+        };
     </script>
 </body>
 

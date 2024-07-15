@@ -61,6 +61,9 @@ Route::middleware([CheckSessionTimeout::class])->group(function () {
         Route::put('/edit_roster/{id}', [RosterController::class, 'update']
         )->name('roster.update');
 
+        Route::delete('/roster/{id}', [RosterController::class, 'destroy']
+        )->name('roster.delete');
+
         Route::get('/analysis', [AnalysisController::class, 'topScore']
         )->name('analysis');
 

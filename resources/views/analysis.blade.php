@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-{{-- @php
-include_once(app_path("Http/Helpers/helper_list_score.php"));
-@endphp --}}
-
 <head>
     <title>Exam Analysis - Little Smart Day Care Centre</title>
 
