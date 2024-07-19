@@ -7,6 +7,9 @@ E-mail: littlesmartdaycare@gmail.com\
 Phone: +6012-2751398 (Ms. Novy)
 
 ### How to run the website
-As of current development, this project is required to be hosted locally, both server and MySQL database. XAMPP can run both the server via Apache and the database via phpMyAdmin.
+As of current development, this project is required to be hosted locally, both server and MySQL database. You are required to install Laravel dependencies to run this website. While Laravel covers both server and database, you can still opt for XAMPP phpMyAdmin to manage database.
 
-[You can download XAMPP here.](https://www.apachefriends.org/download.html)
+Related Dependencies:\
+[Download XAMPP/phpMyAdmin](https://www.apachefriends.org/download.html)\
+[Install Laravel](https://laravel.com/docs/11.x/installation)\
+[Download Composer](https://getcomposer.org/download/)
