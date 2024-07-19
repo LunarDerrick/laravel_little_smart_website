@@ -91,7 +91,7 @@
             </tr>
         </table>
         <br>
-        <button type="button" class="btn btn-primary crud" onclick="document.location='add_post.html'">New Post</button>
+        <button type="button" class="btn btn-primary crud" onclick="window.location='{{ route('add_post') }}'">New Post</button>
     </section>
 
     <br><br>

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RosterController;
 use App\Http\Controllers\AnalysisController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Middleware\CheckSessionTimeout;
 use App\Http\Middleware\RedirectIfAuthenticated;
@@ -78,6 +79,13 @@ Route::middleware([CheckSessionTimeout::class])->group(function () {
         Route::get('/list_post', function () {
             return view('list_post');
         })->name('list_post');
+
+        Route::get('/add_post', function () {
+            return view('add_post');
+        })->name('add_post');
+
+        Route::post('/add_post', [PostController::class, 'store']
+        )->name('post.add');
 
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']
         )->name('logout');

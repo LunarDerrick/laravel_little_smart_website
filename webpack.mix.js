@@ -13,3 +13,5 @@ mix.js('resources/js/app.js', 'public/js')
        'resources/css/main.css'
    ], 'public/style.css')
    .version();
+
+mix.copyDirectory('resources/js/ckeditor', 'public/js/ckeditor');

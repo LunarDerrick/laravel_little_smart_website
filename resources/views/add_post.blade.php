@@ -10,35 +10,38 @@
     <!--Bootstrap implementation-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-
     <!--CSS overwrite-->
-        <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="{{ mix('style.css') }}">
 </head>
 
 <body>
     <nav class="navbar navbar-expand navbar-light bg-custom">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="{{ route('index') }}">
             <img src="{{ asset('media/logo.png') }}" class="d-inline-block align-top" alt="day care centre logo">
         </a>
 
         <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-                <b>
-                <a class="nav-link" href="roster.html">ADMIN</a>
-                </b>
+                <b><a class="nav-link" href="{{ route('roster') }}">{{ Auth::user()->name }}</a></b>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="about.html">About Us</a>
+                <a class="nav-link" href="{{ route('about') }}">About Us</a>
+            </li>
         </ul>
     </nav>
 
     <section>
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <p id="PC">You are now viewing as <b>Computer</b>.</p>
         <p id="tablet">You are now viewing as <b>Tablet</b>.</p>
         <p id="mobile">You are now viewing as <b>Mobile Device</b>.</p>
 
-        <a href="list_post.html">Go Back</a>
+        <a href="{{ route('list_post') }}">Go Back</a>
 
         <section>
             <div class="container">
@@ -94,6 +97,44 @@
         </i></small>
     </footer>
     <br>
+
+    <!-- rich text editor, custom built -->
+    <script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
+    <script>
+        // initialise richtext eeditor
+        ClassicEditor
+            .create( document.querySelector('#content'),
+                // remove media embed, not available for markdown
+                // remove code-related markups
+                {
+                    removePlugins:  ['MediaEmbed', 'Code', 'CodeBlock', 'SourceEditing']
+                }
+            )
+            .then( newEditor => {
+                // save editor to variable for later access
+                editor = newEditor;
+            } )
+            .catch( error => {
+                console.error( error );
+            } );
+
+        // check if editor has anything
+        document.forms[0].onsubmit = evt => {
+            if (editor.getData().trim() == "") {
+                alert("No content is provided.");
+                // prevent form submitting
+                return false;
+            }
+        };
+
+        // show image preview when choosing image
+        document.getElementById("image").onchange = evt => {
+            const [file] = document.getElementById("image").files
+            if (file) {
+                document.getElementById("img-preview").src = URL.createObjectURL(file)
+            }
+        }
+    </script>
 </body>
 
 </html>
