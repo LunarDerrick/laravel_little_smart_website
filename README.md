@@ -13,3 +13,34 @@ Related Dependencies:\
 [Download XAMPP/phpMyAdmin](https://www.apachefriends.org/download.html)\
 [Install Laravel](https://laravel.com/docs/11.x/installation)\
 [Download Composer](https://getcomposer.org/download/)
+
+### Environment setup instruction
+1. Clone the repository:
+   ```
+   https://github.com/LunarDerrick/laravel_little_smart_website.git
+   ```
+2. Open command prompt (Windows) or terminal (MacOS).
+   
+3. Navigate to the project directory:
+   for example, if you place your folder in C: drive
+   ```
+   cd C:\laravel_little_smart_website
+   ```
+4. Install dependencies (require composer):
+   ```
+   composer install
+   ```
+5. Run migrations and seed the database (to populate the database):
+   ```
+   php artisan migrate --seed
+   ```
+   **OR**\
+   Import database that I am working on:
+   ```
+   database/littlesmartdb.sql
+   ```
+7. Serve the application:
+   (in subsequent hosting, just run this step in command prompt would do, remember to run in your project directory!)
+   ```
+   php artisan serve
+   ```
