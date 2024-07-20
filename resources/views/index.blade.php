@@ -49,7 +49,21 @@
         <div class="center">
             <h2>Announcement</h2>
             <!--one section per post-->
-            <section>
+            @foreach ($posts as $post)
+                <section>
+                    <p>{{ $post->createdtime->format('Y-m-d H:i') }}</p>
+                    {{-- <p>Posted by: {{ $post->user->name ?? 'Unknown' }}</p> --}}
+                    @if ($post->image)
+                        <img src="{{ asset('storage/uploads/' . $post->image) }}" alt="{{ $post->title }}" />
+                    @endif
+                    <h3>{{ $post->title }}</h3>
+                    @if ($post->description)
+                        <p>{{ $post->description }}</p>
+                    @endif
+                </section>
+                <br>
+            @endforeach
+            {{-- <section>
                 <p>3 April 2024 18:00</p>
                 <img src="{{ asset('media/children.jpg') }}" alt="a group of children jumping in open field">
                 <h3>Title Text</h3>
@@ -61,20 +75,7 @@
                     culpa qui officia deserunt mollit anim id est laborum."
                 </p>
             </section>
-            <br>
-            <section>
-                <p>6 March 2024 15:34</p>
-                <img src="{{ asset('media/children.jpg') }}" alt="a group of children jumping in open field">
-                <h3>Title Text 2</h3>
-                <p>
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum."
-                </p>
-            </section>
-            <br>
+            <br> --}}
         </div>
     </section>
 

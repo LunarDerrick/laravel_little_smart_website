@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\RosterController;
 use App\Http\Controllers\AnalysisController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RosterController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Middleware\CheckSessionTimeout;
 use App\Http\Middleware\RedirectIfAuthenticated;
@@ -15,11 +15,14 @@ require __DIR__.'/auth.php';
 // Session timeout check wrapper
 Route::middleware([CheckSessionTimeout::class])->group(function () {
 
-    // landing page navigation
-    Route::get('/', function () {
-        // return view('welcome');
-        return view('index');
-    })->name('index');
+    // landing page reference
+    // Route::get('/', function () {
+    //     return view('welcome');
+    // });
+
+    // true landing page
+    Route::get('/', [PostController::class, 'indexHome']
+    )->name('index');
 
     Route::get('/about', function () {
         return view('about');
@@ -76,9 +79,8 @@ Route::middleware([CheckSessionTimeout::class])->group(function () {
             return view('feedback');
         })->name('feedback');
 
-        Route::get('/list_post', function () {
-            return view('list_post');
-        })->name('list_post');
+        Route::get('/list_post', [PostController::class, 'indexList']
+        )->name('list_post');
 
         Route::get('/add_post', function () {
             return view('add_post');

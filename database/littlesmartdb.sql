@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 19, 2024 at 03:10 PM
+-- Generation Time: Jul 20, 2024 at 04:12 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -143,8 +143,16 @@ CREATE TABLE `posts` (
   `title` varchar(255) NOT NULL,
   `description` longtext DEFAULT NULL,
   `image` text DEFAULT NULL,
-  `createdtime` bigint(20) NOT NULL
+  `createdtime` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `posts`
+--
+
+INSERT INTO `posts` (`postid`, `userid`, `title`, `description`, `image`, `createdtime`) VALUES
+(1, 100000, 'Pendaftaran Kemasukan 2025', '家长们别忘了今天开始可以帮2/1/2018-1/1/2019的孩子报名入学啰😊', 'OY1SaDPOj2G4rgcHjUneVpmw7o2BfXSho662T7un.jpg', '2024-07-20 00:52:18'),
+(2, 100000, 'Christmas at Little Smart', '🌲 Christmas is around the corner 🌲', 'Gy5FEDDsnv0JVhvnq2nNic2M0rVwnLgzQ241kiaL.jpg', '2024-07-20 08:58:29');
 
 -- --------------------------------------------------------
 
@@ -196,8 +204,10 @@ INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, 
 ('All0mmraVKJywxAthkPXKvuIob34ju5Gw9LLvyWj', 100000, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiOHNDUHZjNVh6QXRMWHhHQ3dGN1NSc1ZjemRndjd5MXdmODBjVEphVyI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjMyOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYWRkX3Jvc3RlciI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjEwMDAwMDtzOjE2OiJsYXN0QWN0aXZpdHlUaW1lIjtpOjE3MjEwNTc0MTc7fQ==', 1721057417),
 ('cBlrYvy7rQ75YlHZnVf5dDFCI8IZECul1kKVyMS0', 100000, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiYnVVdVAzdVhpSDlrNXVkSFo5QTdTUDRTN1lLdFdLQ3cwdHZIbXNrRCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjg6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9yb3N0ZXIiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxMDAwMDA7czoxNjoibGFzdEFjdGl2aXR5VGltZSI7aToxNzIxMDUxMTU4O30=', 1721051158),
 ('jrKdQabjRa4H7Wu64ScaDpB8Bm8OWQWUWcO11cQG', 100000, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiVTRDeHdGZG9uSkdTTFZvS1J4c0kxdUpXZFZFd2lVVUhYcUJjbG1YOSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjEwMDAwMDtzOjE2OiJsYXN0QWN0aXZpdHlUaW1lIjtpOjE3MjExOTUzMDU7fQ==', 1721195305),
-('QVnMjq55wRF3LKmORWsiQtPzqvCvyIpehFJ6PcFi', 100000, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiWWhGeW96dm10ckluakJ4cWdrUURrVk01NHFxTkkzdEZ1VXNkaFpTVCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjEwMDAwMDtzOjE2OiJsYXN0QWN0aXZpdHlUaW1lIjtpOjE3MjEzOTM5Mjk7fQ==', 1721393929),
-('tmuDEGTPWkMcuMCmh0ANbBdCOk0qyN2HOHvzpD21', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiS1hJcjZTckp0NjRoTUpMWkVLTEVLZzBEVHM2STd3MUQzWDd5YnZ2eSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9sb2dpbiI7fX0=', 1721057093);
+('QVnMjq55wRF3LKmORWsiQtPzqvCvyIpehFJ6PcFi', 100000, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiWWhGeW96dm10ckluakJ4cWdrUURrVk01NHFxTkkzdEZ1VXNkaFpTVCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZGRfcG9zdCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjEwMDAwMDtzOjE2OiJsYXN0QWN0aXZpdHlUaW1lIjtpOjE3MjEzOTUwNjg7fQ==', 1721395068),
+('RwD5B16dlTLfF9AjFT9dDnLSlWacJISki3OhBMmW', 100000, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiamxQWlRQZ255dnA2NzFacWNWOXdwanFNRmVxclZKS0JkVWt1WVh0MCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjEwMDAwMDtzOjE2OiJsYXN0QWN0aXZpdHlUaW1lIjtpOjE3MjE0Njg1NTM7fQ==', 1721468553),
+('tmuDEGTPWkMcuMCmh0ANbBdCOk0qyN2HOHvzpD21', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiS1hJcjZTckp0NjRoTUpMWkVLTEVLZzBEVHM2STd3MUQzWDd5YnZ2eSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9sb2dpbiI7fX0=', 1721057093),
+('zS3drkX3OCMUAjylXImx20162fT3fn2t4AmiPdbv', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoicVJzS2ZvRnBqTVkzelMyZjg0SnkzWk5mbENzMmtYa2hvV3pXV1IwOCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMCI7fX0=', 1721484733);
 
 -- --------------------------------------------------------
 
@@ -227,7 +237,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `name`, `role`, `age`, `telno`, `school`, `standard`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(100000, 'admin', 'Admin', 'teacher', 99, '012-3456789', 'SJK(C) Bukit Serdang', 2, 'admin@gmail.com', '2024-07-12 05:40:42', '$2y$12$q5Vbu49FMC5aa778etZX7OqAi6T6l7KCsHjA1bAqxWJzUQF3ulO1i', 'sM5CAVNevsfTfxG2h4wFo3GsxIOzpwFtAalCwtJwfrdvMnufFc5IT1dbmtdq', '2024-07-12 05:40:43', '2024-07-12 05:40:43'),
+(100000, 'admin', 'Admin', 'teacher', 99, '012-3456789', 'SJK(C) Bukit Serdang', 2, 'admin@gmail.com', '2024-07-12 05:40:42', '$2y$12$q5Vbu49FMC5aa778etZX7OqAi6T6l7KCsHjA1bAqxWJzUQF3ulO1i', 'SPI9XbBgc8IrBydkjD668ae0abPxkyUKuSpaw7OrUq9M7mTdWovJ0YqRZ0VL', '2024-07-12 05:40:43', '2024-07-12 05:40:43'),
 (236087, 'alena.lowe', 'Miss Alfreda Moen', 'student', 10, '013-2237912', 'SJK(C) Bukit Serdang', 4, 'nhowe@example.net', '2024-07-12 05:40:43', '$2y$12$fEo6LR.qP03Aj3P5Bds26uc6WkBoTedu0BjPhSSIeEiTYbSlnTfCi', 'QME0U1h4Va', '2024-07-12 05:40:43', '2024-07-12 05:40:43'),
 (444271, 'aidan.gleichner', 'Nannie Conroy IV', 'student', 10, '013-8953231', 'SJK(C) Bukit Serdang', 4, 'maggio.alek@example.org', '2024-07-12 05:40:43', '$2y$12$fEo6LR.qP03Aj3P5Bds26uc6WkBoTedu0BjPhSSIeEiTYbSlnTfCi', 'JZDnEbU9b3', '2024-07-12 05:40:43', '2024-07-12 05:40:43'),
 (573284, 'kuhn.zoie', 'Joana Ondricka', 'student', 8, '018-7924450', 'SJK(C) Bukit Serdang', 2, 'ewald94@example.net', '2024-07-12 05:40:43', '$2y$12$fEo6LR.qP03Aj3P5Bds26uc6WkBoTedu0BjPhSSIeEiTYbSlnTfCi', 'SXQDzJ0ys8', '2024-07-12 05:40:43', '2024-07-12 05:40:43'),
@@ -337,13 +347,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `postid` int(128) NOT NULL AUTO_INCREMENT;
+  MODIFY `postid` int(128) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `scores`
 --
 ALTER TABLE `scores`
-  MODIFY `scoreid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `scoreid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Constraints for dumped tables

@@ -49,7 +49,8 @@
                     <h1>New Post</h1>
                 </div>
 
-                <form method="POST" enctype="multipart/form-data">
+                <form action="{{ route('post.add') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12 form-label">

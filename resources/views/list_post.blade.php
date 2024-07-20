@@ -31,6 +31,12 @@
     </nav>
 
     <section>
+        @if(session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+        @endif
+
         <p id="PC">You are now viewing as <b>Computer</b>.</p>
         <p id="tablet">You are now viewing as <b>Tablet</b>.</p>
         <p id="mobile">You are now viewing as <b>Mobile Device</b>.</p>
@@ -59,7 +65,18 @@
                 <th>Description</th>
                 <th>Actions</th>
             </tr>
-            <tr>
+            @foreach ($posts as $post)
+                <tr>
+                    <td class="line_break">{{ $post->createdtime->format('Y-m-d H:i:s') }}</td>
+                    <td>{{ $post->title }}</td>
+                    <td>{{ $post->description }}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary mobile tablet" onclick="document.location='edit_post.html'">Edit</button>
+                        <button type="button" class="btn btn-primary mobile tablet">Delete</button>
+                    </td>
+                </tr>
+            @endforeach
+            {{-- <tr>
                 <td class="line_break">2024-04-03-18-00-00</td>
                 <td>Title Text A</td>
                 <td>
@@ -73,22 +90,7 @@
                     <button type="button" class="btn btn-primary mobile tablet" onclick="document.location='edit_post.html'">Edit</button>
                     <button type="button" class="btn btn-primary mobile tablet">Delete</button>
                 </td>
-            </tr>
-            <tr>
-                <td class="line_break">2024-03-06-15-34-00</td>
-                <td>Title Text B</td>
-                <td>
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum."
-                </td>
-                <td>
-                    <button type="button" class="btn btn-primary mobile tablet" onclick="document.location='edit_post.html'">Edit</button>
-                    <button type="button" class="btn btn-primary mobile tablet">Delete</button>
-                </td>
-            </tr>
+            </tr> --}}
         </table>
         <br>
         <button type="button" class="btn btn-primary crud" onclick="window.location='{{ route('add_post') }}'">New Post</button>

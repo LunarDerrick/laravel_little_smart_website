@@ -65,7 +65,8 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE', 'UTC'),
+    // 'timezone' => env('APP_TIMEZONE', 'UTC'),
+    'timezone' => 'Asia/Singapore', // all time log will be viewed as Malaysia time (GMT+8)
 
     /*
     |--------------------------------------------------------------------------

@@ -11,6 +11,16 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    // RosterModel.php remains
+    // // If your table name is not 'rosters', you need to specify it:
+    // protected $table = 'users';
+
+    // // If your primary key is not auto-incrementing, you need to specify it:
+    // public $incrementing = false;
+
+    // // If you don't have created_at and updated_at timestamps in your table, disable them:
+    // public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -52,6 +62,13 @@ class User extends Authenticatable
         ];
     }
 
+    // RosterModel.php remains
+    // // filter database query
+    // public function fetchStudents()
+    // {
+    //     return User::where('role', 'student')->get();
+    // }
+
     public function scopeStudents($query)
     {
         return $query->where('role', 'student');
@@ -60,5 +77,12 @@ class User extends Authenticatable
     public function scores()
     {
         return $this->hasMany(Score::class, 'userid');
+    }
+
+    // define one-to-many relationship
+    //        user   posts
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'userid');
     }
 }
