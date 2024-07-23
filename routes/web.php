@@ -89,6 +89,12 @@ Route::middleware([CheckSessionTimeout::class])->group(function () {
         Route::post('/add_post', [PostController::class, 'store']
         )->name('post.add');
 
+        Route::get('/edit_post/{id}', [PostController::class, 'edit']
+        )->name('post.edit');
+
+        Route::put('/edit_post/{id}', [PostController::class, 'update']
+        )->name('post.update');
+
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']
         )->name('logout');
     });

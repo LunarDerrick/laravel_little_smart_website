@@ -102,7 +102,7 @@
     <!-- rich text editor, custom built -->
     <script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
     <script>
-        // initialise richtext eeditor
+        // initialise richtext editor
         ClassicEditor
             .create( document.querySelector('#content'),
                 // remove media embed, not available for markdown

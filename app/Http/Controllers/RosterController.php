@@ -91,6 +91,7 @@ class RosterController extends Controller
         return view('edit_roster', compact('student'));
     }
 
+    // CRUD update
     public function update(Request $request, $id)
     {
         // Validate input
@@ -148,6 +149,7 @@ class RosterController extends Controller
         }
     }
 
+    // CRUD destroy
     public function destroy($id)
     {
         $student = User::findOrFail($id);

@@ -12,6 +12,12 @@ class Post extends Model
     // database table
     protected $table = 'posts';
 
+    // If you don't have created_at and updated_at timestamps in your table, disable them:
+    public $timestamps = false;
+
+    // explicitly specify primary key name
+    protected $primaryKey = 'postid';
+
     // table fields
     protected $fillable = ['title', 'description', 'image', 'userid', 'createdtime'];
 

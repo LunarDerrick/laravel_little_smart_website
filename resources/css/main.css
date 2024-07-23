@@ -61,6 +61,11 @@
     #roster {
         width: 95vw;
     }
+
+    .modal-dialog {
+        max-width: 90%;
+        margin: 1.75rem auto;
+    }
 }
 
 section {
@@ -186,6 +191,10 @@ a.img-btn {
 
 #logout {
     display: inline;
+}
+
+.rich-text-editor {
+    display: block;
 }
 
 footer {
