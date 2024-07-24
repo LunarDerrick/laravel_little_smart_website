@@ -67,23 +67,32 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-7">
+                                <div class="col-md-3">
                                     <div class="row mt-4">
-                                        <div class="col-3">
+                                        <div class="col-12">
                                             <input type="submit" value="Save Post" class="btn btn-primary">
                                         </div>
-                                        {{-- <div class="col-9">
-                                            <button type="button" class="btn btn-danger" data-bs-target="#clearModal" data-bs-toggle="modal">Clear Image</button>
-                                        </div> --}}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row mt-4">
+                                        <div class="col">
+                                            <input type="checkbox" id="clear-img" name="clear-img" onclick="alert('If ticked, image will be gone forever once you save!');">
+                                            <label for="clear-img">Clear image</label><br>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-5">
                                     <div class="row">
-                                        <div class="col-9">
+                                        <div class="col">
                                             <label for="image"><b>Image</b></label>
                                             <input type="file" accept="image/*" id="image" name="image" class="form-control">
                                             <picture>
-                                                <img id="img-preview" src="{{ asset('storage/uploads/' . $post->image) }}" class="img-fluid card-img-top" alt="...">
+                                                @if($post->image == null)
+                                                    <img id="img-preview" src="{{ asset('media/placeholder.png') }}" class="img-fluid card-img-top" alt="...">
+                                                @else
+                                                    <img id="img-preview" src="{{ asset('storage/uploads/' . $post->image) }}" class="img-fluid card-img-top" alt="...">
+                                                @endif
                                             </picture>
                                         </div>
                                     </div>
@@ -95,28 +104,6 @@
             </div>
         </section>
         <br>
-
-        <!-- clear image modal -->
-        <div class="modal fade" id="clearModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Image Cleared.</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>If you save now, the image will be lost forever.</p>
-                        <p>If you go back, the image will remain.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-info" data-bs-dismiss="modal" id="modalOKBtn">
-                            OK
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </section>
 
     <footer>
@@ -156,52 +143,11 @@
 
         // show image preview when choosing image
         document.getElementById("image").onchange = evt => {
-            const [file] = document.getElementById("image").files
+            const [file] = document.getElementById("image").files;
             if (file) {
-                document.getElementById("img-preview").src = URL.createObjectURL(file)
+                document.getElementById("img-preview").src = URL.createObjectURL(file);
             }
         }
-
-        // clear image modal handling
-        var clearModal = document.getElementById('clearModal');
-        var notyf = new Notyf();
-
-        clearModal.addEventListener('shown.bs.modal', (event) => {
-            modalKeepBtn.focus();
-
-            var button = event.relatedTarget;
-            // var studentID = button.getAttribute('data-bs-id');
-
-            // modalDeleteBtn.setAttribute('data-bs-id', studentID);
-        })
-
-        modalDeleteBtn.onclick = function () {
-            // var studentID = modalDeleteBtn.getAttribute('data-bs-id');
-            // var csrfToken = '{{ csrf_token() }}';
-
-            // fetch(`/roster/${studentID}`, {
-            //     method: 'DELETE',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         'X-CSRF-TOKEN': csrfToken
-            //     }
-            // })
-            // .then(response => response.json())
-            // .then(data => {
-            //     if (data.success) {
-            //         deleteModal.classList.remove('show');
-            //         notyf.success(data.success);
-            //         setTimeout(() => {
-            //             window.location.reload();
-            //         }, 2500);
-            //     } else {
-            //         notyf.error(data.error);
-            //     }
-            // })
-            // .catch(error => {
-            //     notyf.error('We encountered an error when deleting the entry.');
-            // });
-        };
     </script>
 </body>
 

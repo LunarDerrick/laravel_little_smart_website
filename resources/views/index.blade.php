@@ -59,7 +59,8 @@
                     <h3>{{ $post->title }}</h3>
                     @if ($post->description)
                         {{-- preserves newline characters --}}
-                        <p>{!! nl2br(e($post->description)) !!}</p>
+                        {{-- <p>{!! nl2br(e($post->description)) !!}</p> --}}
+                        <p>{!! $post->description !!}</p>
                     @endif
                 </section>
                 <br>

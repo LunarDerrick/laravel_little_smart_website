@@ -76,9 +76,9 @@
                                 <div class="row">
                                     <div class="col">
                                         <label for="image"><b>Image</b></label>
-                                        <input type="file" accept="image/*" id="image" name="image" class="form-control" required>
+                                        <input type="file" accept="image/*" id="image" name="image" class="form-control">
                                         <picture>
-                                            <img id="img-preview" src="media/placeholder.png" class="img-fluid card-img-top" alt="...">
+                                            <img id="img-preview" src="{{ asset('media/placeholder.png') }}" class="img-fluid card-img-top" alt="...">
                                         </picture>
                                     </div>
                                 </div>

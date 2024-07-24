@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Post;
+use HTMLPurifier;
+use HTMLPurifier_Config;
 
 class PostController extends Controller
 {
@@ -58,11 +60,16 @@ class PostController extends Controller
                 $imagePath = basename($imagePath);
             }
 
+            // Sanitize description
+            $config = HTMLPurifier_Config::createDefault();
+            $purifier = new HTMLPurifier($config);
+            $sanitizedDescription = $purifier->purify($validated['description']);
+
             // CRUD create
             DB::table('posts')->insert([
                 'userid' => Auth::id(), // Fetch current user's id
                 'title' => $validated['title'],
-                'description' => $validated['description'],
+                'description' => $sanitizedDescription,
                 'image' => $imagePath, // images are stored in storage/app/imagePath
                 'createdtime' => now(),
             ]);
@@ -110,8 +117,15 @@ class PostController extends Controller
             $post = Post::findOrFail($id);
 
             // Handle file upload
-            // placeholder existing image
-            $imagePath = $post->image;
+            if ($request->has('clear-img')) {
+                // true = user wants to get rid of image
+                $imagePath = null;
+                Storage::delete('public/uploads/' . $post->image);
+            } else {
+                // false = users wants to keep image
+                $imagePath = $post->image;
+            }
+
             if ($request->hasFile('image')) {
                 // Delete the old image if exists
                 if ($post->image) {
@@ -122,9 +136,14 @@ class PostController extends Controller
                 $imagePath = basename($imagePath);
             }
 
+            // Sanitize description
+            $config = HTMLPurifier_Config::createDefault();
+            $purifier = new HTMLPurifier($config);
+            $sanitizedDescription = $purifier->purify($validated['description']);
+
             $post->update([
                 'title' => $validated['title'],
-                'description' => $validated['description'],
+                'description' => $sanitizedDescription,
                 'image' => $imagePath, // images are stored in storage/app/imagePath
             ]);
 
@@ -140,5 +159,23 @@ class PostController extends Controller
 
             return redirect()->back()->with('error', 'Failed to update post.');
         }
+    }
+
+    // CRUD destroy
+    public function destroy($id)
+    {
+        $post = Post::findOrFail($id);
+
+        if ($post) {
+            // Delete image from storage
+            if ($post->image) {
+                Storage::delete('public/uploads/' . $post->image);
+            }
+
+            $post->delete();
+            return response()->json(['success' => 'Entry is deleted.']);
+        }
+
+        return response()->json(['error' => 'Entry not found.'], 404);
     }
 }
