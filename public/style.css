@@ -245,3 +245,8 @@ body {
     display: grid;
     grid-template-rows: auto 1fr auto;
 }
+
+/* isolate forms for proper responsive elements */
+body.form {
+    display: block;
+}

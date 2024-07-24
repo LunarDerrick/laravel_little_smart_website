@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{{ mix('style.css') }}">
 </head>
 
-<body>
+<body class="form">
     <nav class="navbar navbar-expand navbar-light bg-custom">
         <a class="navbar-brand" href="{{ route('index') }}">
             <img src="{{ asset('media/logo.png') }}" class="d-inline-block align-top" alt="day care centre logo">
