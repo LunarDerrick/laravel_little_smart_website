@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "erusev/parsedown-extra": "^0.8.1",
         "ezyang/htmlpurifier": "^4.17",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
@@ -27,7 +28,8 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "app/Http/Helpers/helper_list_roster.php"
+            "app/Http/Helpers/helper_list_roster.php",
+            "app/Http/Helpers/MarkdownHelper.php"
         ]
     },
     "autoload-dev": {

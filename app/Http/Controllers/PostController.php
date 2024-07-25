@@ -62,6 +62,8 @@ class PostController extends Controller
 
             // Sanitize description
             $config = HTMLPurifier_Config::createDefault();
+            // // customize to permit rich text get saved as HTML entities
+            // $config->set('HTML.Allowed', 'p,b,strong,i,em,u,a[href|title],ul,ol,li,br,span,h1,h2,h3,h4,h5,h6,img[src|alt|title|width|height],table,tr,td,th,thead,tbody,tfoot,blockquote,hr');
             $purifier = new HTMLPurifier($config);
             $sanitizedDescription = $purifier->purify($validated['description']);
 

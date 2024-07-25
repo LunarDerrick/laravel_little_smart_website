@@ -58,9 +58,8 @@
                     @endif
                     <h3>{{ $post->title }}</h3>
                     @if ($post->description)
-                        {{-- preserves newline characters --}}
-                        {{-- <p>{!! nl2br(e($post->description)) !!}</p> --}}
-                        <p>{!! $post->description !!}</p>
+                        {{-- to ensure rich text is applied --}}
+                        {!! \App\Http\Helpers\MarkdownHelper::render(htmlentities($post->description)) !!}
                     @endif
                 </section>
                 <br>
