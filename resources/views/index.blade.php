@@ -12,6 +12,11 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!--CSS overwrite-->
     <link rel="stylesheet" href="{{ mix('style.css') }}">
+    <style>
+        table, th, td {
+          border: 1px solid black;
+        }
+    </style>
 </head>
 
 <body>
@@ -58,8 +63,7 @@
                     @endif
                     <h3>{{ $post->title }}</h3>
                     @if ($post->description)
-                        {{-- to ensure rich text is applied --}}
-                        {!! \App\Http\Helpers\MarkdownHelper::render(htmlentities($post->description)) !!}
+                        {!! $post->description !!}
                     @endif
                 </section>
                 <br>

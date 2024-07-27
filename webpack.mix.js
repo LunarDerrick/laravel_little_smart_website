@@ -2,7 +2,8 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .babelConfig({
-        presets: ['@babel/preset-env']
+        presets: ['@babel/preset-env'],
+        plugins: ['@babel/plugin-transform-modules-commonjs'],
     })
     // .sass('resources/sass/app.scss', 'public/css')
     .styles([
@@ -10,7 +11,8 @@ mix.js('resources/js/app.js', 'public/js')
         // and do "npm run dev" in terminal to compile these changes
        'resources/css/bootstrap.min.css',
        'resources/css/graph.css',
-       'resources/css/main.css'
+       'resources/css/main.css',
+       'resources/css/ckeditor.css',
     ], 'public/style.css')
     .copyDirectory('resources/js/ckeditor', 'public/js/ckeditor')
     .version();

@@ -70,7 +70,7 @@
                 <tr>
                     <td class="line_break">{{ $post->createdtime->format('Y-m-d H:i:s') }}</td>
                     <td>{{ $post->title }}</td>
-                    <td>{{ $post->description }}</td>
+                    <td>{{ strip_tags($post->description) }}</td>
                     <td>
                         <button type="button" class="btn btn-primary mobile tablet" onclick="window.location='{{ route('post.edit', ['id' => $post->postid]) }}'">Edit</button>
                         <button type="button" class="btn btn-primary mobile tablet" data-bs-target="#deleteModal" data-bs-toggle="modal" data-bs-id="{{ $post->postid }}">Delete</button>

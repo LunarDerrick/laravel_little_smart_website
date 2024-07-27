@@ -10,6 +10,8 @@
     <!--Bootstrap implementation-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!--ckeditor5 css implementation-->
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.css">
     <!--CSS overwrite-->
     <link rel="stylesheet" href="{{ mix('style.css') }}">
 </head>
@@ -113,34 +115,23 @@
     </footer>
     <br>
 
-    <!-- JavaScript files-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <!-- rich text editor, custom built -->
-    <script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
-    <!-- items for notification toast -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <!-- rich text editor, ckeditor5 builder -->
+    <script type="importmap">
+    {
+        "imports": {
+            "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.js",
+            "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/42.0.2/"
+        }
+    }
+    </script>
+    <script type="module" src="{{ asset('js/ckeditor/main.js') }}"></script>
+    <script type="module" src="{{ asset('js/ckeditor/init-editpost.js') }}"></script>
+    <script type="module">
+        // convert server-side value to client-side value and pass to JS function
+        window.editorInitialData = @json($post->description);
+    </script>
 
     <script>
-        // initialise richtext editor
-        ClassicEditor
-            .create( document.querySelector('#content'),
-                // remove media embed, not available for markdown
-                // remove code-related markups
-                {
-                    removePlugins:  ['MediaEmbed', 'Code', 'CodeBlock', 'SourceEditing']
-                }
-            )
-            .then( newEditor => {
-                // save editor to variable for later access
-                editor = newEditor;
-                // Set editor content after initialization
-                editor.setData(`{{ $post->description }}`);
-            } )
-            .catch( error => {
-                console.error( error );
-            } );
-
         // show image preview when choosing image
         document.getElementById("image").onchange = evt => {
             const [file] = document.getElementById("image").files;

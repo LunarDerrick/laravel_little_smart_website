@@ -10,6 +10,8 @@
     <!--Bootstrap implementation-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!--ckeditor5 css implementation-->
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.css">
     <!--CSS overwrite-->
     <link rel="stylesheet" href="{{ mix('style.css') }}">
 </head>
@@ -99,26 +101,19 @@
     </footer>
     <br>
 
-    <!-- rich text editor, custom built -->
-    <script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
-    <script>
-        // initialise richtext editor
-        ClassicEditor
-            .create( document.querySelector('#content'),
-                // remove media embed, not available for markdown
-                // remove code-related markups
-                {
-                    removePlugins:  ['MediaEmbed', 'Code', 'CodeBlock', 'SourceEditing']
-                }
-            )
-            .then( newEditor => {
-                // save editor to variable for later access
-                editor = newEditor;
-            } )
-            .catch( error => {
-                console.error( error );
-            } );
+    <!-- rich text editor, ckeditor5 builder -->
+    <script type="importmap">
+    {
+        "imports": {
+            "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.js",
+            "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/42.0.2/"
+        }
+    }
+    </script>
+    <script type="module" src="{{ asset('js/ckeditor/main.js') }}"></script>
+    <script type="module" src="{{ asset('js/ckeditor/init-addpost.js') }}"></script>
 
+    <script>
         // check if editor has anything
         document.forms[0].onsubmit = evt => {
             if (editor.getData().trim() == "") {
