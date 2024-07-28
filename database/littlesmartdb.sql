@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 27, 2024 at 07:42 PM
+-- Generation Time: Jul 28, 2024 at 08:03 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -157,7 +157,15 @@ INSERT INTO `posts` (`postid`, `userid`, `title`, `description`, `image`, `creat
 (4, 100000, '安亲班招生啦！', '<p>报名电话： Novy <br />安亲班 <br />功课班 <br />补习班 <br />写作与理解并重 <br />优越的上课环境 <br />多元化的智能教学 <br />7岁~12岁</p>', NULL, '2024-07-20 15:16:45'),
 (5, 100000, 'Teacher\'s Day', '谢谢家长送给老师们的教师节礼物😋', 'U6vSf1mFTkShv8ZtcRpjBDv89XCGotPLXCozPOep.jpg', '2024-07-23 11:31:05'),
 (6, 100000, 'Recruitment', NULL, 'Lr4gxV7okCwaanQsjaOf3dNQtjBsT7pOjcvSx9Ew.jpg', '2024-07-23 11:32:13'),
-(12, 100000, 'RichText Tester', '<h1>Heading 1</h1><p><strong>bold</strong><br /><i>italic</i><br /><u>underline→</u></p><p style=\"text-align:right;\">align right </p><p style=\"text-align:center;\">align center </p><p><s>strikethrough</s></p><p style=\"text-align:justify;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><ul><li>bullet<ul><li>bullet</li></ul></li></ul><ol><li>number</li><li>number<ol><li>number</li></ol></li></ol><p><a href=\"https://www.google.com/\">google.com</a></p><p>horizontal line below</p><hr /><table><thead><tr><th>tablecell</th><th>tablecell</th></tr></thead><tbody><tr><td>tablecell</td><td>tablecell</td></tr></tbody></table>', NULL, '2024-07-24 15:53:24');
+(17, 100000, 'Early Bird Intake 2026', '<p>Little Smart Day Care Centre is open for early registrations!<br />If your child is age 7 to 12, has no one to look after between after-school and after-work hours,<br /><u>this is the place for you~</u><br />Reach out to us now to learn more!</p>', 'cszVJuucl4NflcjXoKKdHJvmCx59lTBSDGSBLBoD.png', '2024-07-28 14:48:48'),
+(18, 100000, 'Congratulations to Top Scorers', '<p>Congratulations to these students, you\'ve done us proud!</p><table><thead><tr><th>Name</th><th>Subject</th><th>Score</th></tr></thead><tbody><tr><td>Camryn Lebsack</td><td>Mandarin</td><td>60</td></tr><tr><td>Camryn Lebsack</td><td>English</td><td>65</td></tr><tr><td>Camryn Lebsack</td><td>Malay</td><td>51</td></tr><tr><td>Miss Alfreda Moen</td><td>Math</td><td>89</td></tr><tr><td>Joana Ondricka</td><td>Science</td><td>86</td></tr></tbody></table>', NULL, '2024-07-28 14:50:17'),
+(19, 100000, 'Analysis Jul 2025', '<p>sneak peek<a href=\"https://emojipedia.org/eyes\">👀</a></p>', 'aKWYwyvYdCUoLR4wBYI4Vx3YiyUQbYeYwYl95PlM.png', '2024-07-28 14:51:44'),
+(20, 100000, 'Do you know?', '<p><strong>A lot of alumni</strong> stated their academics improved after attending tuition.<br />Consider join us now!</p>', NULL, '2024-07-28 14:59:23'),
+(21, 100000, 'Snack Time!', '', 'f7c4L6aOJmWqDq4v5FGWUGTLfZM40TlndXXh2t6A.jpg', '2024-07-28 15:02:17'),
+(22, 100000, 'Guess the Image!', '<p>it\'s a cotton candy machine! we offer fun activities every now and then for students to enjoy</p>', '7iEsW7Er6OU2HR24Z8zoTldiqEubJozFcjw7CbRe.jpg', '2024-07-28 15:03:03'),
+(23, 100000, 'Creativity Over the Roof', '<p>Check out what our students have made!</p>', 'oT0G66HE1NnZ00PvoKCBbKHPcHLjNfDM7FgL5Ovg.jpg', '2024-07-28 15:03:48'),
+(24, 100000, 'CNY 2023', '<p>Little Smart Day Care Centre wishes everyone a happy CNY!</p>', 'lJGCCAsWnzWYr7UE02EaHCyLk1R8fWH8QxcXEFmk.jpg', '2024-07-28 15:09:06'),
+(25, 100000, 'UASA New Format (Important)!', '<p>Want to score A+ in malay in UASA 2030? <br />Join us to learn how!</p>', 'MYXhesOiRSEzvHBVGP7e4IaLVyDn3yDe6yhgblVW.jpg', '2024-07-28 15:09:48');
 
 -- --------------------------------------------------------
 
@@ -206,7 +214,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('Gv4aO6oSkEgFHtkttvwXwIFEgxGlEUcceJ6XUNeo', 100000, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoibVROMVYwRTlFZWZjamFkQ1h4c1JPNDZCV2o5UHVXcE5Zd1FrTXdQWSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjEwMDAwMDtzOjE2OiJsYXN0QWN0aXZpdHlUaW1lIjtpOjE3MjIxMDE5MjE7fQ==', 1722101921);
+('jnwWJq1aa8vWwUH1KfYEap7BS3bF9K0KKhhnsHDv', 100000, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiRmxERFJPSEdNRjkzaHpEaGRvTlk4SklRZXJpcDBqRFpvUGN2V0ljWiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hbmFseXNpcyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjEwMDAwMDtzOjE2OiJsYXN0QWN0aXZpdHlUaW1lIjtpOjE3MjIxODkzMDQ7fQ==', 1722189304);
 
 -- --------------------------------------------------------
 
@@ -346,7 +354,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `postid` int(128) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `postid` int(128) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `scores`
