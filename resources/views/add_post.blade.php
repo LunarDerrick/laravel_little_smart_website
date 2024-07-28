@@ -4,33 +4,13 @@
 <head>
     <title>New Post - Little Smart Day Care Centre</title>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!--Bootstrap implementation-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!--ckeditor5 css implementation-->
-    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.css">
+    @include('components.header')
     <!--CSS overwrite-->
-    <link rel="stylesheet" href="{{ mix('style.css') }}">
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.css">
 </head>
 
 <body class="form">
-    <nav class="navbar navbar-expand navbar-light bg-custom">
-        <a class="navbar-brand" href="{{ route('index') }}">
-            <img src="{{ asset('media/logo.png') }}" class="d-inline-block align-top" alt="day care centre logo">
-        </a>
-
-        <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-                <b><a class="nav-link" href="{{ route('roster') }}">{{ Auth::user()->name }}</a></b>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('about') }}">About Us</a>
-            </li>
-        </ul>
-    </nav>
+    @include('components.navbar')
 
     <section>
         @if(session('error'))
@@ -39,9 +19,7 @@
             </div>
         @endif
 
-        <p id="PC">You are now viewing as <b>Computer</b>.</p>
-        <p id="tablet">You are now viewing as <b>Tablet</b>.</p>
-        <p id="mobile">You are now viewing as <b>Mobile Device</b>.</p>
+        @include('components.device_type')
 
         <a href="{{ route('list_post') }}">Go Back</a>
 
@@ -94,12 +72,7 @@
 
     </section>
 
-    <footer>
-        <small><i>
-            © 2024 Little Smart Day Care Centre
-        </i></small>
-    </footer>
-    <br>
+    @include('components.footer')
 
     <!-- rich text editor, ckeditor5 builder -->
     <script type="importmap">

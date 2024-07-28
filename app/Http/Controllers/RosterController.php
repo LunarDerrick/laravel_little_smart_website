@@ -17,6 +17,9 @@ class RosterController extends Controller
                         ->where('role', 'student') // redundancy in User.php scopeStudents(), but current version didn't filter properly, thus it is repeated here for frontend consistency.
                         ->get();
 
+        // pass an empty variable
+        // $students = collect();
+
         return view('roster', compact('students'));
     }
 

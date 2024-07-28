@@ -4,45 +4,16 @@
 <head>
     <title>Exam Analysis - Little Smart Day Care Centre</title>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!--Bootstrap implementation-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!--CSS overwrite-->
-    <link rel="stylesheet" href="{{ mix('style.css') }}">
+    @include('components.header')
 </head>
 
 <body>
-    <nav class="navbar navbar-expand navbar-light bg-custom">
-        <a class="navbar-brand" href="{{ route('index') }}">
-            <img src="{{ asset('media/logo.png') }}" class="d-inline-block align-top" alt="day care centre logo">
-        </a>
-
-        <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-                <b><a class="nav-link" href="{{ route('roster') }}">{{ Auth::user()->name }}</a></b>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('about') }}">About Us</a>
-            </li>
-        </ul>
-    </nav>
+    @include('components.navbar')
 
     <section>
-        <p id="PC">You are now viewing as <b>Computer</b>.</p>
-        <p id="tablet">You are now viewing as <b>Tablet</b>.</p>
-        <p id="mobile">You are now viewing as <b>Mobile Device</b>.</p>
+        @include('components.device_type')
+        @include('components.btn_admin')
 
-        <button type="button" class="btn btn-primary mobile" onclick="window.location='{{ route('roster') }}'">Name List</button>
-        <button type="button" class="btn btn-primary mobile" onclick="window.location='{{ route('analysis') }}'">Exam Analysis</button>
-        <button type="button" class="btn btn-primary mobile" onclick="window.location='{{ route('feedback') }}'">Feedback Inbox</button>
-        <button type="button" class="btn btn-primary mobile" onclick="window.location='{{ route('list_post') }}'">Edit Post</button>
-        <form method="POST" action="{{ route('logout') }}" id="logout">
-            @csrf
-            <button type="submit" class="btn btn-primary mobile">Logout</button>
-        </form>
         <h1>Exam Analysis</h1>
         <br>
 
@@ -71,22 +42,26 @@
                     </div>
                     <div class="col-md-6 col-lg-4">
                         <div class="card border-0">
-                            <table id="table-graph">
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Subject</th>
-                                    <th>Score</th>
-                                </tr>
-                                @isset($topScores)
-                                    @foreach($topScores as $topScore)
+                            @if (empty($topScores))
+                                @include('components.no_records')
+                            @else
+                                <table id="table-graph">
                                     <tr>
-                                        <td>{{ $topScore['name'] }}</td>
-                                        <td>{{ $topScore['subject'] }}</td>
-                                        <td>{{ $topScore['score'] }}</td>
+                                        <th>Name</th>
+                                        <th>Subject</th>
+                                        <th>Score</th>
                                     </tr>
-                                    @endforeach
-                                @endisset
-                            </table>
+                                    @isset($topScores)
+                                        @foreach($topScores as $topScore)
+                                        <tr>
+                                            <td>{{ $topScore['name'] }}</td>
+                                            <td>{{ $topScore['subject'] }}</td>
+                                            <td>{{ $topScore['score'] }}</td>
+                                        </tr>
+                                        @endforeach
+                                    @endisset
+                                </table>
+                            @endif
                             <div class="card-body">
                                 <h6>Top Scorer for Each Subject</h6>
                             </div>
@@ -109,20 +84,13 @@
 
     <br><br>
 
-    <footer>
-        <small><i>
-            © 2024 Little Smart Day Care Centre
-        </i></small>
-    </footer>
-    <br>
+    @include('components.footer')
 
     <!-- jQuery library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <!-- JS chart library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0/chartjs-plugin-datalabels.min.js"></script>
-    <!-- JavaScript files-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
     <script>
         $(document).ready(function() {
@@ -134,131 +102,154 @@
         const showChart1 = () => {
             // browser "localhost:8000/chart-data-1" to check if js receives datatable
             $.get("{{ url('/chart-data-1') }}", function(data) {
-                // importing datalabel plugin
-                Chart.register(ChartDataLabels);
+                if (!data.datasets) { // if empty data array
+                    showNoData('#barchart_passingrate');
+                } else {
+                    // importing datalabel plugin
+                    Chart.register(ChartDataLabels);
 
-                new Chart("barchart_passingrate", {
-                    type: 'bar',
-                    data: data,
-                    options: {
-                        plugins: {
-                            legend: {
-                                display: false
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    // Convert decimal to percentage
-                                    label: function(tooltipItem) {
-                                        var value = Math.round(tooltipItem.raw * 100);
-                                        return value + '%';
+                    new Chart("barchart_passingrate", {
+                        type: 'bar',
+                        data: data,
+                        options: {
+                            plugins: {
+                                legend: {
+                                    display: false
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        // Convert decimal to percentage
+                                        label: function(tooltipItem) {
+                                            var value = Math.round(tooltipItem.raw * 100);
+                                            return value + '%';
+                                        }
                                     }
+                                },
+                                datalabels: {
+                                    display: false
                                 }
                             },
-                            datalabels: {
-                                display: false
-                            }
-                        },
-                        scales: {
-                            y: {
-                                suggestedMin: 0, // Minimum value for the y-axis
-                                suggestedMax: 1, // Maximum value for the y-axis
-                                title: {
-                                    display: true,
-                                    text: 'Percentage(%)'
-                                },
-                                ticks: {
-                                    // convert decimal to percentage
-                                    callback: function(value, index, values) {
-                                        return (value * 100) + '%';
+                            scales: {
+                                y: {
+                                    suggestedMin: 0, // Minimum value for the y-axis
+                                    suggestedMax: 1, // Maximum value for the y-axis
+                                    title: {
+                                        display: true,
+                                        text: 'Percentage(%)'
+                                    },
+                                    ticks: {
+                                        // convert decimal to percentage
+                                        callback: function(value, index, values) {
+                                            return (value * 100) + '%';
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                });
-            })
+                    });
+                }
+            }).fail(function() {
+                showNoData('#barchart_passingrate');
+            });
         }
 
         const showChart2 = () => {
             // browser "localhost:8000/chart-data-2" to check if js receives datatable
             $.get("{{ url('/chart-data-2') }}", function(data) {
-                // importing datalabel plugin
-                Chart.register(ChartDataLabels);
+                if (!data.datasets) { // if empty data array
+                    showNoData('#piechart_gradescience');
+                } else {
+                    // importing datalabel plugin
+                    Chart.register(ChartDataLabels);
 
-                new Chart("piechart_gradescience", {
-                    type: "pie",
-                    data: data,
-                    options: {
-                        plugins: {
-                            legend: {
-                                display: false,
-                            },
-                            datalabels: {
-                                color: 'black',
-                                labels: {
-                                    title: {
-                                        font: {
-                                            weight: 'bold'
-                                        }
-                                    }
+                    new Chart("piechart_gradescience", {
+                        type: "pie",
+                        data: data,
+                        options: {
+                            plugins: {
+                                legend: {
+                                    display: false,
                                 },
-                                formatter: (value, ctx) => {
-                                    let label = ctx.chart.data.labels[ctx.dataIndex];
-                                    return label + ': ' + value;
+                                datalabels: {
+                                    color: 'black',
+                                    labels: {
+                                        title: {
+                                            font: {
+                                                weight: 'bold'
+                                            }
+                                        }
+                                    },
+                                    formatter: (value, ctx) => {
+                                        let label = ctx.chart.data.labels[ctx.dataIndex];
+                                        return label + ': ' + value;
+                                    }
                                 }
                             }
                         }
-                    }
-                });
-            })
+                    });
+                }
+            }).fail(function() {
+                showNoData('#piechart_gradescience');
+            });
         }
 
         const showChart3 = () => {
             // browser "localhost:8000/chart-data-3" to check if js receives datatable
             $.get("{{ url('/chart-data-3') }}", function(data) {
-                // importing datalabel plugin
-                Chart.register(ChartDataLabels);
+                if (!data.datasets) { // if empty data array
+                    showNoData('#barchart_avgscore');
+                } else {
+                    // importing datalabel plugin
+                    Chart.register(ChartDataLabels);
 
-                // const avg_score = data["avgscore_data"];
-                // const avg_title = [].concat(...avg_score.map(obj => Object.keys(obj)));
-                // const avg_value = [].concat(...avg_score.map(obj => Object.values(obj)));
-
-                // draw vertical bar chart
-                new Chart("barchart_avgscore", {
-                    type: "bar",
-                    data: data,
-                    options: {
-                        plugins: {
-                            legend: {
-                                display: false
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    // round to nearest 1 decimal place
-                                    label: function(tooltipItem) {
-                                        var value = (Math.round(tooltipItem.raw * 10) /10).toFixed(1);
-                                        return value;
+                    // draw vertical bar chart
+                    new Chart("barchart_avgscore", {
+                        type: "bar",
+                        data: data,
+                        options: {
+                            plugins: {
+                                legend: {
+                                    display: false
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        // round to nearest 1 decimal place
+                                        label: function(tooltipItem) {
+                                            var value = (Math.round(tooltipItem.raw * 10) /10).toFixed(1);
+                                            return value;
+                                        }
                                     }
+                                },
+                                datalabels: {
+                                    display: false
                                 }
                             },
-                            datalabels: {
-                                display: false
-                            }
-                        },
-                        scales: {
-                            y: {
-                                suggestedMin: 0, // Minimum value for the y-axis
-                                suggestedMax: 100, // Maximum value for the y-axis
-                                title: {
-                                    display: true,
-                                    text: "Score"
-                                },
+                            scales: {
+                                y: {
+                                    suggestedMin: 0, // Minimum value for the y-axis
+                                    suggestedMax: 100, // Maximum value for the y-axis
+                                    title: {
+                                        display: true,
+                                        text: "Score"
+                                    },
+                                }
                             }
                         }
-                    }
-                });
-            })
+                    });
+                }
+            }).fail(function() {
+                showNoData('#barchart_avgscore');
+            });
         }
+
+        // placeholder when fetched no data
+        const showNoData = (selector) => {
+            const chartContainer = $(selector).parent();
+            chartContainer.empty(); // clear container before appending
+            $.get("{{ url('/no-record') }}", function(data) {
+                chartContainer.append(data);
+            });
+        };
     </script>
 </body>
 

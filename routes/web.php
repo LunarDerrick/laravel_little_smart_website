@@ -71,6 +71,8 @@ Route::middleware([CheckSessionTimeout::class])->group(function () {
         Route::get('/analysis', [AnalysisController::class, 'topScore']
         )->name('analysis');
 
+        Route::get('/no-record', [AnalysisController::class, 'showNoRecords']);
+
         Route::get('/chart-data-1', [AnalysisController::class, 'getPassingRate']);
         Route::get('/chart-data-2', [AnalysisController::class, 'getGradeDistribution']);
         Route::get('/chart-data-3', [AnalysisController::class, 'getAvgScore']);

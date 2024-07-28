@@ -5,31 +5,13 @@ namespace App\Http\Controllers;
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
-use App\Models\Score;
+// use App\Models\Score;
 
 class AnalysisController extends Controller
 {
-    public function topScore()
+    public function showNoRecords()
     {
-        $subjects = ['mandarin', 'english', 'malay', 'math', 'science'];
-        $topScores = [];
-
-        foreach ($subjects as $subject) {
-            $topScore = User::select('users.name', 'scores.'.$subject.' as score')
-                ->join('scores', 'users.id', '=', 'scores.userid')
-                ->orderBy('scores.'.$subject, 'desc')
-                ->first();
-
-            if ($topScore) {
-                $topScores[] = [
-                    'subject' => ucfirst($subject), // Capitalize first letter
-                    'name' => $topScore->name,
-                    'score' => $topScore->score
-                ];
-            }
-        }
-
-        return view('analysis', ['topScores' => $topScores]);
+        return view('components.no_records')->render();
     }
 
     public function getPassingRate()
@@ -50,6 +32,7 @@ class AnalysisController extends Controller
         ->first();
 
         // Prepare the data for Chart.js
+        // comment $chartData content to simulate pass no data
         $chartData = [
             'labels' => ['Mandarin', 'English', 'Malay', 'Math', 'Science'],
             'datasets' => [
@@ -103,6 +86,30 @@ class AnalysisController extends Controller
         ];
 
         return response()->json($chartData);
+    }
+
+    public function topScore()
+    {
+        $subjects = ['mandarin', 'english', 'malay', 'math', 'science'];
+        $topScores = [];
+
+        // comment 'foreach' to simulate pass no variable
+        foreach ($subjects as $subject) {
+            $topScore = User::select('users.name', 'scores.'.$subject.' as score')
+                ->join('scores', 'users.id', '=', 'scores.userid')
+                ->orderBy('scores.'.$subject, 'desc')
+                ->first();
+
+            if ($topScore) {
+                $topScores[] = [
+                    'subject' => ucfirst($subject), // Capitalize first letter
+                    'name' => $topScore->name,
+                    'score' => $topScore->score
+                ];
+            }
+        }
+
+        return view('analysis', ['topScores' => $topScores]);
     }
 
     public function getAvgScore()

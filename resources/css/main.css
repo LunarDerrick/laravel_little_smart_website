@@ -77,6 +77,11 @@ img {
     height: auto;
 }
 
+img.no-record {
+    max-width: 200px;
+    height: auto;
+}
+
 .navbar {
     padding-left: 15px;
     padding-right: 15px;
@@ -89,6 +94,11 @@ img {
 .navbar-brand {
     width: 90px;
     height: auto;
+}
+
+nav[aria-label] {
+    display: flex;
+    justify-content: center;
 }
 
 .center {

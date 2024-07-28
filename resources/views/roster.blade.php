@@ -1,38 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 
-{{-- @php
-include_once(app_path("Http/Helpers/helper_list_roster.php"));
-@endphp --}}
-
 <head>
     <title>Roster - Little Smart Day Care Centre</title>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!--Bootstrap implementation-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!--CSS overwrite-->
-    <link rel="stylesheet" href="{{ mix('style.css') }}">
+    @include('components.header')
 </head>
 
 <body>
-    <nav class="navbar navbar-expand navbar-light bg-custom">
-        <a class="navbar-brand" href="{{ route('index') }}">
-            <img src="media/logo.png" class="d-inline-block align-top" alt="day care centre logo">
-        </a>
-
-        <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-                <b><a class="nav-link" href="{{ route('roster') }}">{{ Auth::user()->name }}</a></b>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('about') }}">About Us</a>
-            </li>
-        </ul>
-    </nav>
+    @include('components.navbar')
 
     <section>
         @if(session('status'))
@@ -41,66 +17,61 @@ include_once(app_path("Http/Helpers/helper_list_roster.php"));
             </div>
         @endif
 
-        <p id="PC">You are now viewing as <b>Computer</b>.</p>
-        <p id="tablet">You are now viewing as <b>Tablet</b>.</p>
-        <p id="mobile">You are now viewing as <b>Mobile Device</b>.</p>
+        @include('components.device_type')
+        @include('components.btn_admin')
 
-        <button type="button" class="btn btn-primary mobile" onclick="window.location='{{ route('roster') }}'">Name List</button>
-        <button type="button" class="btn btn-primary mobile" onclick="window.location='{{ route('analysis') }}'">Exam Analysis</button>
-        <button type="button" class="btn btn-primary mobile" onclick="window.location='{{ route('feedback') }}'">Feedback Inbox</button>
-        <button type="button" class="btn btn-primary mobile" onclick="window.location='{{ route('list_post') }}'">Edit Post</button>
-        <form method="POST" action="{{ route('logout') }}" id="logout">
-            @csrf
-            <button type="submit" class="btn btn-primary mobile">Logout</button>
-        </form>
         <h1>Tuition Roster</h1>
         <br>
 
-        <div id="roster">
-            <p><small><i>Click on any column to sort table in ascending or descending order.</i></small></p>
-            <table id="rosterTable">
-                <tr>
-                    <th>Actions</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Phone Number</th>
-                    <th>School</th>
-                    <th>Standard</th>
-                    <th>Mandarin</th>
-                    <th>English</th>
-                    <th>Malay</th>
-                    <th>Mathematics</th>
-                    <th>Science</th>
-                </tr>
-                @isset($students)
-                    @foreach($students as $student)
+        @if ($students->isEmpty())
+            @include('components.no_records')
+        @else
+            <div id="roster">
+                <p><small><i>Click on any column to sort table in ascending or descending order.</i></small></p>
+                <table id="rosterTable">
                     <tr>
-                        <td>
-                            <a class="img-btn" href="{{ route('roster.edit', ['id' => $student->id]) }}">
-                                <img src="{{ asset('media/edit_img.png') }}" alt="edit">
-                            </a>
-                            <a class="img-btn" href="#" data-bs-target="#deleteModal" data-bs-toggle="modal" data-bs-id="{{ $student->id }}">
-                                <img src="{{ asset('media/delete_img.png') }}" alt="delete">
-                            </a>
-                        </td>
-                        <td>{{ $student->name }}</td>
-                        <td>{{ $student->age }}</td>
-                        <td>{{ $student->telno }}</td>
-                        <td>{{ $student->school }}</td>
-                        <td>{{ $student->standard }}</td>
-                        {{-- fetch associated data in a separate but nested manner --}}
-                        @foreach($student->scores as $score)
-                            <td>{{ $score->mandarin }}</td>
-                            <td>{{ $score->english }}</td>
-                            <td>{{ $score->malay }}</td>
-                            <td>{{ $score->math }}</td>
-                            <td>{{ $score->science }}</td>
-                        @endforeach
+                        <th>Actions</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Phone Number</th>
+                        <th>School</th>
+                        <th>Standard</th>
+                        <th>Mandarin</th>
+                        <th>English</th>
+                        <th>Malay</th>
+                        <th>Mathematics</th>
+                        <th>Science</th>
                     </tr>
-                    @endforeach
-                @endisset
-            </table>
-        </div>
+                    @isset($students)
+                        @foreach($students as $student)
+                        <tr>
+                            <td>
+                                <a class="img-btn" href="{{ route('roster.edit', ['id' => $student->id]) }}">
+                                    <img src="{{ asset('media/edit_img.png') }}" alt="edit">
+                                </a>
+                                <a class="img-btn" href="#" data-bs-target="#deleteModal" data-bs-toggle="modal" data-bs-id="{{ $student->id }}">
+                                    <img src="{{ asset('media/delete_img.png') }}" alt="delete">
+                                </a>
+                            </td>
+                            <td>{{ $student->name }}</td>
+                            <td>{{ $student->age }}</td>
+                            <td>{{ $student->telno }}</td>
+                            <td>{{ $student->school }}</td>
+                            <td>{{ $student->standard }}</td>
+                            {{-- fetch associated data in a separate but nested manner --}}
+                            @foreach($student->scores as $score)
+                                <td>{{ $score->mandarin }}</td>
+                                <td>{{ $score->english }}</td>
+                                <td>{{ $score->malay }}</td>
+                                <td>{{ $score->math }}</td>
+                                <td>{{ $score->science }}</td>
+                            @endforeach
+                        </tr>
+                        @endforeach
+                    @endisset
+                </table>
+            </div>
+        @endif
         <br>
         <button type="button" class="btn btn-primary crud" onclick="window.location='{{ route('add_roster') }}'">ADD</button>
 
@@ -132,15 +103,8 @@ include_once(app_path("Http/Helpers/helper_list_roster.php"));
 
     <br><br>
 
-    <footer>
-        <small><i>
-            © 2024 Little Smart Day Care Centre
-        </i></small>
-    </footer>
-    <br>
+    @include('components.footer')
 
-    <!-- JavaScript files-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <!-- items for notification toast -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>

@@ -18,7 +18,14 @@ class PostController extends Controller
     public function indexHome()
     {
         // Retrieve all records from the 'posts' table
-        $posts = Post::orderBy('createdtime', 'desc')->get();
+        // $posts = Post::orderBy('createdtime', 'desc')->get();
+
+        // Split posts into several pages
+        // Cut-off point is 15 pages (ellipsis will appear)
+        $posts = Post::orderBy('createdtime', 'desc')->paginate(5); // number of records per page
+
+        // pass an empty variable
+        // $posts = collect();
 
         // Pass the posts data to the view
         return view('index', compact('posts'));
@@ -28,7 +35,8 @@ class PostController extends Controller
     public function indexList()
     {
         // Retrieve all records from the 'posts' table
-        $posts = Post::orderBy('createdtime', 'desc')->get();
+        // $posts = Post::orderBy('createdtime', 'desc')->get();
+        $posts = Post::orderBy('createdtime', 'desc')->paginate(20);
 
         // Pass the posts data to the view
         return view('list_post', compact('posts'));
