@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 28, 2024 at 08:03 PM
+-- Generation Time: Jul 30, 2024 at 06:03 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -113,11 +113,12 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '0001_01_01_000000_create_users_table', 1),
-(2, '0001_01_01_000001_create_cache_table', 1),
-(3, '0001_01_01_000002_create_jobs_table', 1),
-(4, '2024_07_12_125725_edit_users_table', 1),
-(5, '2024_07_12_130942_create_scores_table', 1);
+(13, '0001_01_01_000000_create_users_table', 1),
+(14, '0001_01_01_000001_create_cache_table', 1),
+(15, '0001_01_01_000002_create_jobs_table', 1),
+(16, '2024_07_12_125725_edit_users_table', 1),
+(17, '2024_07_12_130942_create_scores_table', 1),
+(18, '2024_07_30_163147_create_posts_table', 1);
 
 -- --------------------------------------------------------
 
@@ -138,34 +139,25 @@ CREATE TABLE `password_reset_tokens` (
 --
 
 CREATE TABLE `posts` (
-  `postid` int(128) NOT NULL,
+  `postid` int(10) UNSIGNED NOT NULL,
   `userid` bigint(20) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` longtext DEFAULT NULL,
   `image` text DEFAULT NULL,
   `createdtime` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `posts`
 --
 
 INSERT INTO `posts` (`postid`, `userid`, `title`, `description`, `image`, `createdtime`) VALUES
-(1, 100000, 'Pendaftaran Kemasukan 2025', '家长们别忘了今天开始可以帮2/1/2018-1/1/2019的孩子报名入学啰😊', 'thL59Vwgjho9Mb9XbRAnrnIqYQv3kOpi0ImjDnUI.jpg', '2024-07-20 00:52:18'),
-(2, 100000, 'Christmas at Little Smart', '🌲 Christmas is around the corner 🌲', 'Gy5FEDDsnv0JVhvnq2nNic2M0rVwnLgzQ241kiaL.jpg', '2024-07-20 08:58:29'),
-(3, 100000, 'Happy Holidays 🥳', NULL, 'oFauLATAn9Rid1r5iUdHxQkU19mxN8GdaBZhhVbX.jpg', '2024-07-20 15:07:13'),
-(4, 100000, '安亲班招生啦！', '<p>报名电话： Novy <br />安亲班 <br />功课班 <br />补习班 <br />写作与理解并重 <br />优越的上课环境 <br />多元化的智能教学 <br />7岁~12岁</p>', NULL, '2024-07-20 15:16:45'),
-(5, 100000, 'Teacher\'s Day', '谢谢家长送给老师们的教师节礼物😋', 'U6vSf1mFTkShv8ZtcRpjBDv89XCGotPLXCozPOep.jpg', '2024-07-23 11:31:05'),
-(6, 100000, 'Recruitment', NULL, 'Lr4gxV7okCwaanQsjaOf3dNQtjBsT7pOjcvSx9Ew.jpg', '2024-07-23 11:32:13'),
-(17, 100000, 'Early Bird Intake 2026', '<p>Little Smart Day Care Centre is open for early registrations!<br />If your child is age 7 to 12, has no one to look after between after-school and after-work hours,<br /><u>this is the place for you~</u><br />Reach out to us now to learn more!</p>', 'cszVJuucl4NflcjXoKKdHJvmCx59lTBSDGSBLBoD.png', '2024-07-28 14:48:48'),
-(18, 100000, 'Congratulations to Top Scorers', '<p>Congratulations to these students, you\'ve done us proud!</p><table><thead><tr><th>Name</th><th>Subject</th><th>Score</th></tr></thead><tbody><tr><td>Camryn Lebsack</td><td>Mandarin</td><td>60</td></tr><tr><td>Camryn Lebsack</td><td>English</td><td>65</td></tr><tr><td>Camryn Lebsack</td><td>Malay</td><td>51</td></tr><tr><td>Miss Alfreda Moen</td><td>Math</td><td>89</td></tr><tr><td>Joana Ondricka</td><td>Science</td><td>86</td></tr></tbody></table>', NULL, '2024-07-28 14:50:17'),
-(19, 100000, 'Analysis Jul 2025', '<p>sneak peek<a href=\"https://emojipedia.org/eyes\">👀</a></p>', 'aKWYwyvYdCUoLR4wBYI4Vx3YiyUQbYeYwYl95PlM.png', '2024-07-28 14:51:44'),
-(20, 100000, 'Do you know?', '<p><strong>A lot of alumni</strong> stated their academics improved after attending tuition.<br />Consider join us now!</p>', NULL, '2024-07-28 14:59:23'),
-(21, 100000, 'Snack Time!', '', 'f7c4L6aOJmWqDq4v5FGWUGTLfZM40TlndXXh2t6A.jpg', '2024-07-28 15:02:17'),
-(22, 100000, 'Guess the Image!', '<p>it\'s a cotton candy machine! we offer fun activities every now and then for students to enjoy</p>', '7iEsW7Er6OU2HR24Z8zoTldiqEubJozFcjw7CbRe.jpg', '2024-07-28 15:03:03'),
-(23, 100000, 'Creativity Over the Roof', '<p>Check out what our students have made!</p>', 'oT0G66HE1NnZ00PvoKCBbKHPcHLjNfDM7FgL5Ovg.jpg', '2024-07-28 15:03:48'),
-(24, 100000, 'CNY 2023', '<p>Little Smart Day Care Centre wishes everyone a happy CNY!</p>', 'lJGCCAsWnzWYr7UE02EaHCyLk1R8fWH8QxcXEFmk.jpg', '2024-07-28 15:09:06'),
-(25, 100000, 'UASA New Format (Important)!', '<p>Want to score A+ in malay in UASA 2030? <br />Join us to learn how!</p>', 'MYXhesOiRSEzvHBVGP7e4IaLVyDn3yDe6yhgblVW.jpg', '2024-07-28 15:09:48');
+(1, 100000, 'Omnis voluptatem qui earum.', 'Corrupti sed enim aut nihil consequatur odit. Soluta alias minima qui quia nobis. Incidunt rerum placeat facilis ut alias laborum. Quibusdam qui quis autem temporibus atque enim optio.', '66a90d7f6f0ca.jpg', '2019-08-30 01:44:23'),
+(2, 100000, 'Et autem enim ducimus et.', 'Tempora iste ut nihil. Officia voluptatem et perspiciatis.', '66a90d83baf54.jpg', '2020-04-06 05:10:47'),
+(3, 100000, 'Ipsum vitae aut dicta incidunt aut.', 'Et autem inventore quis et exercitationem iure. Aut est molestias tenetur officia expedita. Beatae eius dignissimos ut asperiores totam consequatur sunt.', '66a90d8649a1d.jpg', '2020-08-15 14:01:24'),
+(4, 100000, 'Ea sunt animi at atque iusto molestiae harum.', 'Magni est quisquam a aliquid quisquam eaque quaerat praesentium. At sint aut molestias ipsum quod vel velit. Necessitatibus et recusandae doloremque molestiae. Numquam non quia deleniti consequatur aut.', '66a90d882a933.jpg', '2021-06-30 17:47:57'),
+(5, 100000, 'Sed sit eos qui aliquam iusto nihil.', 'Totam adipisci nobis qui velit assumenda. Eos quod totam consequatur id earum. Nostrum alias accusantium vero hic officia deserunt. Ut odit aut tempore veniam molestiae qui repudiandae.', '66a90d8b4137c.jpg', '2019-04-08 01:06:12'),
+(6, 100000, 'Excepturi laboriosam ex quaerat rerum quia.', 'Quidem reiciendis sit et eos. Aliquid aut et rerum itaque sit. Sint aut molestiae facilis mollitia qui qui dolores.', '66a90d8d2c99d.jpg', '2023-12-21 00:03:44');
 
 -- --------------------------------------------------------
 
@@ -188,11 +180,11 @@ CREATE TABLE `scores` (
 --
 
 INSERT INTO `scores` (`scoreid`, `userid`, `mandarin`, `english`, `malay`, `math`, `science`) VALUES
-(1, 444271, 58, 24, 50, 25, 18),
-(2, 993288, 60, 65, 51, 45, 67),
-(3, 573284, 17, 38, 51, 52, 86),
-(4, 236087, 3, 61, 33, 89, 59),
-(5, 929361, 42, 64, 46, 75, 40);
+(1, 846562, 60, 85, 39, 42, 81),
+(2, 369183, 7, 26, 55, 18, 23),
+(3, 767120, 69, 1, 28, 57, 37),
+(4, 713198, 29, 44, 64, 11, 99),
+(5, 319409, 64, 82, 69, 98, 39);
 
 -- --------------------------------------------------------
 
@@ -214,7 +206,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('jnwWJq1aa8vWwUH1KfYEap7BS3bF9K0KKhhnsHDv', 100000, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiRmxERFJPSEdNRjkzaHpEaGRvTlk4SklRZXJpcDBqRFpvUGN2V0ljWiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hbmFseXNpcyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjEwMDAwMDtzOjE2OiJsYXN0QWN0aXZpdHlUaW1lIjtpOjE3MjIxODkzMDQ7fQ==', 1722189304);
+('BTrXbNCISgBnEWRqNam75oWwt6OGKUYUHJVQYoeB', 100000, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiUUU4M3JReDBrbk5ZUGllYlQ3VFB3WDRtNzRRSkZIUzNZTUdJMWNZVCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjEwMDAwMDtzOjE2OiJsYXN0QWN0aXZpdHlUaW1lIjtpOjE3MjIzNTUzMjE7fQ==', 1722355321);
 
 -- --------------------------------------------------------
 
@@ -244,12 +236,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `name`, `role`, `age`, `telno`, `school`, `standard`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(100000, 'admin', 'Admin', 'teacher', 99, '012-3456789', 'SJK(C) Bukit Serdang', 2, 'admin@gmail.com', '2024-07-12 05:40:42', '$2y$12$q5Vbu49FMC5aa778etZX7OqAi6T6l7KCsHjA1bAqxWJzUQF3ulO1i', 'SPI9XbBgc8IrBydkjD668ae0abPxkyUKuSpaw7OrUq9M7mTdWovJ0YqRZ0VL', '2024-07-12 05:40:43', '2024-07-12 05:40:43'),
-(236087, 'alena.lowe', 'Miss Alfreda Moen', 'student', 10, '013-2237912', 'SJK(C) Bukit Serdang', 4, 'nhowe@example.net', '2024-07-12 05:40:43', '$2y$12$fEo6LR.qP03Aj3P5Bds26uc6WkBoTedu0BjPhSSIeEiTYbSlnTfCi', 'QME0U1h4Va', '2024-07-12 05:40:43', '2024-07-12 05:40:43'),
-(444271, 'aidan.gleichner', 'Nannie Conroy IV', 'student', 10, '013-8953231', 'SJK(C) Bukit Serdang', 4, 'maggio.alek@example.org', '2024-07-12 05:40:43', '$2y$12$fEo6LR.qP03Aj3P5Bds26uc6WkBoTedu0BjPhSSIeEiTYbSlnTfCi', 'JZDnEbU9b3', '2024-07-12 05:40:43', '2024-07-12 05:40:43'),
-(573284, 'kuhn.zoie', 'Joana Ondricka', 'student', 8, '018-7924450', 'SJK(C) Bukit Serdang', 2, 'ewald94@example.net', '2024-07-12 05:40:43', '$2y$12$fEo6LR.qP03Aj3P5Bds26uc6WkBoTedu0BjPhSSIeEiTYbSlnTfCi', 'SXQDzJ0ys8', '2024-07-12 05:40:43', '2024-07-12 05:40:43'),
-(929361, 'wisozk.bettye', 'Mrs. Lilyan Monahan PhD', 'student', 12, '015-6094506', 'SJK(C) Bukit Serdang', 6, 'maryjane71@example.com', '2024-07-12 05:40:43', '$2y$12$fEo6LR.qP03Aj3P5Bds26uc6WkBoTedu0BjPhSSIeEiTYbSlnTfCi', 'NiYM6pbOS6', '2024-07-12 05:40:43', '2024-07-12 05:40:43'),
-(993288, 'brennon.ondricka', 'Camryn Lebsack', 'student', 7, '011-30093359', 'SJK(C) Bukit Serdang', 1, 'hertha.donnelly@example.net', '2024-07-12 05:40:43', '$2y$12$fEo6LR.qP03Aj3P5Bds26uc6WkBoTedu0BjPhSSIeEiTYbSlnTfCi', 'deWXKeEOo8', '2024-07-12 05:40:43', '2024-07-12 05:40:43');
+(100000, 'admin', 'Admin', 'teacher', 99, '012-3456789', 'SJK(C) Bukit Serdang', 5, 'admin@gmail.com', '2024-07-30 15:57:51', '$2y$12$qS00bv.BodLRywod5OtnWO2fTKkrvWK8cyKXD9w6uaiQwW33pgCbW', 'tJ0fgm8zKl', '2024-07-30 15:57:51', '2024-07-30 15:57:51'),
+(319409, 'stiedemann.delfina', 'Regan Kris Jr.', 'student', 7, '014-7764252', 'SJK(C) Bukit Serdang', 1, 'janie.greenfelder@example.org', '2024-07-30 15:57:51', '$2y$12$awf14aX7IsQVbORJidWKk.ZO4meTOor.AdpywipdKq/kzAnV.NPxe', 'c3wjT9yBfu', '2024-07-30 15:57:51', '2024-07-30 15:57:51'),
+(369183, 'zane.bosco', 'Narciso Orn', 'student', 9, '016-9922063', 'SJK(C) Bukit Serdang', 3, 'aterry@example.net', '2024-07-30 15:57:51', '$2y$12$awf14aX7IsQVbORJidWKk.ZO4meTOor.AdpywipdKq/kzAnV.NPxe', 'YwE9ONybxQ', '2024-07-30 15:57:51', '2024-07-30 15:57:51'),
+(713198, 'barton.olin', 'Mr. Jabari Frami PhD', 'student', 12, '016-5623932', 'SJK(C) Bukit Serdang', 6, 'gleichner.madisen@example.com', '2024-07-30 15:57:51', '$2y$12$awf14aX7IsQVbORJidWKk.ZO4meTOor.AdpywipdKq/kzAnV.NPxe', 'iP6PTJc38D', '2024-07-30 15:57:51', '2024-07-30 15:57:51'),
+(767120, 'vroob', 'Alia Orn III', 'student', 9, '014-8018136', 'SJK(C) Bukit Serdang', 3, 'xmorar@example.com', '2024-07-30 15:57:51', '$2y$12$awf14aX7IsQVbORJidWKk.ZO4meTOor.AdpywipdKq/kzAnV.NPxe', 'WoA7DhDRP9', '2024-07-30 15:57:51', '2024-07-30 15:57:51'),
+(846562, 'mills.modesta', 'Deshawn Nikolaus Sr.', 'student', 10, '010-9070844', 'SJK(C) Bukit Serdang', 4, 'alockman@example.com', '2024-07-30 15:57:51', '$2y$12$awf14aX7IsQVbORJidWKk.ZO4meTOor.AdpywipdKq/kzAnV.NPxe', 'FMazfz9BfR', '2024-07-30 15:57:51', '2024-07-30 15:57:51');
 
 --
 -- Indexes for dumped tables
@@ -348,19 +340,19 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `postid` int(128) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `postid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `scores`
 --
 ALTER TABLE `scores`
-  MODIFY `scoreid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `scoreid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
@@ -370,7 +362,7 @@ ALTER TABLE `scores`
 -- Constraints for table `posts`
 --
 ALTER TABLE `posts`
-  ADD CONSTRAINT `posts_userid_foreign` FOREIGN KEY (`userid`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `posts_userid_foreign` FOREIGN KEY (`userid`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `scores`

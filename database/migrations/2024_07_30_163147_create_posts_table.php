@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('scores', function (Blueprint $table) {
-            $table->increments('scoreid')->primary();
+        Schema::create('posts', function (Blueprint $table) {
+            $table->increments('postid')->primary();
             $table->unsignedBigInteger('userid');
             $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('mandarin')->length(3);
-            $table->integer('english')->length(3);
-            $table->integer('malay')->length(3);
-            $table->integer('math')->length(3);
-            $table->integer('science')->length(3);
+            $table->string('title', 255);
+            $table->longText('description')->nullable();
+            $table->text('image')->nullable();
+            $table->timestamp('createdtime')->useCurrent();
         });
     }
 
@@ -28,12 +27,12 @@ return new class extends Migration
      */
     public function down(): void
     {
-        if (Schema::hasTable('scores')) {
-            Schema::table('scores', function (Blueprint $table) {
+        if (Schema::hasTable('posts')) {
+            Schema::table('posts', function (Blueprint $table) {
                 $table->dropForeign(['userid']);
             });
         }
 
-        Schema::dropIfExists('scores');
+        Schema::dropIfExists('posts');
     }
 };
