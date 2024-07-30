@@ -30,7 +30,11 @@ Related Dependencies:\
    ```
    composer install
    ```
-5. Run migrations and seed the database (to populate the database):
+5. Compile necessary assets to the main folder:
+   ```
+   npm run prod
+   ```
+7. Run migrations and seed the database (to populate the database):
    ```
    php artisan migrate --seed
    ```
@@ -39,7 +43,7 @@ Related Dependencies:\
    ```
    database/littlesmartdb.sql
    ```
-7. Serve the application:
+8. Serve the application:
    (in subsequent hosting, just run this step in command prompt would do, remember to run in your project directory!)
    ```
    php artisan serve
