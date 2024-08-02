@@ -6,7 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Score;
 
-class ScoresSeeder extends Seeder
+class ScoreSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -15,13 +15,7 @@ include_once(app_path('Http/Helpers/helper_list_roster.php'));
     @include('components.navbar')
 
     <section>
-        @if(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
-
-        @include('components.device_type')
+        @include('components.alert_notification')
 
         <a href="{{ route('roster') }}">Go Back</a>
 
@@ -32,7 +26,7 @@ include_once(app_path('Http/Helpers/helper_list_roster.php'));
                 </div>
 
                 @isset($student)
-                    <form action="{{ route('roster.update', ['id' => $student->id]) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('roster.update', ['id' => $student->id]) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="container">

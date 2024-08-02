@@ -10,10 +10,10 @@ canvas {
 
 .card-body {
     padding: 16px 16px 0;
-}
 
-.card-body h6 {
-    text-align: center;
+    h6 {
+        text-align: center;
+    }
 }
 
 canvas#piechart_gradescience {
@@ -21,6 +21,8 @@ canvas#piechart_gradescience {
     max-width: 162px;
 }
 
-#table-graph th, #table-graph td {
-    border-width: 1px;
+#table-graph {
+    th, td {
+        border-width: 1px;
+    }
 }

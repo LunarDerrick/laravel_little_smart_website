@@ -17,7 +17,7 @@
     @include('components.navbar')
 
     <section>
-        @include('components.device_type')
+        @include('components.alert_notification')
 
         @auth
             <h1>Welcome, {{ Auth::user()->name }}.</h1>
@@ -56,6 +56,7 @@
         </div>
     </section>
 
+    @include('components.send_feedback')
     @include('components.footer')
 </body>
 

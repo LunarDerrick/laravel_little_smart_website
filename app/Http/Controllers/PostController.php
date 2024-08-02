@@ -39,7 +39,7 @@ class PostController extends Controller
         $posts = Post::orderBy('createdtime', 'desc')->paginate(20);
 
         // Pass the posts data to the view
-        return view('list_post', compact('posts'));
+        return view('post', compact('posts'));
     }
 
     // validate input then add to database

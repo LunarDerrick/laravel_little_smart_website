@@ -11,13 +11,7 @@
     @include('components.navbar')
 
     <section>
-        @if(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
-
-        @include('components.device_type')
+        @include('components.alert_notification')
 
         <div id="form-container">
             <div>

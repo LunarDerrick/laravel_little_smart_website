@@ -13,15 +13,9 @@
     @include('components.navbar')
 
     <section>
-        @if(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
+        @include('components.alert_notification')
 
-        @include('components.device_type')
-
-        <a href="{{ route('list_post') }}">Go Back</a>
+        <a href="{{ route('post') }}">Go Back</a>
 
         <section>
             <div class="container">

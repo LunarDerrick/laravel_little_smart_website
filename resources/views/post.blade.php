@@ -11,22 +11,14 @@
     @include('components.navbar')
 
     <section>
-        @if(session('status'))
-            <div class="alert alert-success">
-                {{ session('status') }}
-            </div>
-        @endif
-
-        @include('components.device_type')
+        @include('components.alert_notification')
         @include('components.btn_admin')
 
         <h1>Post List</h1>
         <br>
 
         @if ($posts->isEmpty())
-            <div class="text-center">
-                @include('components.no_records')
-            </div>
+            @include('components.no_records')
         @else
             <p><small><i>Click on any column to sort table in ascending or descending order.</i></small></p>
             <table id="post">
@@ -93,6 +85,8 @@
 
     @include('components.footer')
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- items for notification toast -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>

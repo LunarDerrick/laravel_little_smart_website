@@ -11,13 +11,7 @@
     @include('components.navbar')
 
     <section>
-        @if(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
-
-        @include('components.device_type')
+        @include('components.alert_notification')
 
         <a href="{{ route('roster') }}">Go Back</a>
 
@@ -27,7 +21,7 @@
                     <h1>New Entry</h1>
                 </div>
 
-                <form action="{{ route('roster.add') }}" method="POST" enctype="multipart/form-data" id="rosterForm">
+                <form action="{{ route('roster.add') }}" method="POST" id="rosterForm">
                     @csrf
                     <div class="container">
                         <div class="row">

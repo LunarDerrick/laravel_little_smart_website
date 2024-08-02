@@ -11,7 +11,7 @@
     @include('components.navbar')
 
     <section>
-        @include('components.device_type')
+        @include('components.alert_notification')
         @include('components.btn_admin')
 
         <h1>Exam Analysis</h1>

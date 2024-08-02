@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 30, 2024 at 06:03 PM
+-- Generation Time: Aug 02, 2024 at 12:11 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -64,6 +64,31 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `feedbacks`
+--
+
+CREATE TABLE `feedbacks` (
+  `msgid` int(10) UNSIGNED NOT NULL,
+  `userid` bigint(20) UNSIGNED DEFAULT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` longtext NOT NULL,
+  `createdtime` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `feedbacks`
+--
+
+INSERT INTO `feedbacks` (`msgid`, `userid`, `title`, `description`, `createdtime`) VALUES
+(1, 371665, 'Voluptas impedit nihil nam eius est est.', 'Commodi dolorum voluptates et earum commodi alias. Fuga velit ipsam quo sint in voluptates. Et officiis vel accusantium earum quo unde voluptates. Reiciendis quae architecto mollitia ut debitis qui.', '2020-05-29 11:54:21'),
+(2, 849341, 'Dolorum ad amet et iste velit.', 'In voluptate asperiores quo cumque aut repellat. Autem non pariatur tempore doloremque voluptatem tempore. In nemo qui debitis.', '2019-03-18 15:06:50'),
+(3, 100000, 'Iste perspiciatis ipsam fugit sed.', 'Perferendis illum aut rerum voluptatem fuga dolorum. Illum doloribus at pariatur quaerat quasi quo molestiae reiciendis. Possimus suscipit optio cupiditate fuga praesentium aut aut. Id nihil totam dolorum adipisci assumenda quia occaecati.', '2021-10-06 15:34:18'),
+(4, NULL, 'Fugit quasi optio ipsam perspiciatis.', 'Rem laudantium dolor ad hic quidem. Quis excepturi occaecati laudantium voluptas. Minus provident nulla aut modi amet dignissimos est. Aut voluptas minus magni veritatis voluptatem officia harum.', '2022-08-14 09:47:24'),
+(5, 371665, 'Corporis commodi soluta quis distinctio.', 'Quia ex velit sit delectus neque. Non cumque tempora rerum neque. Aspernatur consequuntur quo natus iure quibusdam molestiae sunt.', '2023-06-10 08:32:27');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `jobs`
 --
 
@@ -113,12 +138,13 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(13, '0001_01_01_000000_create_users_table', 1),
-(14, '0001_01_01_000001_create_cache_table', 1),
-(15, '0001_01_01_000002_create_jobs_table', 1),
-(16, '2024_07_12_125725_edit_users_table', 1),
-(17, '2024_07_12_130942_create_scores_table', 1),
-(18, '2024_07_30_163147_create_posts_table', 1);
+(8, '0001_01_01_000000_create_users_table', 1),
+(9, '0001_01_01_000001_create_cache_table', 1),
+(10, '0001_01_01_000002_create_jobs_table', 1),
+(11, '2024_07_12_125725_edit_users_table', 1),
+(12, '2024_07_12_130942_create_scores_table', 1),
+(13, '2024_07_30_163147_create_posts_table', 1),
+(14, '2024_08_01_235052_create_feedbacks_table', 1);
 
 -- --------------------------------------------------------
 
@@ -152,12 +178,12 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`postid`, `userid`, `title`, `description`, `image`, `createdtime`) VALUES
-(1, 100000, 'Omnis voluptatem qui earum.', 'Corrupti sed enim aut nihil consequatur odit. Soluta alias minima qui quia nobis. Incidunt rerum placeat facilis ut alias laborum. Quibusdam qui quis autem temporibus atque enim optio.', '66a90d7f6f0ca.jpg', '2019-08-30 01:44:23'),
-(2, 100000, 'Et autem enim ducimus et.', 'Tempora iste ut nihil. Officia voluptatem et perspiciatis.', '66a90d83baf54.jpg', '2020-04-06 05:10:47'),
-(3, 100000, 'Ipsum vitae aut dicta incidunt aut.', 'Et autem inventore quis et exercitationem iure. Aut est molestias tenetur officia expedita. Beatae eius dignissimos ut asperiores totam consequatur sunt.', '66a90d8649a1d.jpg', '2020-08-15 14:01:24'),
-(4, 100000, 'Ea sunt animi at atque iusto molestiae harum.', 'Magni est quisquam a aliquid quisquam eaque quaerat praesentium. At sint aut molestias ipsum quod vel velit. Necessitatibus et recusandae doloremque molestiae. Numquam non quia deleniti consequatur aut.', '66a90d882a933.jpg', '2021-06-30 17:47:57'),
-(5, 100000, 'Sed sit eos qui aliquam iusto nihil.', 'Totam adipisci nobis qui velit assumenda. Eos quod totam consequatur id earum. Nostrum alias accusantium vero hic officia deserunt. Ut odit aut tempore veniam molestiae qui repudiandae.', '66a90d8b4137c.jpg', '2019-04-08 01:06:12'),
-(6, 100000, 'Excepturi laboriosam ex quaerat rerum quia.', 'Quidem reiciendis sit et eos. Aliquid aut et rerum itaque sit. Sint aut molestiae facilis mollitia qui qui dolores.', '66a90d8d2c99d.jpg', '2023-12-21 00:03:44');
+(1, 100000, 'Minus tenetur veniam sunt nam soluta.', 'Culpa est laudantium magnam adipisci facere qui quas. Laudantium quibusdam eveniet odit et. Et maiores eaque nemo quia. Deserunt quidem quisquam in in blanditiis neque. Tempore odit eum sed quidem.', '66ac96fd0a1ff.jpg', '2020-06-02 11:47:14'),
+(2, 100000, 'Et labore iste sunt nesciunt nisi minus illo.', 'Non fugit impedit incidunt nihil quia non. Repudiandae aut excepturi quia exercitationem. Vero quasi ea itaque voluptate iusto aut ullam. Voluptatem commodi distinctio voluptas magni totam totam quaerat. Molestiae est ducimus aliquam voluptas et hic.', '66ac96fec9705.jpg', '2023-08-11 22:52:08'),
+(3, 100000, 'Maiores eligendi eveniet minima repellat vitae provident minus.', 'Rem quo voluptas reprehenderit quas sed et minus et. Aut eligendi nesciunt voluptatem tempora qui adipisci. Sapiente molestiae tempora aut non consequatur.', '66ac97002f5bb.jpg', '2023-04-25 04:26:17'),
+(4, 100000, 'Hic quo hic officia et maiores.', 'In dignissimos sed et. Sed voluptatem quia sapiente corporis debitis ut. Sint earum pariatur quia aliquam impedit eos nam.', '66ac9701bb088.jpg', '2023-02-01 23:53:52'),
+(5, 100000, 'Eveniet et neque ullam laboriosam ullam fuga qui quia.', 'Commodi quae ut quasi nostrum quisquam eaque libero. Voluptatum laborum soluta consequatur et. Vero provident hic voluptas dignissimos non.', '66ac9702f04e1.jpg', '2023-02-06 16:37:11'),
+(6, 100000, 'Fuga fugiat laudantium magni incidunt ea.', 'Qui impedit laborum velit ut quos nisi est. Dignissimos voluptatem modi quasi.', '66ac970449735.jpg', '2019-08-11 07:25:33');
 
 -- --------------------------------------------------------
 
@@ -180,11 +206,11 @@ CREATE TABLE `scores` (
 --
 
 INSERT INTO `scores` (`scoreid`, `userid`, `mandarin`, `english`, `malay`, `math`, `science`) VALUES
-(1, 846562, 60, 85, 39, 42, 81),
-(2, 369183, 7, 26, 55, 18, 23),
-(3, 767120, 69, 1, 28, 57, 37),
-(4, 713198, 29, 44, 64, 11, 99),
-(5, 319409, 64, 82, 69, 98, 39);
+(1, 371665, 51, 82, 0, 64, 2),
+(2, 838480, 57, 42, 17, 57, 28),
+(3, 578152, 46, 49, 60, 40, 18),
+(4, 803654, 88, 94, 85, 5, 43),
+(5, 849341, 96, 66, 50, 40, 32);
 
 -- --------------------------------------------------------
 
@@ -206,7 +232,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('BTrXbNCISgBnEWRqNam75oWwt6OGKUYUHJVQYoeB', 100000, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiUUU4M3JReDBrbk5ZUGllYlQ3VFB3WDRtNzRRSkZIUzNZTUdJMWNZVCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjEwMDAwMDtzOjE2OiJsYXN0QWN0aXZpdHlUaW1lIjtpOjE3MjIzNTUzMjE7fQ==', 1722355321);
+('pIx8i0L2j4ow9gZ90iIbFZJNZxK0TGe80UmJIpkK', 100000, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiUmdBaUwzTGlWNndzMzRFVzZqZGhEcVdNWjBRR21TWHljYUc4T2x3NSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9pbmJveCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjEwMDAwMDtzOjE2OiJsYXN0QWN0aXZpdHlUaW1lIjtpOjE3MjI1OTMyNzk7fQ==', 1722593279);
 
 -- --------------------------------------------------------
 
@@ -236,12 +262,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `name`, `role`, `age`, `telno`, `school`, `standard`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(100000, 'admin', 'Admin', 'teacher', 99, '012-3456789', 'SJK(C) Bukit Serdang', 5, 'admin@gmail.com', '2024-07-30 15:57:51', '$2y$12$qS00bv.BodLRywod5OtnWO2fTKkrvWK8cyKXD9w6uaiQwW33pgCbW', 'tJ0fgm8zKl', '2024-07-30 15:57:51', '2024-07-30 15:57:51'),
-(319409, 'stiedemann.delfina', 'Regan Kris Jr.', 'student', 7, '014-7764252', 'SJK(C) Bukit Serdang', 1, 'janie.greenfelder@example.org', '2024-07-30 15:57:51', '$2y$12$awf14aX7IsQVbORJidWKk.ZO4meTOor.AdpywipdKq/kzAnV.NPxe', 'c3wjT9yBfu', '2024-07-30 15:57:51', '2024-07-30 15:57:51'),
-(369183, 'zane.bosco', 'Narciso Orn', 'student', 9, '016-9922063', 'SJK(C) Bukit Serdang', 3, 'aterry@example.net', '2024-07-30 15:57:51', '$2y$12$awf14aX7IsQVbORJidWKk.ZO4meTOor.AdpywipdKq/kzAnV.NPxe', 'YwE9ONybxQ', '2024-07-30 15:57:51', '2024-07-30 15:57:51'),
-(713198, 'barton.olin', 'Mr. Jabari Frami PhD', 'student', 12, '016-5623932', 'SJK(C) Bukit Serdang', 6, 'gleichner.madisen@example.com', '2024-07-30 15:57:51', '$2y$12$awf14aX7IsQVbORJidWKk.ZO4meTOor.AdpywipdKq/kzAnV.NPxe', 'iP6PTJc38D', '2024-07-30 15:57:51', '2024-07-30 15:57:51'),
-(767120, 'vroob', 'Alia Orn III', 'student', 9, '014-8018136', 'SJK(C) Bukit Serdang', 3, 'xmorar@example.com', '2024-07-30 15:57:51', '$2y$12$awf14aX7IsQVbORJidWKk.ZO4meTOor.AdpywipdKq/kzAnV.NPxe', 'WoA7DhDRP9', '2024-07-30 15:57:51', '2024-07-30 15:57:51'),
-(846562, 'mills.modesta', 'Deshawn Nikolaus Sr.', 'student', 10, '010-9070844', 'SJK(C) Bukit Serdang', 4, 'alockman@example.com', '2024-07-30 15:57:51', '$2y$12$awf14aX7IsQVbORJidWKk.ZO4meTOor.AdpywipdKq/kzAnV.NPxe', 'FMazfz9BfR', '2024-07-30 15:57:51', '2024-07-30 15:57:51');
+(100000, 'admin', 'Admin', 'teacher', 99, '012-3456789', 'SJK(C) Bukit Serdang', 2, 'admin@gmail.com', '2024-08-02 08:21:16', '$2y$12$3FfwpHRwlDgQhQK2/cv8GuBPkWBye0Ud/6W5RFIMPTINh.VPNdlEi', 'xKi31Lk91n', '2024-08-02 08:21:16', '2024-08-02 08:21:16'),
+(371665, 'hlebsack', 'Piper Fritsch', 'student', 11, '013-1111930', 'SJK(C) Bukit Serdang', 5, 'troy70@example.net', '2024-08-02 08:21:16', '$2y$12$rbKYAD/oXs9hY27SyiTOC.V5rYdKyqem02.oxVBw4aFXSnLcx4spe', '0tURdeZSKX', '2024-08-02 08:21:16', '2024-08-02 08:21:16'),
+(578152, 'johnathon12', 'Ms. Lottie Block', 'student', 11, '010-8534525', 'SJK(C) Bukit Serdang', 5, 'sage.will@example.org', '2024-08-02 08:21:16', '$2y$12$rbKYAD/oXs9hY27SyiTOC.V5rYdKyqem02.oxVBw4aFXSnLcx4spe', 'AeDNzxpz7o', '2024-08-02 08:21:16', '2024-08-02 08:21:16'),
+(803654, 'jermain.klocko', 'Stacy Daugherty', 'student', 11, '011-64022460', 'SJK(C) Bukit Serdang', 5, 'destiney.harris@example.org', '2024-08-02 08:21:16', '$2y$12$rbKYAD/oXs9hY27SyiTOC.V5rYdKyqem02.oxVBw4aFXSnLcx4spe', 'l0kKjRP7Bi', '2024-08-02 08:21:16', '2024-08-02 08:21:16'),
+(838480, 'jessie80', 'Ottilie Labadie', 'student', 9, '015-7464056', 'SJK(C) Bukit Serdang', 3, 'cnicolas@example.com', '2024-08-02 08:21:16', '$2y$12$rbKYAD/oXs9hY27SyiTOC.V5rYdKyqem02.oxVBw4aFXSnLcx4spe', 'qsd3IVfXSY', '2024-08-02 08:21:16', '2024-08-02 08:21:16'),
+(849341, 'purdy.rosamond', 'Mrs. Summer Yundt', 'student', 11, '013-7557425', 'SJK(C) Bukit Serdang', 5, 'ftromp@example.org', '2024-08-02 08:21:16', '$2y$12$rbKYAD/oXs9hY27SyiTOC.V5rYdKyqem02.oxVBw4aFXSnLcx4spe', '3rYDvB6pqO', '2024-08-02 08:21:16', '2024-08-02 08:21:16');
 
 --
 -- Indexes for dumped tables
@@ -265,6 +291,13 @@ ALTER TABLE `cache_locks`
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indexes for table `feedbacks`
+--
+ALTER TABLE `feedbacks`
+  ADD PRIMARY KEY (`msgid`),
+  ADD KEY `feedbacks_userid_foreign` (`userid`);
 
 --
 -- Indexes for table `jobs`
@@ -331,6 +364,12 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `feedbacks`
+--
+ALTER TABLE `feedbacks`
+  MODIFY `msgid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
@@ -340,23 +379,29 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `postid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `postid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `scores`
 --
 ALTER TABLE `scores`
-  MODIFY `scoreid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `scoreid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `feedbacks`
+--
+ALTER TABLE `feedbacks`
+  ADD CONSTRAINT `feedbacks_userid_foreign` FOREIGN KEY (`userid`) REFERENCES `users` (`id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `posts`

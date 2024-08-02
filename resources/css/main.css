@@ -2,6 +2,194 @@
     display: none;
 }
 
+section {
+    margin: 10px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+img.no-record {
+    max-width: 200px;
+    height: auto;
+}
+
+.navbar {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.navbar.bg-custom {
+    background-color: #D9D9D9;
+}
+
+.navbar-brand {
+    width: 90px;
+    height: auto;
+}
+
+nav[aria-label] {
+    display: flex;
+    justify-content: center;
+}
+
+.center {
+    margin: auto;
+    width: 45%;
+}
+
+table#post {
+    width: 100%;
+    table-layout: fixed;
+
+    /* child elements under <table id="post"> */
+    th, td {
+        border: 1px solid black;
+        padding: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    col#date {
+        width: 15%;
+    }
+
+    col#title {
+        width: 30%;
+    }
+
+    /* col#description takes up the rest of the width */
+
+    col#action {
+        width: 13%;
+    }
+}
+
+th {
+    background: #f2f2f2;
+}
+
+button.crud {
+    float: right;
+    width: 100px;
+}
+
+#form-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    text-align: right;
+}
+
+.login-field {
+    background-color: lightblue;
+    border: none;
+}
+
+#corner {
+    align-self: flex-end;
+}
+
+#roster {
+    overflow-x: auto;
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        white-space: nowrap;
+    }
+
+    th, td {
+        border: 1px solid black;
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        position: sticky;
+        top: 0;
+    }
+}
+
+.img-btn img {
+    max-width: 30px;
+    height: auto;
+}
+
+a.img-btn {
+    text-decoration: none;
+}
+
+.close {
+    float: right;
+}
+
+#logout {
+    display: inline;
+}
+
+table#feedback {
+    width: 100%;
+    table-layout: fixed;
+
+    th, td {
+        border: 1px solid black;
+        padding: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    col#date {
+        width: 15%;
+    }
+
+    col#name {
+        width: 20%;
+    }
+
+    col#title {
+        width: 25%;
+    }
+
+    /* col#description takes up the rest of the width */
+
+    col#action {
+        width: 5%;
+    }
+}
+
+.rich-text-editor {
+    display: block;
+}
+
+footer {
+    text-align: center;
+}
+
+/* footer will always attach to bottom of screen */
+body {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+/* isolate forms for proper responsive elements */
+body.form {
+    display: block;
+}
+
+/* REMINDER: media query should be place at end of file, higher override priority*/
+
 /* This condition activates when preview screen is shorter than given max width. */
 /* This is exclusive for tablets */
 @media screen and (max-width: 768px) {
@@ -66,159 +254,4 @@
         max-width: 90%;
         margin: 1.75rem auto;
     }
-}
-
-section {
-    margin: 10px;
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-img.no-record {
-    max-width: 200px;
-    height: auto;
-}
-
-.navbar {
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-.navbar.bg-custom {
-    background-color: #D9D9D9;
-}
-
-.navbar-brand {
-    width: 90px;
-    height: auto;
-}
-
-nav[aria-label] {
-    display: flex;
-    justify-content: center;
-}
-
-.center {
-    margin: auto;
-    width: 45%;
-}
-
-table#post {
-    width: 100%;
-    table-layout: fixed;
-}
-
-/* select <table id="post"> and all its child elements */
-table#post, table#post th, table#post td {
-    border: 1px solid black;
-    padding: 10px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-th {
-    background: #f2f2f2;
-}
-
-table#post col#date {
-    width: 15%;
-}
-
-table#post col#title {
-    width: 30%;
-}
-
-/* col#description takes up the rest of the width */
-
-table#post col#action {
-    width: 13%;
-}
-
-button.crud {
-    float: right;
-    width: 100px;
-}
-
-#form-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: fit-content;
-    text-align: right;
-}
-
-.login-field {
-    background-color: lightblue;
-    border: none;
-}
-
-#corner {
-    align-self: flex-end;
-}
-
-#roster {
-    overflow-x: auto;
-}
-
-#roster table {
-    width: 100%;
-    border-collapse: collapse;
-    white-space: nowrap;
-}
-
-#roster th, #roster td {
-    border: 1px solid black;
-    padding: 10px;
-    text-align: left;
-}
-
-#roster th {
-    position: sticky;
-    top: 0;
-}
-
-.img-btn img {
-    max-width: 30px;
-    height: auto;
-}
-
-a.img-btn {
-    text-decoration: none;
-}
-
-.close {
-    float: right;
-}
-
-#logout {
-    display: inline;
-}
-
-.rich-text-editor {
-    display: block;
-}
-
-footer {
-    text-align: center;
-}
-
-/* footer will always attach to bottom of screen */
-body {
-    min-height: 100vh;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-}
-
-/* isolate forms for proper responsive elements */
-body.form {
-    display: block;
 }

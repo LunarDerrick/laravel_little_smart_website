@@ -11,13 +11,14 @@
     @include('components.navbar')
 
     <section>
-        @include('components.device_type')
+        @include('components.alert_notification')
 
         <h1>About Us</h1>
         <br>
 
     </section>
 
+    @include('components.send_feedback')
     @include('components.footer')
 </body>
 

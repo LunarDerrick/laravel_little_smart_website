@@ -90,4 +90,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class, 'userid');
     }
+
+    public function feedbacks()
+    {
+        return $this->hasMany(Feedback::class);
+    }
 }

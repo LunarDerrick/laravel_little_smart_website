@@ -10,9 +10,10 @@ mix.js('resources/js/app.js', 'public/js')
         // remember to add directory for every new css file
         // and do "npm run dev" in terminal to compile these changes
        'resources/css/bootstrap.min.css',
+       'resources/css/ckeditor.css',
+       'resources/css/feedback.css',
        'resources/css/graph.css',
        'resources/css/main.css',
-       'resources/css/ckeditor.css',
     ], 'public/style.css')
     .copyDirectory('resources/js/ckeditor', 'public/js/ckeditor')
     .version();

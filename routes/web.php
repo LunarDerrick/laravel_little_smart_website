@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AnalysisController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RosterController;
@@ -77,12 +78,14 @@ Route::middleware([CheckSessionTimeout::class])->group(function () {
         Route::get('/chart-data-2', [AnalysisController::class, 'getGradeDistribution']);
         Route::get('/chart-data-3', [AnalysisController::class, 'getAvgScore']);
 
-        Route::get('/feedback', function () {
-            return view('feedback');
-        })->name('feedback');
+        Route::get('/inbox', [FeedbackController::class, 'index']
+        )->name('feedback.list');
 
-        Route::get('/list_post', [PostController::class, 'indexList']
-        )->name('list_post');
+        Route::post('/add_feedback', [FeedbackController::class, 'store']
+        )->name('feedback.add');
+
+        Route::get('/post', [PostController::class, 'indexList']
+        )->name('post');
 
         Route::get('/add_post', function () {
             return view('add_post');
@@ -97,7 +100,7 @@ Route::middleware([CheckSessionTimeout::class])->group(function () {
         Route::put('/edit_post/{id}', [PostController::class, 'update']
         )->name('post.update');
 
-        Route::delete('/list_post/{id}', [PostController::class, 'destroy']
+        Route::delete('/post/{id}', [PostController::class, 'destroy']
         )->name('post.delete');
 
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']

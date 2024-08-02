@@ -1,0 +1,43 @@
+.message-box {
+    width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border: 1px solid grey;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    background-color: white;
+    z-index: 4; /* to appear in front of pagination nav */
+
+    .btn i {
+        font-size: 1.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    textarea {
+        resize: none;
+    }
+
+    input.btn {
+        width: 100%;
+    }
+}
+
+.message-header {
+    background-color: grey;
+    color: white;
+    border-bottom: 1px solid grey;
+    padding: 0.75rem;
+}
+
+/* This will affect animation performance */
+.message-body {
+    padding: 1rem;
+}
