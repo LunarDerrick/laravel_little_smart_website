@@ -154,7 +154,7 @@ table#feedback {
     }
 
     col#name {
-        width: 20%;
+        width: 18%;
     }
 
     col#title {
@@ -164,7 +164,7 @@ table#feedback {
     /* col#description takes up the rest of the width */
 
     col#action {
-        width: 5%;
+        width: 51px;
     }
 }
 
@@ -238,12 +238,36 @@ body.form {
         white-space: initial;
     }
 
-    table#post th:nth-child(3), table#post td:nth-child(3), col#description {
-        display: none;
+    table#post {
+        th:nth-child(3), td:nth-child(3) {
+            display: none;
+        }
+    }
+
+    table#feedback {
+        th:nth-child(2), td:nth-child(2), th:nth-child(4), td:nth-child(4) {
+            display: none;
+        }
+
+        col#name {
+            display: none;
+        }
+
+        col#date {
+            width: 13%;
+        }
+
+        col#action {
+            width: 6%;
+        }
     }
 
     col#date {
         width: 30%;
+    }
+
+    col#description {
+        display: none;
     }
 
     #roster {

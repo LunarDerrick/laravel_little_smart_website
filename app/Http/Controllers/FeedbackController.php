@@ -15,7 +15,10 @@ class FeedbackController extends Controller
      */
     public function index()
     {
-        $feedbacks = Feedback::orderBy('createdtime', 'desc')->get();
+        $feedbacks = Feedback::with('user')->orderBy('createdtime', 'desc')->paginate(20);
+
+        // pass an empty variable
+        // $feedbacks = collect();
 
         return view('inbox', compact('feedbacks'));
     }

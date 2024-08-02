@@ -36,7 +36,7 @@
                 @foreach ($posts as $post)
                 <section>
                     <p>{{ $post->createdtime->format('Y-m-d H:i') }}</p>
-                    {{-- <p>Posted by: {{ $post->user->name ?? 'Unknown' }}</p> --}}
+                    {{-- <p>Posted by: {{ $post->user->name }}</p> --}}
                     @if ($post->image)
                         <img src="{{ asset('storage/uploads/' . $post->image) }}" alt="{{ $post->title }}" />
                     @endif
