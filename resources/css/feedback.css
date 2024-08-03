@@ -41,3 +41,16 @@
 .message-body {
     padding: 1rem;
 }
+
+div.feedback {
+    margin: auto;
+    width: 90%;
+}
+
+.feedback-action {
+    text-align: center;
+
+    button {
+        width: 100px;
+    }
+}

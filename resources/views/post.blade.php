@@ -207,8 +207,6 @@
             var button = event.relatedTarget;
             var postID = button.getAttribute('data-bs-id');
 
-            console.log(`postID: ${postID}`);
-
             modalDeleteBtn.setAttribute('data-bs-id', postID);
         })
 
@@ -216,7 +214,7 @@
             var postID = modalDeleteBtn.getAttribute('data-bs-id');
             var csrfToken = '{{ csrf_token() }}';
 
-            fetch(`/list_post/${postID}`, {
+            fetch(`/post/${postID}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -227,8 +225,7 @@
             .then(data => {
                 if (data.success) {
                     deleteModal.classList.remove('show');
-                    // notyf.success(data.success);
-                    notyf.success("Post is deleted.");
+                    notyf.success(data.success);
                     setTimeout(() => {
                         window.location.reload();
                     }, 2500);

@@ -47,7 +47,7 @@
                         <td>{{ $feedback->title }}</td>
                         <td>{{ $feedback->description }}</td>
                         <td>
-                            <a class="img-btn" href="#">
+                            <a class="img-btn" href="{{ route('feedback', ['id' => $feedback->msgid]) }}">
                                 <img src="{{ asset('media/view.png') }}" alt="view">
                             </a>
                         </td>
@@ -60,11 +60,11 @@
             </nav>
         @endif
         <br>
-        <button type="button" class="btn btn-danger crud" data-bs-target="#deleteModal" data-bs-toggle="modal" data-bs-id="">Delete All</button>
+        <button type="button" class="btn btn-danger crud" data-bs-target="#deleteModal" data-bs-toggle="modal">Delete All</button>
         {{-- <button type="button" class="btn btn-primary mobile tablet" data-bs-target="#deleteModal" data-bs-toggle="modal" data-bs-id="{{ $post->postid }}">Delete</button> --}}
 
         <!-- delete modal -->
-        <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -77,7 +77,7 @@
                         <strong>There is no way to revert the action!</strong>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-dark mx-2" data-bs-postid="" id="modalDeleteBtn">
+                        <button type="button" class="btn btn-dark mx-2" id="modalDeleteBtn">
                             Delete All
                         </button>
                         <button type="button" class="btn btn-info" data-bs-dismiss="modal" id="modalKeepBtn">
@@ -202,27 +202,14 @@
         });
 
         // delete modal handling
-        var deleteModal = document.getElementById('deleteModal');
         var modalKeepBtn = document.getElementById('modalKeepBtn');
         var modalDeleteBtn = document.getElementById('modalDeleteBtn');
         var notyf = new Notyf();
 
-        deleteModal.addEventListener('shown.bs.modal', (event) => {
-            modalKeepBtn.focus();
-
-            var button = event.relatedTarget;
-            // var postID = button.getAttribute('data-bs-id');
-
-            // console.log(`postID: ${postID}`);
-
-            // modalDeleteBtn.setAttribute('data-bs-id', postID);
-        })
-
         modalDeleteBtn.onclick = function () {
-            // var postID = modalDeleteBtn.getAttribute('data-bs-id');
             var csrfToken = '{{ csrf_token() }}';
 
-            fetch(`/list_post/${postID}`, {
+            fetch(`/delete_all_feedbacks`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -233,8 +220,7 @@
             .then(data => {
                 if (data.success) {
                     deleteModal.classList.remove('show');
-                    // notyf.success(data.success);
-                    notyf.success("Deleted all feedbacks.");
+                    notyf.success(data.success);
                     setTimeout(() => {
                         window.location.reload();
                     }, 2500);

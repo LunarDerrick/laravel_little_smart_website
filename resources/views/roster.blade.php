@@ -36,8 +36,7 @@
                         <th>Mathematics</th>
                         <th>Science</th>
                     </tr>
-                    @isset($students)
-                        @foreach($students as $student)
+                    @foreach($students as $student)
                         <tr>
                             <td>
                                 <a class="img-btn" href="{{ route('roster.edit', ['id' => $student->id]) }}">
@@ -61,8 +60,7 @@
                                 <td>{{ $score->science }}</td>
                             @endforeach
                         </tr>
-                        @endforeach
-                    @endisset
+                    @endforeach
                 </table>
             </div>
         @endif

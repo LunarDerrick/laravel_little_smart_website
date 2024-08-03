@@ -68,10 +68,45 @@ class FeedbackController extends Controller
     }
 
     /**
+     * Show the profile for a given user.
+     */
+    public function show($id)
+    {
+        $feedback = Feedback::findOrFail($id);
+
+        return view('feedback', compact('feedback'));
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
-        //
+        $feedback = Feedback::findOrFail($id);
+
+        if ($feedback) {
+            $feedback->delete();
+
+            return response()->json(['success' => 'Feedback is deleted.']);
+        }
+
+        return response()->json(['error' => 'Feedback not found.'], 404);
+    }
+
+    /**
+     * Remove all resources from storage.
+     */
+    public function destroyAll()
+    {
+        $feedbacks = Feedback::all();
+
+        if ($feedbacks->isNotEmpty()) {
+            // Delete each feedback record and associated resources if needed
+            foreach ($feedbacks as $feedback) $feedback->delete();
+
+            return response()->json(['success' => 'All feedbacks are deleted.']);
+        }
+
+        return response()->json(['error' => 'No feedbacks found.'], 404);
     }
 }

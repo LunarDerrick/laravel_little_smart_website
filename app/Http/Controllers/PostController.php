@@ -87,7 +87,7 @@ class PostController extends Controller
             // Commit the transaction
             DB::commit();
 
-            return redirect()->route('list_post')->with('status', 'Added new post.');
+            return redirect()->route('post')->with('status', 'Added new post.');
 
         } catch (\Exception $e) {
             // Rollback the transaction on error
@@ -160,7 +160,7 @@ class PostController extends Controller
             // Commit the transaction
             DB::commit();
 
-            return redirect()->route('list_post')->with('status', 'Updated existing post.');
+            return redirect()->route('post')->with('status', 'Updated existing post.');
 
         } catch (\Exception $e) {
             // Rollback the transaction on error
@@ -183,9 +183,9 @@ class PostController extends Controller
             }
 
             $post->delete();
-            return response()->json(['success' => 'Entry is deleted.']);
+            return response()->json(['success' => 'Post is deleted.']);
         }
 
-        return response()->json(['error' => 'Entry not found.'], 404);
+        return response()->json(['error' => 'Post not found.'], 404);
     }
 }
