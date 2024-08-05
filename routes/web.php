@@ -87,6 +87,9 @@ Route::middleware([CheckSessionTimeout::class])->group(function () {
         Route::post('/add_feedback', [FeedbackController::class, 'store']
         )->name('feedback.add');
 
+        Route::post('/read_all_feedbacks', [FeedbackController::class, 'readAll']
+        )->name('feedback.read_all');
+
         Route::delete('/feedback/{id}', [FeedbackController::class, 'destroy']
         )->name('feedback.delete');
 

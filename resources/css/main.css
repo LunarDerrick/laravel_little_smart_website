@@ -74,7 +74,9 @@ th {
 
 button.crud {
     float: right;
-    width: 100px;
+    width: auto;
+    min-width: 100px;
+    margin-left: 20px;
 }
 
 #form-container {

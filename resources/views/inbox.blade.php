@@ -41,7 +41,7 @@
                     <th></th> {{-- ommited, too narrow to fit text --}}
                 </tr>
                 @foreach ($feedbacks as $feedback)
-                    <tr>
+                    <tr class="{{ $feedback->is_read ? 'read' : 'unread' }}">
                         <td class="line_break">{{ $feedback->createdtime->format('Y-m-d H:i:s') }}</td>
                         <td>{{ $feedback->user->name ?? 'Anonymous' }}</td>
                         <td>{{ $feedback->title }}</td>
@@ -54,14 +54,15 @@
                     </tr>
                 @endforeach
             </table>
+            <br>
             <!-- Pagination Links -->
             <nav aria-label="Page navigation">
                 {{ $feedbacks->links('pagination::bootstrap-4') }}
             </nav>
         @endif
-        <br>
         <button type="button" class="btn btn-danger crud" data-bs-target="#deleteModal" data-bs-toggle="modal">Delete All</button>
-        {{-- <button type="button" class="btn btn-primary mobile tablet" data-bs-target="#deleteModal" data-bs-toggle="modal" data-bs-id="{{ $post->postid }}">Delete</button> --}}
+        <button type="button" class="btn btn-secondary crud">Mark All as Unread</button>
+        <button type="button" class="btn btn-info crud" id="btn-readAll">Mark All as Read</button>
 
         <!-- delete modal -->
         <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -73,7 +74,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>Are you sure you want to delete?</p>
+                        <p>Are you sure you want to delete <strong><u>for all pages</u></strong>?</p>
                         <strong>There is no way to revert the action!</strong>
                     </div>
                     <div class="modal-footer">
@@ -232,6 +233,33 @@
                 notyf.error('We encountered an error when deleting feedbacks.');
             });
         };
+
+        // mark all as read handling
+        document.getElementById('btn-readAll').addEventListener('click', function() {
+            var csrfToken = '{{ csrf_token() }}';
+
+            fetch('{{ route('feedback.read_all') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    notyf.success(data.success);
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2500);
+                } else {
+                    notyf.error("Failed to mark as read.");
+                }
+            })
+            .catch(error => {
+                notyf.error("Failed to mark as read.");
+            });
+        });
     </script>
 </body>
 

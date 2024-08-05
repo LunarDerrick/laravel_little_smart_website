@@ -73,8 +73,19 @@ class FeedbackController extends Controller
     public function show($id)
     {
         $feedback = Feedback::findOrFail($id);
+        $feedback->update(['is_read' => true]);
 
         return view('feedback', compact('feedback'));
+    }
+
+    /**
+     * Mark all existing feedbacks as read.
+     */
+    public function readAll()
+    {
+        Feedback::where('is_read', false)->update(['is_read' => true]);
+
+        return response()->json(['success' => 'All feedbacks marked as read.']);
     }
 
     /**
@@ -87,10 +98,12 @@ class FeedbackController extends Controller
         if ($feedback) {
             $feedback->delete();
 
-            return response()->json(['success' => 'Feedback is deleted.']);
+            // return response()->json(['success' => 'Feedback is deleted.']);
+            return redirect()->route('feedback.list')->with('status', 'Feedback deleted.');
         }
 
-        return response()->json(['error' => 'Feedback not found.'], 404);
+        // return response()->json(['error' => 'Feedback not found.'], 404);
+        return redirect()->back()->with('error', 'Failed to delete feedback.');
     }
 
     /**

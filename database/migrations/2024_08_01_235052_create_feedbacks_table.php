@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('userid')->references('id')->on('users')->onDelete('set null');
             $table->string('title', 255);
             $table->longText('description');
+            $table->boolean('is_read')->default(false);
             $table->timestamp('createdtime')->useCurrent();
         });
     }

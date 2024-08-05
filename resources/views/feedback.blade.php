@@ -25,11 +25,15 @@
                     <h4>{{ $feedback->title }}</h4>
                     <i>{{ $feedback->createdtime->format('Y-m-d H:i:s') }}</i><br>
                     <p>{{ $feedback->user->name ?? 'Anonymous' }}</p>
-                    {{ $feedback->description }}
+                    {!! nl2br(e($feedback->description)) !!} {{-- include newline --}}
                 </div>
                 <div class="feedback-action">
                     <br><br>
-                    <button type="button" class="btn btn-danger" onclick="window.location='{{ route('feedback.delete', ['id' => $feedback->msgid]) }}'">Delete</button>
+                    <form method="POST" action="{{ route('feedback.delete', ['id' => $feedback->msgid]) }}" id="delete-feedback">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
                 </div>
             @endif
         </div>

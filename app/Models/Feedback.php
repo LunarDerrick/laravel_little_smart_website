@@ -19,7 +19,7 @@ class Feedback extends Model
     protected $primaryKey = 'msgid';
 
     // table fields
-    protected $fillable = ['userid', 'title', 'description', 'createdtime'];
+    protected $fillable = ['userid', 'title', 'description', 'is_read', 'createdtime'];
 
     // setup datetime for Laravel conversion automation
     protected $casts = [

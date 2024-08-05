@@ -33,6 +33,8 @@ class FeedbackFactory extends Factory
             'userid' => fake()->randomElement($userIds),
             'title' => fake()->sentence,
             'description' => fake()->paragraph,
+            // if prefer to have some read by default
+            // 'is_read' => fake()->boolean,
             'createdtime' => fake()->dateTimeBetween($startDate = '2018-12-17', $endDate = 'now', $timezone),
         ];
     }

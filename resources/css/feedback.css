@@ -54,3 +54,8 @@ div.feedback {
         width: 100px;
     }
 }
+
+.unread {
+    font-weight: bold;
+    background-color: lightyellow;
+}

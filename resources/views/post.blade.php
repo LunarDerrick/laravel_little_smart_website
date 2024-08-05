@@ -52,7 +52,6 @@
                 {{ $posts->links('pagination::bootstrap-4') }}
             </nav>
         @endif
-        <br>
         <button type="button" class="btn btn-primary crud" onclick="window.location='{{ route('add_post') }}'">New Post</button>
 
         <!-- delete modal -->
