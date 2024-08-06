@@ -14,7 +14,7 @@
         @include('components.alert_notification')
 
         <h1>Feedback</h1>
-        <a href="{{ route('feedback.list') }}">Go Back</a>
+        <a href="{{ route('feedback.list', ['page' => request()->query('page', 1)]) }}">Go Back</a>
         <br><br>
 
         <div class="feedback">
@@ -27,8 +27,12 @@
                     <p>{{ $feedback->user->name ?? 'Anonymous' }}</p>
                     {!! nl2br(e($feedback->description)) !!} {{-- include newline --}}
                 </div>
+                <br><br>
                 <div class="feedback-action">
-                    <br><br>
+                    <form method="POST" action="{{ route('feedback.unread', ['id' => $feedback->msgid]) }}" id="mark-unread">
+                        @csrf
+                        <button type="submit" class="btn btn-primary">Mark Unread</button>
+                    </form>
                     <form method="POST" action="{{ route('feedback.delete', ['id' => $feedback->msgid]) }}" id="delete-feedback">
                         @csrf
                         @method('DELETE')

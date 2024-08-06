@@ -40,8 +40,8 @@
                         <td>{{ $post->title }}</td>
                         <td>{{ strip_tags($post->description) }}</td>
                         <td>
-                            <button type="button" class="btn btn-primary mobile tablet" onclick="window.location='{{ route('post.edit', ['id' => $post->postid]) }}'">Edit</button>
-                            <button type="button" class="btn btn-primary mobile tablet" data-bs-target="#deleteModal" data-bs-toggle="modal" data-bs-id="{{ $post->postid }}">Delete</button>
+                            <button type="button" class="btn btn-info mobile tablet" onclick="window.location='{{ route('post.edit', ['id' => $post->postid, 'page' => $posts->currentPage()]) }}'">Edit</button>
+                            <button type="button" class="btn btn-warning mobile tablet" data-bs-target="#deleteModal" data-bs-toggle="modal" data-bs-id="{{ $post->postid }}">Delete</button>
                         </td>
                     </tr>
                 @endforeach

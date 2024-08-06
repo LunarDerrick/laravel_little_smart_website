@@ -86,10 +86,12 @@ div.feedback {
 }
 
 .feedback-action {
-    text-align: center;
+    display: flex;
+    justify-content: center;
 
     button {
-        width: 100px;
+        min-width: 100px;
+        margin: 0 10px;
     }
 }
 
@@ -125,6 +127,10 @@ canvas#piechart_gradescience {
     th, td {
         border-width: 1px;
     }
+}
+
+.btn-warning {
+    color: black; /* improve contrast */
 }
 
 #tablet, #mobile {
@@ -280,6 +286,10 @@ table#feedback {
         white-space: nowrap;
     }
 
+    col#select {
+        width: 34px;
+    }
+
     col#date {
         width: 15%;
     }
@@ -296,6 +306,15 @@ table#feedback {
 
     col#action {
         width: 51px;
+    }
+}
+
+.feedback-list-action {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+        margin: 0 10px;
     }
 }
 
@@ -339,6 +358,12 @@ body.form {
         /* to fix some misaligned text */
         padding: 10px;
     }
+
+    table#feedback {
+        col#date {
+            width: 16%;
+        }
+    }
 }
 
 /* This condition activates when preview screen is shorter than given max width. */
@@ -376,20 +401,24 @@ body.form {
     }
 
     table#feedback {
-        th:nth-child(2), td:nth-child(2), th:nth-child(4), td:nth-child(4) {
+        th:nth-child(3), td:nth-child(3), th:nth-child(5), td:nth-child(5) {
             display: none;
+        }
+
+        col#select {
+            width: 5%;
+        }
+
+        col#date {
+            width: 16%;
         }
 
         col#name {
             display: none;
         }
 
-        col#date {
-            width: 13%;
-        }
-
         col#action {
-            width: 6%;
+            width: 7%;
         }
     }
 
@@ -408,5 +437,13 @@ body.form {
     .modal-dialog {
         max-width: 90%;
         margin: 1.75rem auto;
+    }
+
+    .feedback-list-action {
+        justify-content: center;
+
+        .btn {
+            order: initial; /* Maintain initial order */
+        }
     }
 }

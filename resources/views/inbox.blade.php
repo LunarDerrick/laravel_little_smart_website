@@ -27,6 +27,7 @@
             <p><small><i>Click on any column to sort table in ascending or descending order.</i></small></p>
             <table id="feedback">
                 <colgroup>
+                    <col id="select">
                     <col id="date">
                     <col id="name">
                     <col id="title">
@@ -34,6 +35,7 @@
                     <col id="action">
                 </colgroup>
                 <tr>
+                    <th><input type="checkbox" id="select-all" /></th>
                     <th>Date</th>
                     <th>Name</th>
                     <th>Title</th>
@@ -42,12 +44,13 @@
                 </tr>
                 @foreach ($feedbacks as $feedback)
                     <tr class="{{ $feedback->is_read ? 'read' : 'unread' }}">
+                        <td><input type="checkbox" class="select-item" data-feedback-id="{{ $feedback->msgid }}" /></td>
                         <td class="line_break">{{ $feedback->createdtime->format('Y-m-d H:i:s') }}</td>
                         <td>{{ $feedback->user->name ?? 'Anonymous' }}</td>
                         <td>{{ $feedback->title }}</td>
                         <td>{{ $feedback->description }}</td>
                         <td>
-                            <a class="img-btn" href="{{ route('feedback', ['id' => $feedback->msgid]) }}">
+                            <a class="img-btn" href="{{ route('feedback', ['id' => $feedback->msgid, 'page' => $feedbacks->currentPage()]) }}">
                                 <img src="{{ asset('media/view.png') }}" alt="view">
                             </a>
                         </td>
@@ -60,21 +63,23 @@
                 {{ $feedbacks->links('pagination::bootstrap-4') }}
             </nav>
         @endif
-        <button type="button" class="btn btn-danger crud" data-bs-target="#deleteModal" data-bs-toggle="modal">Delete All</button>
-        <button type="button" class="btn btn-secondary crud">Mark All as Unread</button>
-        <button type="button" class="btn btn-info crud" id="btn-readAll">Mark All as Read</button>
+        <div class="feedback-list-action">
+            <button type="button" class="btn btn-info" id="btn-readSelected">Mark Read</button>
+            <button type="button" class="btn btn-secondary" id="btn-unreadSelected">Mark Unread</button>
+            <button type="button" class="btn btn-danger" data-bs-target="#deleteModal" data-bs-toggle="modal">Delete</button>
+        </div>
 
         <!-- delete modal -->
         <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Delete All Feedbacks</h5>
+                        <h5 class="modal-title" id="deleteModalLabel">Delete Feedbacks</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>Are you sure you want to delete <strong><u>for all pages</u></strong>?</p>
+                        <p>Are you sure you want to delete these feedback?</p>
                         <strong>There is no way to revert the action!</strong>
                     </div>
                     <div class="modal-footer">
@@ -187,7 +192,7 @@
 
         function resetSortingIndicators() {
             let headers = document.getElementsByTagName("th");
-            for (let i = 0; i < headers.length; i++) {
+            for (let i = 1; i < headers.length; i++) { // exclude checkbox column
                 headers[i].innerHTML = headers[i].innerHTML.split(" ")[0]; // Remove existing indicators
             }
         }
@@ -196,9 +201,11 @@
         document.addEventListener('DOMContentLoaded', function() {
             var headers = document.querySelectorAll("#feedback th");
             headers.forEach(function(header, index) {
-                header.addEventListener('click', function() {
-                    sortTable(index);
-                });
+                if (index !== 0) { // exclude checkbox column
+                    header.addEventListener('click', function() {
+                        sortTable(index);
+                    });
+                }
             });
         });
 
@@ -208,14 +215,24 @@
         var notyf = new Notyf();
 
         modalDeleteBtn.onclick = function () {
+            var selectedIds = Array.from(document.querySelectorAll('.select-item:checked')).map(function(checkbox) {
+                return checkbox.getAttribute('data-feedback-id');
+            });
+
+            if (selectedIds.length === 0) {
+                new Notyf().error("No feedbacks selected.");
+                return;
+            }
+
             var csrfToken = '{{ csrf_token() }}';
 
-            fetch(`/delete_all_feedbacks`, {
+            fetch(`/delete_selected_feedbacks`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': csrfToken
-                }
+                },
+                body: JSON.stringify({ ids: selectedIds })
             })
             .then(response => response.json())
             .then(data => {
@@ -226,38 +243,83 @@
                         window.location.reload();
                     }, 2500);
                 } else {
-                    notyf.error(data.error);
+                    notyf.error('Unable to delete feedbacks.');
                 }
             })
             .catch(error => {
-                notyf.error('We encountered an error when deleting feedbacks.');
+                notyf.error('Unable to delete feedbacks.');
             });
         };
 
-        // mark all as read handling
-        document.getElementById('btn-readAll').addEventListener('click', function() {
+        // Select/Deselect All Checkboxes
+        document.getElementById('select-all').addEventListener('change', function() {
+            var checkboxes = document.querySelectorAll('.select-item');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = this.checked;
+            }, this);
+        });
+
+        // Mark Selected as Read
+        document.getElementById('btn-readSelected').addEventListener('click', function() {
+            var selectedIds = Array.from(document.querySelectorAll('.select-item:checked')).map(function(checkbox) {
+                return checkbox.getAttribute('data-feedback-id');
+            });
+
+            if (selectedIds.length === 0) {
+                new Notyf().error("No feedbacks selected.");
+                return;
+            }
+
             var csrfToken = '{{ csrf_token() }}';
 
-            fetch('{{ route('feedback.read_all') }}', {
+            fetch('{{ route('feedback.read_selected') }}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': csrfToken
-                }
+                },
+                body: JSON.stringify({ ids: selectedIds })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    notyf.success(data.success);
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 2500);
-                } else {
-                    notyf.error("Failed to mark as read.");
+                    window.location.reload();
                 }
             })
             .catch(error => {
-                notyf.error("Failed to mark as read.");
+                new Notyf().error("Failed to mark as read.");
+            });
+        });
+
+        // Mark Selected as Unread
+        document.getElementById('btn-unreadSelected').addEventListener('click', function() {
+            var selectedIds = Array.from(document.querySelectorAll('.select-item:checked')).map(function(checkbox) {
+                return checkbox.getAttribute('data-feedback-id');
+            });
+
+            if (selectedIds.length === 0) {
+                new Notyf().error("No feedbacks selected.");
+                return;
+            }
+
+            var csrfToken = '{{ csrf_token() }}';
+
+            fetch('{{ route('feedback.unread_selected') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                body: JSON.stringify({ ids: selectedIds })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.reload();
+                }
+            })
+            .catch(error => {
+                new Notyf().error("Failed to mark as unread.");
             });
         });
     </script>

@@ -68,7 +68,7 @@ class FeedbackController extends Controller
     }
 
     /**
-     * Show the profile for a given user.
+     * Show the full information of the selected feedback.
      */
     public function show($id)
     {
@@ -79,13 +79,37 @@ class FeedbackController extends Controller
     }
 
     /**
-     * Mark all existing feedbacks as read.
+     * Mark selected feedbacks as read.
      */
-    public function readAll()
+    public function readSelected(Request $request)
     {
-        Feedback::where('is_read', false)->update(['is_read' => true]);
+        $ids = $request->input('ids');
+        Feedback::whereIn('msgid', $ids)->update(['is_read' => true]);
+        return response()->json(['success' => 'Selected feedbacks marked as read.']);
+    }
 
-        return response()->json(['success' => 'All feedbacks marked as read.']);
+    /**
+     * Mark the selected feedback as unread.
+     */
+    public function unread(Request $request, $id)
+    {
+        $feedback = Feedback::findOrFail($id);
+        $feedback->is_read = false;
+        $feedback->save();
+
+        $page = $request->input('page', 1);
+
+        return redirect()->route('feedback.list', ['page' => $page]);
+    }
+
+    /**
+     * Mark selected feedbacks as unread.
+     */
+    public function unreadSelected(Request $request)
+    {
+        $ids = $request->input('ids');
+        Feedback::whereIn('msgid', $ids)->update(['is_read' => false]);
+        return response()->json(['success' => 'Selected feedbacks marked as unread.']);
     }
 
     /**
@@ -107,19 +131,12 @@ class FeedbackController extends Controller
     }
 
     /**
-     * Remove all resources from storage.
+     * Remove multiple specified resources from storage.
      */
-    public function destroyAll()
+    public function destroySelected(Request $request)
     {
-        $feedbacks = Feedback::all();
-
-        if ($feedbacks->isNotEmpty()) {
-            // Delete each feedback record and associated resources if needed
-            foreach ($feedbacks as $feedback) $feedback->delete();
-
-            return response()->json(['success' => 'All feedbacks are deleted.']);
-        }
-
-        return response()->json(['error' => 'No feedbacks found.'], 404);
+        $ids = $request->input('ids');
+        Feedback::whereIn('msgid', $ids)->delete();
+        return response()->json(['success' => 'Feedbacks deleted successfully.']);
     }
 }

@@ -9,7 +9,12 @@ use Illuminate\Support\Facades\Artisan;
 
 class ClearStorageAfterMigrate
 {
-    // protected $command;
+    // list of commands to respond to
+    protected $commandsToWatch = [
+        'migrate:reset',
+        'migrate:refresh',
+        'migrate:fresh',
+    ];
 
     /**
      * Create the event listener.
@@ -21,19 +26,21 @@ class ClearStorageAfterMigrate
 
     /**
      * Handle the event.
+     *
+     * Context: If the user resets database via migrate command, listener will clear local storage as well.
      */
     public function handle(CommandFinished $event): void
     {
-        $commandsToWatch = [
-            'migrate:reset',
-            'migrate:refresh',
-            'migrate:fresh',
-        ];
+        $command = trim($event->command);
+        $options = $event->input->getOptions();
 
-        if (in_array($event->command, $commandsToWatch)) {
-            Artisan::call('storage:clear');
-            // log to terminal to notify action
-            echo "Cleared storage/app/public.\n";
+        if (in_array($command, $this->commandsToWatch)) {
+            // check for '--seed' option
+            // if true, skip local storage clear.
+            if (!isset($options['seed']) || !$options['seed']) {
+                Artisan::call('storage:clear');
+                echo "Cleared storage/app/public.\n";
+            }
         }
     }
 }

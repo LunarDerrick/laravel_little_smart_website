@@ -87,14 +87,20 @@ Route::middleware([CheckSessionTimeout::class])->group(function () {
         Route::post('/add_feedback', [FeedbackController::class, 'store']
         )->name('feedback.add');
 
-        Route::post('/read_all_feedbacks', [FeedbackController::class, 'readAll']
-        )->name('feedback.read_all');
+        Route::post('/read_selected_feedbacks', [FeedbackController::class, 'readSelected']
+        )->name('feedback.read_selected');
+
+        Route::post('/feedback/{id}/unread_feedback', [FeedbackController::class, 'unread']
+        )->name('feedback.unread');
+
+        Route::post('/unread_selected_feedbacks', [FeedbackController::class, 'unreadSelected']
+        )->name('feedback.unread_selected');
 
         Route::delete('/feedback/{id}', [FeedbackController::class, 'destroy']
         )->name('feedback.delete');
 
-        Route::delete('/delete_all_feedbacks', [FeedbackController::class, 'destroyAll']
-        )->name('feedback.delete_all');
+        Route::delete('/delete_selected_feedbacks', [FeedbackController::class, 'destroySelected']
+        )->name('feedback.delete_selected');
 
         Route::get('/post', [PostController::class, 'indexList']
         )->name('post');

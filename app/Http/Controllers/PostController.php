@@ -101,7 +101,8 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::findOrFail($id);
-        return view('edit_post', compact('post'));
+        $page = request()->input('page', 1);
+        return view('edit_post', compact('post', 'page'));
     }
 
     // CRUD update
@@ -160,7 +161,9 @@ class PostController extends Controller
             // Commit the transaction
             DB::commit();
 
-            return redirect()->route('post')->with('status', 'Updated existing post.');
+            $page = $request->input('page', 1);
+
+            return redirect()->route('post', ['page' => $page])->with('status', 'Updated existing post.');
 
         } catch (\Exception $e) {
             // Rollback the transaction on error

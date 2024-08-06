@@ -15,7 +15,7 @@
     <section>
         @include('components.alert_notification')
 
-        <a href="{{ route('post') }}">Go Back</a>
+        <a href="{{ route('post', ['page' => $page]) }}">Go Back</a>
 
         <section>
             <div class="container">
@@ -24,7 +24,7 @@
                 </div>
 
                 @isset($post)
-                    <form action="{{ route('post.update', ['id' => $post->postid]) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('post.update', ['id' => $post->postid, 'page' => $page]) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="container">

@@ -48,10 +48,12 @@ div.feedback {
 }
 
 .feedback-action {
-    text-align: center;
+    display: flex;
+    justify-content: center;
 
     button {
-        width: 100px;
+        min-width: 100px;
+        margin: 0 10px;
     }
 }
 
