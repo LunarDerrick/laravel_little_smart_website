@@ -44,6 +44,10 @@ nav[aria-label] {
     width: 45%;
 }
 
+.about {
+    text-align: justify;
+}
+
 table#post {
     width: 100%;
     table-layout: fixed;

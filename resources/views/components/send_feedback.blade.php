@@ -3,7 +3,7 @@
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<div class="message-box position-fixed bottom-0 end-0">
+<div class="message-box position-fixed bottom-0 start-0">
     <div class="message-header d-flex justify-content-between align-items-center">
         <h5 class="mb-0">Send Feedback</h5>
         <button type="button" class="btn btn-sm p-0" data-bs-toggle="collapse" data-bs-target="#messageBoxBody" aria-expanded="true" aria-controls="messageBoxBody">

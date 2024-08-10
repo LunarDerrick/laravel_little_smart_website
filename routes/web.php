@@ -142,3 +142,7 @@ Route::middleware(RedirectIfAuthenticated::class)->group(function () {
         return view('login');
     })->name('login');
 });
+
+// to accomodate unauthenticated users
+Route::post('/add_feedback', [FeedbackController::class, 'store']
+)->name('feedback.add');

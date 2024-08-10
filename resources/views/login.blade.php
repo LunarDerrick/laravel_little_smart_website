@@ -5,6 +5,8 @@
     <title>Login - Little Smart Day Care Centre</title>
 
     @include('components.header')
+    <!--chatbot-->
+    <script src="https://code.tidio.co/0i12wozmwajexcywukm95pjuqf8tphpx.js" async></script>
 </head>
 
 <body>
