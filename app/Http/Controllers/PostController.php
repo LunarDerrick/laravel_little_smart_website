@@ -49,7 +49,7 @@ class PostController extends Controller
         $validated = $request->validate([
             'title' => 'required|string',
             'description' => 'nullable|string',
-            'image' => 'nullable|mimes:jpeg,png|max:2048' // must be JPEG or PNG, max size 2MB
+            'image' => 'nullable|mimes:jpeg,png,gif|max:5120' // accept jpg, png, gif max 5mb
         ]);
 
         // Ensure the images directory exists
@@ -70,8 +70,6 @@ class PostController extends Controller
 
             // Sanitize description
             $config = HTMLPurifier_Config::createDefault();
-            // // customize to permit rich text get saved as HTML entities
-            // $config->set('HTML.Allowed', 'p,b,strong,i,em,u,a[href|title],ul,ol,li,br,span,h1,h2,h3,h4,h5,h6,img[src|alt|title|width|height],table,tr,td,th,thead,tbody,tfoot,blockquote,hr');
             $purifier = new HTMLPurifier($config);
             $sanitizedDescription = $purifier->purify($validated['description']);
 
@@ -112,7 +110,7 @@ class PostController extends Controller
         $validated = $request->validate([
             'title' => 'required|string',
             'description' => 'nullable|string',
-            'image' => 'nullable|mimes:jpeg,png|max:2048' // must be JPEG or PNG, max size 2MB
+            'image' => 'nullable|mimes:jpeg,png,gif|max:5120' // accept jpg, png, gif max 5mb
         ]);
 
         // Ensure the images directory exists
