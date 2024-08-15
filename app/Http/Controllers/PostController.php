@@ -14,20 +14,27 @@ use HTMLPurifier_Config;
 
 class PostController extends Controller
 {
-    // CRUD read
+    /**
+     * (CRUD read)
+     * Display a listing of the resource, exclusive for announcement page.
+     *
+     * Retrieves all records from 'posts' table, split into several pages,
+     * Decode JSON data for 'posts.images', which converts JSON string to
+     * PHP array. Pass final data to blade view.
+     */
     public function indexHome()
     {
-        // Retrieve all records from the 'posts' table
-        // $posts = Post::orderBy('createdtime', 'desc')->get();
-
-        // Split posts into several pages
-        // Cut-off point is 15 pages (ellipsis will appear)
+        // Cut-off point for page nav btn is 15 pages (ellipsis will appear)
         $posts = Post::orderBy('createdtime', 'desc')->paginate(5); // number of records per page
+
+        $posts->getCollection()->transform(function ($post) {
+            $post->images = json_decode($post->images);
+            return $post;
+        });
 
         // pass an empty variable
         // $posts = collect();
 
-        // Pass the posts data to the view
         return view('index', compact('posts'));
     }
 
@@ -49,7 +56,7 @@ class PostController extends Controller
         $validated = $request->validate([
             'title' => 'required|string',
             'description' => 'nullable|string',
-            'image' => 'nullable|mimes:jpeg,png,gif|max:5120' // accept jpg, png, gif max 5mb
+            'images.*' => 'nullable|mimes:jpeg,png,gif|max:5120' // accept jpg, png, gif max 5mb
         ]);
 
         // Ensure the images directory exists
@@ -61,11 +68,13 @@ class PostController extends Controller
             // Start transaction
             DB::beginTransaction();
 
-            // Handle file upload
-            $imagePath = null;
-            if ($request->hasFile('image')) {
-                $imagePath = $request->file('image')->store('public/uploads');
-                $imagePath = basename($imagePath);
+            // Handle multiple file uploads
+            $imagePaths = [];
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $image) {
+                    $imagePath = $image->store('public/uploads'); // images are stored in storage/app/imagePath
+                    $imagePaths[] = basename($imagePath);
+                }
             }
 
             // Sanitize description
@@ -78,7 +87,7 @@ class PostController extends Controller
                 'userid' => Auth::id(), // Fetch current user's id
                 'title' => $validated['title'],
                 'description' => $sanitizedDescription,
-                'image' => $imagePath, // images are stored in storage/app/imagePath
+                'images' => json_encode($imagePaths), // Store JSON-encoded array
                 'createdtime' => now(),
             ]);
 
@@ -110,7 +119,7 @@ class PostController extends Controller
         $validated = $request->validate([
             'title' => 'required|string',
             'description' => 'nullable|string',
-            'image' => 'nullable|mimes:jpeg,png,gif|max:5120' // accept jpg, png, gif max 5mb
+            'images.*' => 'nullable|mimes:jpeg,png,gif|max:5120' // accept jpg, png, gif max 5mb
         ]);
 
         // Ensure the images directory exists
@@ -125,24 +134,28 @@ class PostController extends Controller
             // Update posts table
             $post = Post::findOrFail($id);
 
+            // Decode the existing image paths
+            $imagePaths = json_decode($post->images, true) ?: [];
+
             // Handle file upload
-            if ($request->has('clear-img')) {
-                // true = user wants to get rid of image
-                $imagePath = null;
-                Storage::delete('public/uploads/' . $post->image);
-            } else {
-                // false = users wants to keep image
-                $imagePath = $post->image;
+            if ($request->has('delete-selected-img')) {
+                $selectedImages = explode(',', $request->input('delete-selected-img'));
+
+                // Delete selected images
+                foreach ($selectedImages as $image) {
+                    if (($key = array_search($image, $imagePaths)) !== false) {
+                        Storage::delete('public/uploads/' . $image);
+                        unset($imagePaths[$key]);
+                    }
+                }
+                $imagePaths = array_values($imagePaths); // Reindex array
             }
 
-            if ($request->hasFile('image')) {
-                // Delete the old image if exists
-                if ($post->image) {
-                    Storage::delete('public/uploads/' . $post->image);
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $image) {
+                    $imagePath = $image->store('public/uploads');
+                    $imagePaths[] = basename($imagePath);
                 }
-
-                $imagePath = $request->file('image')->store('public/uploads');
-                $imagePath = basename($imagePath);
             }
 
             // Sanitize description
@@ -153,7 +166,7 @@ class PostController extends Controller
             $post->update([
                 'title' => $validated['title'],
                 'description' => $sanitizedDescription,
-                'image' => $imagePath, // images are stored in storage/app/imagePath
+                'images' => json_encode($imagePaths), // Store JSON-encoded array
             ]);
 
             // Commit the transaction
@@ -177,10 +190,13 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
 
+        // Decode the existing image paths
+        $imagePaths = json_decode($post->images, true) ?: [];
+
         if ($post) {
             // Delete image from storage
-            if ($post->image) {
-                Storage::delete('public/uploads/' . $post->image);
+            foreach ($imagePaths as $image) {
+                Storage::delete('public/uploads/' . $image);
             }
 
             $post->delete();

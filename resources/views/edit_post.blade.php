@@ -24,7 +24,7 @@
                 </div>
 
                 @isset($post)
-                    <form action="{{ route('post.update', ['id' => $post->postid, 'page' => $page]) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('post.update', ['id' => $post->postid, 'page' => $page]) }}" method="POST" enctype="multipart/form-data" id="editpost-form">
                         @csrf
                         @method('PUT')
                         <div class="container">
@@ -50,24 +50,32 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="row mt-4">
-                                        <div class="col">
-                                            <input type="checkbox" id="clear-img" name="clear-img" onclick="alert('If ticked, image will be gone forever once you save!');">
-                                            <label for="clear-img">Clear image</label><br>
+                                        <div class="col-auto">
+                                            <button type="button" class="btn btn-danger" id="deleteimg-btn" data-bs-toggle="modal" data-bs-target="#imageDeleteModal">Delete image</button>
+                                            <input type="hidden" id="delete-selected-img" name="delete-selected-img">
+                                        </div>
+                                        <div class="col-auto d-flex align-items-center no-padding">
+                                            <span id="selected-img-count"></span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-5">
-                                    <div class="row">
+                                    <div class="row mt-2">
                                         <div class="col">
                                             <label for="image"><b>Image</b></label>
-                                            <input type="file" accept="image/*" id="image" name="image" class="form-control">
-                                            <picture>
-                                                @if($post->image == null)
-                                                    <img id="img-preview" src="{{ asset('media/placeholder.png') }}" class="img-fluid card-img-top" alt="...">
+                                            <input type="file" accept="image/*" id="images" name="images[]" class="form-control" multiple>
+                                            <div id="preview-container">
+                                                @if($post->images && json_decode($post->images, true))
+                                                    @php
+                                                        $imagePaths = json_decode($post->images, true); // Decode the JSON-encoded images
+                                                    @endphp
+                                                    @foreach($imagePaths as $imagePath)
+                                                        <img src="{{ asset('storage/uploads/' . $imagePath) }}" class="img-fluid card-img-top" alt="...">
+                                                    @endforeach
                                                 @else
-                                                    <img id="img-preview" src="{{ asset('storage/uploads/' . $post->image) }}" class="img-fluid card-img-top" alt="...">
+                                                    <img src="{{ asset('media/placeholder.png') }}" class="img-fluid card-img-top" alt="...">
                                                 @endif
-                                            </picture>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -78,6 +86,26 @@
             </div>
         </section>
         <br>
+
+        <!--image delete modal-->
+        <div class="modal fade" id="imageDeleteModal" tabindex="-1" aria-labelledby="imageDeleteModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="imageDeleteModalLabel">Select Images to Delete</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-images-container">
+                  <!-- Images will be dynamically added here -->
+                </div>
+                <div class="modal-footer">
+                  <span id="selected-images-count">0 selected</span>
+                  <button type="button" class="btn btn-danger" id="confirm-delete">Delete Selected</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
     </section>
 
     @include('components.footer')
@@ -96,16 +124,99 @@
     <script type="module">
         // convert server-side value to client-side value and pass to JS function
         window.editorInitialData = @json($post->description);
+        window.imagePaths = @json($post->images ? json_decode($post->images, true) : []);
     </script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // show image preview when choosing image
-        document.getElementById("image").onchange = evt => {
-            const [file] = document.getElementById("image").files;
-            if (file) {
-                document.getElementById("img-preview").src = URL.createObjectURL(file);
+        document.getElementById('images').addEventListener('change', function(event) {
+            // catch non-image file uploads
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            const files = Array.from(event.target.files);
+            const invalidFiles = files.filter(file => !allowedTypes.includes(file.type));
+            if (invalidFiles.length > 0) {
+                alert('Only JPG, PNG, and GIF files are allowed.');
+                event.target.value = ''; // Clear the input field
+                return;
             }
-        }
+
+            // preview images to be added
+            const previewContainer = document.getElementById('preview-container');
+            previewContainer.innerHTML = ''; // reset current selection
+
+            Array.from(event.target.files).forEach(file => {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('img-fluid', 'card-img-top');
+                    previewContainer.appendChild(img);
+                };
+
+                reader.readAsDataURL(file);
+            });
+        });
+
+        // image delete modal
+        const deleteImgButton = document.getElementById('deleteimg-btn');
+        const modal = new bootstrap.Modal(document.getElementById('imageDeleteModal'));
+        const modalImagesContainer = document.getElementById('modal-images-container');
+        const selectedImagesCount = document.getElementById('selected-images-count'); // Element to show selected count
+
+        // Populate modal with existing images
+        deleteImgButton.addEventListener('click', function () {
+            if (window.imagePaths.length === 0) {
+                // include('components.no_records')
+                modalImagesContainer.innerHTML = `
+                    <div class="text-center">
+                        <img src="{{ asset('media/no_record.jpg') }}" alt="No records found" class="no-record"/>
+                        <h2 class="text-secondary">No records found</h2>
+                        <p class="text-secondary">This post has no image.</p>
+                    </div>
+                `;
+                return; // Exit function since there's no content to process
+            } else {
+                modalImagesContainer.innerHTML = ''; // Clear existing content
+
+                window.imagePaths.forEach(imagePath => {
+                    const imgDiv = document.createElement('div');
+                    imgDiv.classList.add('image-container');
+                    imgDiv.innerHTML = `
+                        <div class="row">
+                            <div class="col-1 d-flex align-items-center">
+                                <input type="checkbox" name="delete_images[]" value="${imagePath}">
+                            </div>
+                            <div class="col-11">
+                                <img src="{{ asset('storage/uploads') }}/${imagePath}" class="img-fluid card-img-top" alt="...">
+                            </div>
+                        </div>
+                    `;
+                    modalImagesContainer.appendChild(imgDiv);
+                });
+            }
+        });
+
+        // handle image selection within the modal
+        modalImagesContainer.addEventListener('change', function () {
+            const selectedImages = modalImagesContainer.querySelectorAll('input[type="checkbox"]:checked').length;
+            selectedImagesCount.textContent = `${selectedImages} selected`;
+        });
+
+        // Send select request to form
+        document.getElementById('confirm-delete').addEventListener('click', function () {
+            const selectedImages = Array.from(modalImagesContainer.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value);
+
+            // Update select count outside of modal
+            const selectedCount = selectedImages.length;
+            document.getElementById('selected-img-count').textContent = `${selectedCount} image${selectedCount === 1 ? '' : 's'} selected`;
+
+            // Update hidden input with selected images
+            document.getElementById('delete-selected-img').value = selectedImages.join(',');
+
+            modal.hide();
+        });
     </script>
 </body>
 

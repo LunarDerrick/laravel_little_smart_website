@@ -102,7 +102,7 @@
         const showChart1 = () => {
             // browser "localhost:8000/chart-data-1" to check if js receives datatable
             $.get("{{ url('/chart-data-1') }}", function(data) {
-                if (!data.datasets) { // if empty data array
+                if (!hasData(data)) {
                     showNoData('#barchart_passingrate');
                 } else {
                     // importing datalabel plugin
@@ -156,7 +156,7 @@
         const showChart2 = () => {
             // browser "localhost:8000/chart-data-2" to check if js receives datatable
             $.get("{{ url('/chart-data-2') }}", function(data) {
-                if (!data.datasets) { // if empty data array
+                if (!hasData(data)) {
                     showNoData('#piechart_gradescience');
                 } else {
                     // importing datalabel plugin
@@ -196,7 +196,7 @@
         const showChart3 = () => {
             // browser "localhost:8000/chart-data-3" to check if js receives datatable
             $.get("{{ url('/chart-data-3') }}", function(data) {
-                if (!data.datasets) { // if empty data array
+                if (!hasData(data)) {
                     showNoData('#barchart_avgscore');
                 } else {
                     // importing datalabel plugin
@@ -250,6 +250,11 @@
                 chartContainer.append(data);
             });
         };
+
+        // check for empty/null data array
+        const hasData = (data) => {
+            return data.datasets && data.datasets[0].data.every(value => value !== null);
+        }
     </script>
 </body>
 

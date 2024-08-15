@@ -175,6 +175,18 @@ nav[aria-label] {
     width: 45%;
 }
 
+.slick-carousel {
+    max-width: 600px;
+}
+
+.slick-arrow, .slick-arrow:hover, .slick-arrow:focus {
+    background-color: cornflowerblue;
+}
+
+.slick-slide img {
+    margin: auto;
+}
+
 .about {
     text-align: justify;
 }
@@ -229,6 +241,16 @@ button.crud {
     align-items: center;
     width: fit-content;
     text-align: right;
+}
+
+#editpost-form {
+    .btn {
+        min-width: 110px;
+    }
+}
+
+.no-padding {
+    padding-left: 0;
 }
 
 .login-field {
@@ -383,7 +405,11 @@ body.form {
 
     .center {
         margin: auto;
-        width: 100%;
+        width: 97%;
+    }
+
+    .slick-slide {
+        padding: 0 1px;
     }
 
     button.mobile {

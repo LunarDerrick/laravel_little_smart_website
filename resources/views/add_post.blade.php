@@ -47,13 +47,13 @@
                                 </div>
                             </div>
                             <div class="col-md-5">
-                                <div class="row">
+                                <div class="row mt-2">
                                     <div class="col">
                                         <label for="image"><b>Image</b></label>
-                                        <input type="file" accept="image/*" id="image" name="image" class="form-control">
-                                        <picture>
+                                        <input type="file" accept="image/*" id="images" name="images[]" class="form-control" multiple>
+                                        <div id="preview-container">
                                             <img id="img-preview" src="{{ asset('media/placeholder.png') }}" class="img-fluid card-img-top" alt="...">
-                                        </picture>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -81,22 +81,35 @@
     <script type="module" src="{{ asset('js/ckeditor/init-addpost.js') }}"></script>
 
     <script>
-        // check if editor has anything
-        document.forms[0].onsubmit = evt => {
-            if (editor.getData().trim() == "") {
-                alert("No content is provided.");
-                // prevent form submitting
-                return false;
+        document.getElementById('images').addEventListener('change', function(event) {
+            // catch non-image file uploads
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            const files = Array.from(event.target.files);
+            const invalidFiles = files.filter(file => !allowedTypes.includes(file.type));
+            if (invalidFiles.length > 0) {
+                alert('Only JPG, PNG, and GIF files are allowed.');
+                event.target.value = ''; // Clear the input field
+                return;
             }
-        };
 
-        // show image preview when choosing image
-        document.getElementById("image").onchange = evt => {
-            const [file] = document.getElementById("image").files
-            if (file) {
-                document.getElementById("img-preview").src = URL.createObjectURL(file)
-            }
-        }
+            // preview images to be added
+            const previewContainer = document.getElementById('preview-container');
+            previewContainer.innerHTML = ''; // reset current selection
+
+            Array.from(event.target.files).forEach(file => {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('img-fluid', 'card-img-top');
+                    img.style.margin = '0px 0px 5px 0px';
+                    previewContainer.appendChild(img);
+                };
+
+                reader.readAsDataURL(file);
+            });
+        });
     </script>
 </body>
 

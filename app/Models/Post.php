@@ -19,7 +19,7 @@ class Post extends Model
     protected $primaryKey = 'postid';
 
     // table fields
-    protected $fillable = ['title', 'description', 'image', 'userid', 'createdtime'];
+    protected $fillable = ['title', 'description', 'images', 'userid', 'createdtime'];
 
     // setup datetime for Laravel conversion automation
     protected $casts = [
