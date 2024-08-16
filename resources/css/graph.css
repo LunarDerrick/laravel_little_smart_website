@@ -4,6 +4,12 @@ canvas {
     max-width: 310px;
 }
 
+canvas.piechart {
+    margin: auto;
+    max-width: 162px;
+    min-width: 162px;
+}
+
 .card {
     padding: 15px;
 }
@@ -14,11 +20,6 @@ canvas {
     h6 {
         text-align: center;
     }
-}
-
-canvas#piechart_gradescience {
-    margin: auto;
-    max-width: 162px;
 }
 
 #table-graph {
