@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 15, 2024 at 04:54 PM
+-- Generation Time: Aug 17, 2024 at 03:57 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -249,7 +249,9 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('CSamcWrlf9c61Pr22pEx6swcDExEwlaTEJ2YxRXr', 100000, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoibDV5eDRJNjdyVGN3ZEhweUE5Rk1LZFJYZkE5QjFqU1JCbEhCT25NaSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjEwMDAwMDtzOjE2OiJsYXN0QWN0aXZpdHlUaW1lIjtpOjE3MjM3MzM2NTE7fQ==', 1723733651);
+('DBULdrbwUpgS2WsFpiclQ0a3y1MoLpbHlm8dTUWc', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiYmt5eEhwTDhVUUhqWlJFVTY1U0JMd3VDSnpMU2w1cjdtUURNRThiUyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MTI0OiJodHRwOi8vbG9jYWxob3N0OjgwMDAvcmVzZXQtcGFzc3dvcmQvMDhjNWViZDYzYTQxOTJkZmVjZjM5NTg3OTZmNDU5ZDA4MTNmYWM3NDhkNDc2MjBiNjU0MWUxZjA3ZmE4NzNmYT9lbWFpbD1hZG1pbiU0MG1haWwuY29tIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1723901456),
+('Epaf23QqFLQORRVQ0TD6nPff0O68RXsIfB6Tds3e', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiWjFLV3VCeWxBcGpUYjdnWXBzeW1pNlM0SXluRzM5NjV1MUhXTHFFdCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9mb3Jnb3RfcGFzc3dvcmQiO319', 1723902900),
+('gsm3zWYNpo7ix6J8gx9dNvtsh3YFskBxa8VVfJEH', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiRzY2azFNS0tVRmRqSkpKVEtMc3FFTFZFU3NvSUVyMVpGVVRtT3RUUCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MTI0OiJodHRwOi8vbG9jYWxob3N0OjgwMDAvcmVzZXQtcGFzc3dvcmQvZjE5NTdjOTBiMjYxY2Y3ODA1NWI1NTcxZGM3NmM0YTg5NTExZDYzOTZlNjkyZGQ5NmRlMWVkYzA4YmQxMTcxNT9lbWFpbD1hZG1pbiU0MG1haWwuY29tIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1723898248);
 
 -- --------------------------------------------------------
 
@@ -279,7 +281,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `name`, `role`, `age`, `telno`, `school`, `standard`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(100000, 'admin', 'Admin', 'teacher', 99, '012-3456789', 'SJK(C) Bukit Serdang', 3, 'admin@gmail.com', '2024-08-15 14:53:09', '$2y$12$OUwCDJJ7qdVpSkdrCNJKZO.ojW/fdCBUytcmmf3cIMg8GutCQyHhK', 'Vd7GcXGQhO', '2024-08-15 14:53:09', '2024-08-15 14:53:09'),
+(100000, 'admin', 'Admin', 'teacher', 99, '012-3456789', 'SJK(C) Bukit Serdang', 3, 'admin@mail.com', '2024-08-15 14:53:09', '$2y$12$Y9kLevo0MLeafn0P4JtOX.5HwTPpneQDigr5ujgYcHAUqyIdxalcK', 'ION7Faly3fDodtgNOD9V1mV2Ygmz0rsHJ6D7Fgul9fcbwZgrweoOlXWGFxJN', '2024-08-15 14:53:09', '2024-08-17 13:32:38'),
 (123671, 'roberta.corkery', 'Dr. Edward Conn', 'student', 7, '010-5680058', 'SJK(C) Bukit Serdang', 1, 'cyrus04@example.org', '2024-08-15 14:53:09', '$2y$12$9bcNLN19tuxFbde20yVp1OVEEcLVZQA43EJkLRe00hhAfEwL9MUAK', 'js7sShNNi9', '2024-08-15 14:53:09', '2024-08-15 14:53:09'),
 (333595, 'leonora22', 'Dr. Noah Grant MD', 'student', 10, '013-9399893', 'SJK(C) Bukit Serdang', 4, 'stokes.gladyce@example.org', '2024-08-15 14:53:09', '$2y$12$9bcNLN19tuxFbde20yVp1OVEEcLVZQA43EJkLRe00hhAfEwL9MUAK', 'AkjgobE1g8', '2024-08-15 14:53:09', '2024-08-15 14:53:09'),
 (558123, 'lakin.monroe', 'Rhianna Streich', 'student', 7, '014-8274440', 'SJK(C) Bukit Serdang', 1, 'lowell.beier@example.net', '2024-08-15 14:53:09', '$2y$12$9bcNLN19tuxFbde20yVp1OVEEcLVZQA43EJkLRe00hhAfEwL9MUAK', 'INyTWzkAyo', '2024-08-15 14:53:09', '2024-08-15 14:53:09'),

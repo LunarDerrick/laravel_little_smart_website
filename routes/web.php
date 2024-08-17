@@ -8,6 +8,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RosterController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+// use App\Http\Controllers\Auth\NewPasswordController;
+// use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Middleware\CheckSessionTimeout;
 use App\Http\Middleware\RedirectIfAuthenticated;
 
@@ -147,6 +149,25 @@ Route::middleware(RedirectIfAuthenticated::class)->group(function () {
     })->name('login');
 });
 
-// to accomodate unauthenticated users
+// no condition check required
 Route::post('/add_feedback', [FeedbackController::class, 'store']
 )->name('feedback.add');
+
+Route::get('/forgot_password', function () {
+    return view('forgot_password');
+})->name('password.forgot');
+
+Route::post('/forgot_password', [LoginController::class, 'storeToken']
+)->name('password.email');
+
+Route::get('/reset-password/{token}', [LoginController::class, 'create']
+)->name('password.reset');
+
+Route::put('reset-password', [LoginController::class, 'editPassword']
+)->name('password.edit');
+
+// auth reference
+// Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
+// Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
+// Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+// Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.update');

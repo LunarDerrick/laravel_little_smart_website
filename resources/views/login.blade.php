@@ -5,8 +5,6 @@
     <title>Login - Little Smart Day Care Centre</title>
 
     @include('components.header')
-    <!--chatbot-->
-    <script src="https://code.tidio.co/0i12wozmwajexcywukm95pjuqf8tphpx.js" async></script>
 </head>
 
 <body>
@@ -15,40 +13,41 @@
     <section>
         @include('components.alert_notification')
 
-        <div id="form-container">
-            <div>
+        <div class="container form-center">
+            <div class="row mt-5 pb-3">
                 <h1>Teacher Login</h1>
             </div>
-            <form action="{{ route('login.submit') }}" method="POST">
-                @csrf
-                <div class="form-group row">
-                    <label for="username" class="col-sm-3 col-form-label">Username:</label>
-                    <div class="col-sm">
-                        <input type="text" class="form-control login-field" id="username" name="username" placeholder="type here..." required>
+            <div class="row pb-3">
+                <form action="{{ route('login.submit') }}" method="POST">
+                    @csrf
+                    <div class="form-group row">
+                        <label for="username" class="col-sm-3 col-form-label">Username:</label>
+                        <div class="col-sm">
+                            <input type="text" class="form-control login-field" id="username" name="username" placeholder="type here..." required>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="password" class="col-sm-3 col-form-label">Password:</label>
-                    <div class="col-sm">
-                        <input type="password" class="form-control login-field" id="password" name="password" placeholder="type here..." required>
+                    <div class="form-group row pb-3">
+                        <label for="password" class="col-sm-3 col-form-label">Password&nbsp;:</label>
+                        <div class="col-sm">
+                            <input type="password" class="form-control login-field" id="password" name="password" placeholder="type here..." required>
+                        </div>
                     </div>
-                </div>
-                <p></p>
-                <div class="form-group row">
-                    <div class="col-sm">
-                        <button type="submit" class="btn btn-primary">LOGIN</button>
+                    <div class="form-group row">
+                        <div class="col-sm">
+                            <button type="submit" class="btn btn-primary">LOGIN</button>
+                        </div>
                     </div>
-                </div>
-            </form>
-            <p></p>
-            <div class="row" id="corner">
-                <a href="#">Forgot password?</a>
+                </form>
+            </div>
+            <div class="row">
+                <a href="{{ route('password.forgot') }}">Forgot password?</a>
             </div>
         </div>
 
         <br>
     </section>
 
+    @include('components.send_feedback')
     @include('components.footer')
 
     <!-- items for notification toast -->
@@ -56,9 +55,14 @@
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 
     <script>
+        const notyf = new Notyf({
+            duration: 0,
+            dismissible: true,
+        });
+
         document.addEventListener('DOMContentLoaded', function () {
             @if ($errors->any())
-                new Notyf().error("{{ $errors->first('login') }}");
+                notyf.error("{{ $errors->first('login') }}");
             @endif
         });
     </script>

@@ -40,8 +40,9 @@
                             <div class="form-label">
                                 <label for="telno"><b>Phone Number</b></label>
                                 <input type="tel"  id="telno" name="telno" class="form-control" required
-                                pattern="([0-9]{3}-[0-9]{7})|([0-9]{3}-[0-9]{8})" placeholder="Example: 012-3456789"
-                                title="format: 012-3456789 OR 011-34567890"> {{-- Custom tooltip/hover message --}}
+                                pattern="([0-9]{3}-[0-9]{7})|([0-9]{3}-[0-9]{8})"
+                                title="format: 012-3456789 OR 011-34567890" aria-describedby="telnoHelp"> {{-- Custom tooltip/hover message --}}
+                                <small id="telnoHelp" class="form-text text-muted">example format: 012-3456789</small>
                             </div>
                         </div>
                         <div class="row">

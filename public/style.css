@@ -231,17 +231,38 @@ button.crud {
     margin-left: 20px;
 }
 
-#form-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: fit-content;
-    text-align: right;
+.form-center {
+    margin: auto;
+    width: 40%;
+
+    h1 {
+        text-align: center;
+    }
+
+    button {
+        min-width: 100px;
+        float: right;
+    }
+
+    a {
+        text-align: right;
+    }
+
+    .form-group {
+        align-items: center;
+
+        label.long {
+            line-height: 1.2;
+        }
+    }
+}
+
+.spinner-border {
+    display: none;
+}
+
+div#forgot{
+    text-align: center;
 }
 
 #editpost-form {
@@ -257,10 +278,6 @@ button.crud {
 .login-field {
     background-color: lightblue;
     border: none;
-}
-
-#corner {
-    align-self: flex-end;
 }
 
 #roster {
@@ -386,6 +403,14 @@ body.form {
         padding: 10px;
     }
 
+    .form-center {
+        width: 50%;
+    }
+
+    .form-center.extend {
+        width: 65%;
+    }
+
     table#feedback {
         col#date {
             width: 16%;
@@ -423,6 +448,10 @@ body.form {
 
     .line_break {
         white-space: initial;
+    }
+
+    .form-center {
+        width: 70%;
     }
 
     table#post {
