@@ -158,7 +158,7 @@ Route::get('/forgot_password', function () {
 })->name('password.forgot');
 
 Route::post('/forgot_password', [LoginController::class, 'storeToken']
-)->name('password.email');
+)->name('password.email_link');
 
 Route::get('/reset-password/{token}', [LoginController::class, 'create']
 )->name('password.reset');

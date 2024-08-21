@@ -27,7 +27,7 @@
                 <h1>Forgot password</h1>
             </div>
             <div class="row">
-                <form action="{{ route('password.email') }}" method="POST" id="forgotForm">
+                <form action="{{ route('password.email_link') }}" method="POST" id="forgotForm">
                     @csrf
                     <div class="form-group row pb-3">
                         <label for="email" class="col-sm-2 col-form-label">Email:</label>
