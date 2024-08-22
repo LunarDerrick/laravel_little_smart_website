@@ -21,9 +21,10 @@ class Post extends Model
     // table fields
     protected $fillable = ['title', 'description', 'images', 'userid', 'createdtime'];
 
-    // setup datetime for Laravel conversion automation
+    // conversion automation
     protected $casts = [
         'createdtime' => 'datetime',
+        'images' => 'array',
     ];
 
     // define one-to-many relationship

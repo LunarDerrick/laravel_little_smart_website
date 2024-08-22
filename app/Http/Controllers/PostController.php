@@ -19,18 +19,12 @@ class PostController extends Controller
      * Display a listing of the resource, exclusive for announcement page.
      *
      * Retrieves all records from 'posts' table, split into several pages,
-     * Decode JSON data for 'posts.images', which converts JSON string to
-     * PHP array. Pass final data to blade view.
+     * pass final data to blade view.
      */
     public function indexHome()
     {
         // Cut-off point for page nav btn is 15 pages (ellipsis will appear)
         $posts = Post::orderBy('createdtime', 'desc')->paginate(5); // number of records per page
-
-        $posts->getCollection()->transform(function ($post) {
-            $post->images = json_decode($post->images);
-            return $post;
-        });
 
         // pass an empty variable
         // $posts = collect();
@@ -135,7 +129,7 @@ class PostController extends Controller
             $post = Post::findOrFail($id);
 
             // Decode the existing image paths
-            $imagePaths = json_decode($post->images, true) ?: [];
+            $imagePaths = $post->images;
 
             // Handle file upload
             if ($request->has('delete-selected-img')) {
@@ -166,7 +160,7 @@ class PostController extends Controller
             $post->update([
                 'title' => $validated['title'],
                 'description' => $sanitizedDescription,
-                'images' => json_encode($imagePaths), // Store JSON-encoded array
+                'images' => $imagePaths, // Store JSON-encoded array [Eloquent no need encode, DB raw need encode]
             ]);
 
             // Commit the transaction
@@ -190,12 +184,9 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
 
-        // Decode the existing image paths
-        $imagePaths = json_decode($post->images, true) ?: [];
-
         if ($post) {
             // Delete image from storage
-            foreach ($imagePaths as $image) {
+            foreach ($post->images as $image) {
                 Storage::delete('public/uploads/' . $image);
             }
 

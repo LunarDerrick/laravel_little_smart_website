@@ -65,12 +65,9 @@
                                             <label for="image"><b>Image</b></label>
                                             <input type="file" accept="image/*" id="images" name="images[]" class="form-control" multiple>
                                             <div id="preview-container">
-                                                @if($post->images && json_decode($post->images, true))
-                                                    @php
-                                                        $imagePaths = json_decode($post->images, true); // Decode the JSON-encoded images
-                                                    @endphp
-                                                    @foreach($imagePaths as $imagePath)
-                                                        <img src="{{ asset('storage/uploads/' . $imagePath) }}" class="img-fluid card-img-top" alt="...">
+                                                @if($post->images)
+                                                    @foreach($post->images as $image)
+                                                        <img src="{{ asset('storage/uploads/' . $image) }}" class="img-fluid card-img-top" alt="...">
                                                     @endforeach
                                                 @else
                                                     <img src="{{ asset('media/placeholder.png') }}" class="img-fluid card-img-top" alt="...">
@@ -124,7 +121,7 @@
     <script type="module">
         // convert server-side value to client-side value and pass to JS function
         window.editorInitialData = @json($post->description);
-        window.imagePaths = @json($post->images ? json_decode($post->images, true) : []);
+        window.images = @json($post->images);
     </script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -167,7 +164,7 @@
 
         // Populate modal with existing images
         deleteImgButton.addEventListener('click', function () {
-            if (window.imagePaths.length === 0) {
+            if (window.images.length === 0) {
                 // include('components.no_records')
                 modalImagesContainer.innerHTML = `
                     <div class="text-center">
@@ -180,16 +177,16 @@
             } else {
                 modalImagesContainer.innerHTML = ''; // Clear existing content
 
-                window.imagePaths.forEach(imagePath => {
+                window.images.forEach(image => {
                     const imgDiv = document.createElement('div');
                     imgDiv.classList.add('image-container');
                     imgDiv.innerHTML = `
                         <div class="row">
                             <div class="col-1 d-flex align-items-center">
-                                <input type="checkbox" name="delete_images[]" value="${imagePath}">
+                                <input type="checkbox" name="delete_images[]" value="${image}">
                             </div>
                             <div class="col-11">
-                                <img src="{{ asset('storage/uploads') }}/${imagePath}" class="img-fluid card-img-top" alt="...">
+                                <img src="{{ asset('storage/uploads') }}/${image}" class="img-fluid card-img-top" alt="...">
                             </div>
                         </div>
                     `;
