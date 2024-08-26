@@ -34,6 +34,18 @@ Related Dependencies:\
    ```
    npm run prod
    ```
+6. Setup .env settings (in particular, database & mailer):
+   ```
+   DB_DATABASE
+   DB_USERNAME
+   DB_PASSWORD
+   MAIL_MAILER=smtp
+   MAIL_HOST
+   MAIL_PORT=587
+   MAIL_USERNAME
+   MAIL_PASSWORD
+   ```
+   You may refer **How to get your SMTP credentials** over [here](https://github.com/InfinityFreeHosting/contactform).
 7. Run migrations and seed the database (to populate the database):
    ```
    php artisan migrate --seed
