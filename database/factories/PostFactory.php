@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Config;
 use App\Models\Post;
 use App\Models\User;
+use App\Services\FileSyncService;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
@@ -37,6 +38,10 @@ class PostFactory extends Factory
 
         // Download and save the image locally
         downloadImage($imageUrl, $localPath);
+
+        // replace symbolic link
+        $fileSyncService = new FileSyncService();
+        $fileSyncService->sync($imageName);
 
         return [
             // randomly assign post maker, may duplicate

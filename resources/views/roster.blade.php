@@ -211,11 +211,15 @@
             var csrfToken = '{{ csrf_token() }}';
 
             fetch(`/roster/${studentID}`, {
-                method: 'DELETE',
+                // method: 'DELETE',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': csrfToken
-                }
+                },
+                body: JSON.stringify({
+                    _method: 'DELETE' // Fake the DELETE method
+                })
             })
             .then(response => response.json())
             .then(data => {

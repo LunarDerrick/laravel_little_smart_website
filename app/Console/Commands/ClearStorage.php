@@ -37,6 +37,8 @@ class ClearStorage extends Command
 
             if (File::exists($path)) {
                 File::cleanDirectory($path);
+                // replace symbolic link
+                File::cleanDirectory(public_path("storage/{$directory}"));
                 $this->info("Cleared: $directory");
             } else {
                 $this->info("Directory does not exist: $path");

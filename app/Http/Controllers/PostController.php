@@ -5,15 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Post;
+use App\Services\FileSyncService;
 use HTMLPurifier;
 use HTMLPurifier_Config;
 
 class PostController extends Controller
 {
+    protected $fileSyncService;
+
+    public function __construct(FileSyncService $fileSyncService)
+    {
+        $this->fileSyncService = $fileSyncService;
+    }
+
     /**
      * (CRUD read)
      * Display a listing of the resource, exclusive for announcement page.
@@ -53,11 +60,6 @@ class PostController extends Controller
             'images.*' => 'nullable|mimes:jpeg,png,gif|max:5120' // accept jpg, png, gif max 5mb
         ]);
 
-        // Ensure the images directory exists
-        if (!File::exists(public_path('uploads'))) {
-            File::makeDirectory(public_path('uploads'), 0755, true);
-        }
-
         try {
             // Start transaction
             DB::beginTransaction();
@@ -68,6 +70,8 @@ class PostController extends Controller
                 foreach ($request->file('images') as $image) {
                     $imagePath = $image->store('public/uploads'); // images are stored in storage/app/imagePath
                     $imagePaths[] = basename($imagePath);
+                    // replace symbolic link
+                    $this->fileSyncService->sync(basename($imagePath));
                 }
             }
 
@@ -116,11 +120,6 @@ class PostController extends Controller
             'images.*' => 'nullable|mimes:jpeg,png,gif|max:5120' // accept jpg, png, gif max 5mb
         ]);
 
-        // Ensure the images directory exists
-        if (!File::exists(public_path('uploads'))) {
-            File::makeDirectory(public_path('uploads'), 0755, true);
-        }
-
         try {
             // Start transaction
             DB::beginTransaction();
@@ -139,6 +138,8 @@ class PostController extends Controller
                 foreach ($selectedImages as $image) {
                     if (($key = array_search($image, $imagePaths)) !== false) {
                         Storage::delete('public/uploads/' . $image);
+                        // replace symbolic link
+                        $this->fileSyncService->delete($image);
                         unset($imagePaths[$key]);
                     }
                 }
@@ -149,6 +150,8 @@ class PostController extends Controller
                 foreach ($request->file('images') as $image) {
                     $imagePath = $image->store('public/uploads');
                     $imagePaths[] = basename($imagePath);
+                    // replace symbolic link
+                    $this->fileSyncService->sync(basename($imagePath));
                 }
             }
 
@@ -188,6 +191,8 @@ class PostController extends Controller
             // Delete image from storage
             foreach ($post->images as $image) {
                 Storage::delete('public/uploads/' . $image);
+                // replace symbolic link
+                $this->fileSyncService->delete($image);
             }
 
             $post->delete();
