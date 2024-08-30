@@ -53,7 +53,7 @@
                                     </tr>
                                     @isset($topScores)
                                         @foreach($topScores as $topScore)
-                                        <tr>
+                                        <tr translate="no">
                                             <td>{{ $topScore['name'] }}</td>
                                             <td>{{ $topScore['subject'] }}</td>
                                             <td>{{ $topScore['score'] }}</td>

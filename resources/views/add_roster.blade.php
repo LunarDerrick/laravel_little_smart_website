@@ -16,97 +16,91 @@
         <a href="{{ route('roster') }}">Go Back</a>
 
         <section>
-            <div class="container">
-                <div class="container section-title ">
-                    <h1>New Entry</h1>
+            <div class="container roster-form">
+                <div class="row sticky">
+                    <div class="col">
+                        <h1>New Entry</h1>
+                    </div>
                 </div>
-
-                <form action="{{ route('roster.add') }}" method="POST" id="rosterForm">
+                <form action="{{ route('roster.add') }}" method="POST">
                     @csrf
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12 form-label">
-                                <label for="name"><b>Name</b></label>
-                                <input type="text" id="name" name="name" class="form-control" required>
-                            </div>
+                    <div class="row">
+                        <div class="col form-label">
+                            <label for="name"><b>Name</b></label>
+                            <input type="text" id="name" name="name" class="form-control" required>
                         </div>
-                        <div class="row">
-                            <div class="form-label">
-                                <label for="age"><b>Age</b></label>
-                                <input type="number" min="1" id="age" name="age" class="form-control" required title="please enter numbers only.">
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col form-label">
+                            <label for="age"><b>Age</b></label>
+                            <input type="number" min="1" id="age" name="age" class="form-control" required>
                         </div>
-                        <div class="row">
-                            <div class="form-label">
-                                <label for="telno"><b>Phone Number</b></label>
-                                <input type="tel"  id="telno" name="telno" class="form-control" required
-                                pattern="([0-9]{3}-[0-9]{7})|([0-9]{3}-[0-9]{8})"
-                                title="format: 012-3456789 OR 011-34567890" aria-describedby="telnoHelp"> {{-- Custom tooltip/hover message --}}
-                                <small id="telnoHelp" class="form-text text-muted">example format: 012-3456789</small>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col form-label">
+                            <label for="telno"><b>Phone Number</b></label>
+                            <input type="tel" id="telno" name="telno" class="form-control" required
+                            pattern="([0-9]{3}-[0-9]{7})|([0-9]{3}-[0-9]{8})"
+                            oninvalid="this.setCustomValidity('Invalid phone number. Example: 012-3456789')" onchange="this.setCustomValidity('')">
                         </div>
-                        <div class="row">
-                            <div class="form-label">
-                                <label for="school"><b>Primary School</b></label>
-                                <input type="text" id="school" name="school" class="form-control" required>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col form-label">
+                            <label for="school"><b>Primary School</b></label>
+                            <input type="text" id="school" name="school" class="form-control" required>
                         </div>
-                        <div class="row">
-                            <div class="form-label">
-                                <label for="standard"><b>Standard</b></label>
-                                <select type="standard" id="standard" name="standard" class="form-select" required>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                </select>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col form-label">
+                            <label for="standard"><b>Standard</b></label>
+                            <select type="standard" id="standard" name="standard" class="form-select" required>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                            </select>
                         </div>
-                        <div class="row">
-                            <div class="form-label">
-                                <h4>Exam Scores</h4>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col form-label">
+                            <h4>Exam Scores</h4>
                         </div>
-                        <div class="row">
-                            <div class="form-label">
-                                <label for="mandarin"><b>Mandarin</b></label>
-                                <input type="number" min="0" max="100" id="mandarin" name="mandarin" class="form-control" required title="please enter numbers only.">
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col form-label">
+                            <label for="mandarin"><b>Mandarin</b></label>
+                            <input type="number" min="0" max="100" step="0.1" id="mandarin" name="mandarin" class="form-control" required>
                         </div>
-                        <div class="row">
-                            <div class="form-label">
-                                <label for="english"><b>English</b></label>
-                                <input type="number" min="0" max="100" id="english" name="english" class="form-control" required title="please enter numbers only.">
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col form-label">
+                            <label for="english"><b>English</b></label>
+                            <input type="number" min="0" max="100" step="0.1" id="english" name="english" class="form-control" required>
                         </div>
-                        <div class="row">
-                            <div class="form-label">
-                                <label for="malay"><b>Malay</b></label>
-                                <input type="number" min="0" max="100" id="malay" name="malay" class="form-control" required title="please enter numbers only.">
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col form-label">
+                            <label for="malay"><b>Malay</b></label>
+                            <input type="number" min="0" max="100" step="0.1" id="malay" name="malay" class="form-control" required>
                         </div>
-                        <div class="row">
-                            <div class="form-label">
-                                <label for="math"><b>Mathematics</b></label>
-                                <input type="number" min="0" max="100" id="math" name="math" class="form-control" required title="please enter numbers only.">
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col form-label">
+                            <label for="math"><b>Mathematics</b></label>
+                            <input type="number" min="0" max="100" step="0.1" id="math" name="math" class="form-control" required>
                         </div>
-                        <div class="row">
-                            <div class="form-label">
-                                <label for="science"><b>Science</b></label>
-                                <input type="number" min="0" max="100" id="science" name="science" class="form-control" required title="please enter numbers only.">
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col form-label">
+                            <label for="science"><b>Science</b></label>
+                            <input type="number" min="0" max="100" step="0.1" id="science" name="science" class="form-control" required>
                         </div>
-                        <div class="row">
-                            <div class="col-md-7">
-                                <div class="row mt-4">
-                                    <div class="col-12">
-                                        <input type="submit" value="Add Entry" class="btn btn-primary">
-                                    </div>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col">
+                            <input type="submit" value="Save" class="btn btn-primary">
                         </div>
                     </div>
                 </form>

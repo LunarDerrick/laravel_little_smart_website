@@ -301,6 +301,21 @@ div#forgot{
     }
 }
 
+.roster-form {
+    max-height: 100vh;
+    overflow-y: auto;
+
+    .sticky {
+        position: sticky;
+        top: 0;
+        background-color: white;
+    }
+
+    .btn {
+        min-width: 100px;
+    }
+}
+
 .img-btn img {
     max-width: 30px;
     height: auto;

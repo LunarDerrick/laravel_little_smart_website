@@ -37,7 +37,7 @@
                         <th>Science</th>
                     </tr>
                     @foreach($students as $student)
-                        <tr>
+                        <tr translate="no">
                             <td>
                                 <a class="img-btn" href="{{ route('roster.edit', ['id' => $student->id]) }}">
                                     <img src="{{ asset('media/edit_img.png') }}" alt="edit">

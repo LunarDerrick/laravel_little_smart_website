@@ -35,7 +35,7 @@
                     <th>Actions</th>
                 </tr>
                 @foreach ($posts as $post)
-                    <tr>
+                    <tr translate="no">
                         <td class="line_break">{{ $post->createdtime->format('Y-m-d H:i:s') }}</td>
                         <td>{{ $post->title }}</td>
                         <td>{{ strip_tags($post->description) }}</td>

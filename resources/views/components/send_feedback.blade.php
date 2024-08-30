@@ -18,7 +18,7 @@
                     <div class="col form-label">
                         Sending as:
                         @auth
-                            {{ Auth::user()->name }}
+                            <span translate="no">{{ Auth::user()->name }}</span>
                         @else
                             Anonymous
                         @endauth

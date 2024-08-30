@@ -24,7 +24,7 @@
                 <div>
                     <h4>{{ $feedback->title }}</h4>
                     <i>{{ $feedback->createdtime->format('Y-m-d H:i:s') }}</i><br>
-                    <p>{{ $feedback->user->name ?? 'Anonymous' }}</p>
+                    <p translate="no">{{ $feedback->user->name ?? 'Anonymous' }}</p>
                     {!! nl2br(e($feedback->description)) !!} {{-- include newline --}}
                 </div>
                 <br><br>

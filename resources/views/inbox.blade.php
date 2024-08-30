@@ -43,7 +43,7 @@
                     <th></th> {{-- ommited, too narrow to fit text --}}
                 </tr>
                 @foreach ($feedbacks as $feedback)
-                    <tr class="{{ $feedback->is_read ? 'read' : 'unread' }}">
+                    <tr class="{{ $feedback->is_read ? 'read' : 'unread' }}" translate="no">
                         <td><input type="checkbox" class="select-item" data-feedback-id="{{ $feedback->msgid }}" /></td>
                         <td class="line_break">{{ $feedback->createdtime->format('Y-m-d H:i:s') }}</td>
                         <td>{{ $feedback->user->name ?? 'Anonymous' }}</td>

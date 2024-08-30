@@ -29,7 +29,10 @@
         @auth
             <h1>Welcome, {{ Auth::user()->name }}.</h1>
         @else
-            <h1>小聪明安亲班 Little Smart Day Care Centre</h1>
+            <h1>
+                <span translate="no">小聪明安亲班</span>
+                <span>Little Smart Day Care Centre</span>
+            </h1>
         @endauth
         <br>
 
