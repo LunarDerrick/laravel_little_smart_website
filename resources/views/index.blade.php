@@ -27,7 +27,10 @@
         @include('components.alert_notification')
 
         @auth
-            <h1>Welcome, {{ Auth::user()->name }}.</h1>
+            <h1>
+                <span>Welcome,</span>
+                <span translate="no">{{ Auth::user()->name }}</span><span>.</span>
+            </h1>
         @else
             <h1>
                 <span translate="no">小聪明安亲班</span>
