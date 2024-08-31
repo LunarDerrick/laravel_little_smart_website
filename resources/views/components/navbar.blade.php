@@ -6,7 +6,7 @@
     <ul class="navbar-nav ms-auto">
         <li class="nav-item">
             @auth
-                <b><a class="nav-link" href="{{ route('roster') }}" translate="no">{{ Auth::user()->name }}</a></b>
+                <b><a class="nav-link" href="{{ route('profile') }}" translate="no">{{ Auth::user()->name }}</a></b>
             @else
                 <a class="nav-link" href="{{ route('login') }}">Teacher Login</a>
             @endauth

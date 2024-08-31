@@ -10,6 +10,7 @@ use App\Http\Controllers\RosterController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 // use App\Http\Controllers\Auth\NewPasswordController;
 // use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Middleware\CheckRole;
 use App\Http\Middleware\CheckSessionTimeout;
 use App\Http\Middleware\RedirectIfAuthenticated;
 
@@ -52,80 +53,86 @@ Route::middleware([CheckSessionTimeout::class])->group(function () {
          * if a page needs to pass variable/fetch from database, include controller in routing like below
          * index is function name, and the function will be in charge of returning relevant view
         */
-        Route::get('/roster', [RosterController::class, 'index']
-        )->name('roster');
+        Route::middleware([CheckRole::class . ':teacher'])->group(function () {
+            Route::get('/roster', [RosterController::class, 'index']
+            )->name('roster');
 
-        Route::get('/add_roster', function () {
-            return view('add_roster');
-        })->name('add_roster');
+            Route::get('/add_roster', function () {
+                return view('add_roster');
+            })->name('add_roster');
 
-        Route::post('/add_roster', [RosterController::class, 'store']
-        )->name('roster.add');
+            Route::post('/add_roster', [RosterController::class, 'store']
+            )->name('roster.add');
 
-        Route::get('/edit_roster/{id}', [RosterController::class, 'edit']
-        )->name('roster.edit');
+            Route::get('/edit_roster/{id}', [RosterController::class, 'edit']
+            )->name('roster.edit');
 
-        Route::put('/edit_roster/{id}', [RosterController::class, 'update']
-        )->name('roster.update');
+            Route::put('/edit_roster/{id}', [RosterController::class, 'update']
+            )->name('roster.update');
 
-        Route::delete('/roster/{id}', [RosterController::class, 'destroy']
-        )->name('roster.delete');
+            Route::delete('/roster/{id}', [RosterController::class, 'destroy']
+            )->name('roster.delete');
 
-        Route::get('/analysis', [AnalysisController::class, 'topScore']
-        )->name('analysis');
+            Route::get('/analysis', [AnalysisController::class, 'topScore']
+            )->name('analysis');
 
-        Route::get('/no-record', [AnalysisController::class, 'showNoRecords']);
+            Route::get('/no-record', [AnalysisController::class, 'showNoRecords']);
 
-        Route::get('/chart-data-1', [AnalysisController::class, 'getPassingRate']);
-        Route::get('/chart-data-2', [AnalysisController::class, 'getAvgScore']);
-        Route::get('/chart-data-3', [AnalysisController::class, 'getMandarinGrade']);
-        Route::get('/chart-data-4', [AnalysisController::class, 'getEnglishGrade']);
-        Route::get('/chart-data-5', [AnalysisController::class, 'getMalayGrade']);
-        Route::get('/chart-data-6', [AnalysisController::class, 'getMathGrade']);
-        Route::get('/chart-data-7', [AnalysisController::class, 'getScienceGrade']);
+            Route::get('/chart-data-1', [AnalysisController::class, 'getPassingRate']);
+            Route::get('/chart-data-2', [AnalysisController::class, 'getAvgScore']);
+            Route::get('/chart-data-3', [AnalysisController::class, 'getMandarinGrade']);
+            Route::get('/chart-data-4', [AnalysisController::class, 'getEnglishGrade']);
+            Route::get('/chart-data-5', [AnalysisController::class, 'getMalayGrade']);
+            Route::get('/chart-data-6', [AnalysisController::class, 'getMathGrade']);
+            Route::get('/chart-data-7', [AnalysisController::class, 'getScienceGrade']);
 
-        Route::get('/inbox', [FeedbackController::class, 'index']
-        )->name('feedback.list');
+            Route::get('/inbox', [FeedbackController::class, 'index']
+            )->name('feedback.list');
 
-        Route::get('/feedback/{id}', [FeedbackController::class, 'show']
-        )->name('feedback');
+            Route::get('/feedback/{id}', [FeedbackController::class, 'show']
+            )->name('feedback');
 
-        Route::post('/add_feedback', [FeedbackController::class, 'store']
-        )->name('feedback.add');
+            Route::post('/add_feedback', [FeedbackController::class, 'store']
+            )->name('feedback.add');
 
-        Route::post('/read_selected_feedbacks', [FeedbackController::class, 'readSelected']
-        )->name('feedback.read_selected');
+            Route::post('/read_selected_feedbacks', [FeedbackController::class, 'readSelected']
+            )->name('feedback.read_selected');
 
-        Route::post('/feedback/{id}/unread_feedback', [FeedbackController::class, 'unread']
-        )->name('feedback.unread');
+            Route::post('/feedback/{id}/unread_feedback', [FeedbackController::class, 'unread']
+            )->name('feedback.unread');
 
-        Route::post('/unread_selected_feedbacks', [FeedbackController::class, 'unreadSelected']
-        )->name('feedback.unread_selected');
+            Route::post('/unread_selected_feedbacks', [FeedbackController::class, 'unreadSelected']
+            )->name('feedback.unread_selected');
 
-        Route::delete('/feedback/{id}', [FeedbackController::class, 'destroy']
-        )->name('feedback.delete');
+            Route::delete('/feedback/{id}', [FeedbackController::class, 'destroy']
+            )->name('feedback.delete');
 
-        Route::delete('/delete_selected_feedbacks', [FeedbackController::class, 'destroySelected']
-        )->name('feedback.delete_selected');
+            Route::delete('/delete_selected_feedbacks', [FeedbackController::class, 'destroySelected']
+            )->name('feedback.delete_selected');
 
-        Route::get('/post', [PostController::class, 'indexList']
-        )->name('post');
+            Route::get('/post', [PostController::class, 'indexList']
+            )->name('post');
 
-        Route::get('/add_post', function () {
-            return view('add_post');
-        })->name('add_post');
+            Route::get('/add_post', function () {
+                return view('add_post');
+            })->name('add_post');
 
-        Route::post('/add_post', [PostController::class, 'store']
-        )->name('post.add');
+            Route::post('/add_post', [PostController::class, 'store']
+            )->name('post.add');
 
-        Route::get('/edit_post/{id}', [PostController::class, 'edit']
-        )->name('post.edit');
+            Route::get('/edit_post/{id}', [PostController::class, 'edit']
+            )->name('post.edit');
 
-        Route::put('/edit_post/{id}', [PostController::class, 'update']
-        )->name('post.update');
+            Route::put('/edit_post/{id}', [PostController::class, 'update']
+            )->name('post.update');
 
-        Route::delete('/post/{id}', [PostController::class, 'destroy']
-        )->name('post.delete');
+            Route::delete('/post/{id}', [PostController::class, 'destroy']
+            )->name('post.delete');
+        });
+
+        Route::get('/profile', function () {
+            return view('profile');
+        })->name('profile');
 
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']
         )->name('logout');
@@ -150,6 +157,10 @@ Route::middleware(RedirectIfAuthenticated::class)->group(function () {
 });
 
 // no condition check required
+Route::get('/access_denied', function () {
+    return view('access_denied');
+})->name('access.denied');
+
 Route::post('/add_feedback', [FeedbackController::class, 'store']
 )->name('feedback.add');
 
