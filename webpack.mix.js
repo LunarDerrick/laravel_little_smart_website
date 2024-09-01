@@ -12,8 +12,10 @@ mix.js('resources/js/app.js', 'public/js')
        'resources/css/bootstrap.min.css',
        'resources/css/ckeditor.css',
        'resources/css/feedback.css',
+       'resources/css/form.css',
        'resources/css/graph.css',
        'resources/css/main.css',
+       'resources/css/query.css',
     ], 'public/style.css')
     .copyDirectory('resources/js/ckeditor', 'public/js/ckeditor')
     .version();

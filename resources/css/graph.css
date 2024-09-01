@@ -16,14 +16,12 @@ canvas.piechart {
 
 .card-body {
     padding: 16px 16px 0;
-
-    h6 {
-        text-align: center;
-    }
 }
 
-#table-graph {
-    th, td {
-        border-width: 1px;
-    }
+.card-body h6 {
+    text-align: center;
+}
+
+#table-graph th, #table-graph td {
+    border-width: 1px;
 }

@@ -1,0 +1,44 @@
+.form-center {
+    margin: auto;
+    width: 40%;
+}
+
+.form-center h1 {
+    text-align: center;
+}
+
+.form-center button {
+    min-width: 100px;
+    float: right;
+}
+
+.form-center a {
+    text-align: right;
+}
+
+.form-center .form-group {
+    align-items: center;
+}
+
+.form-center .form-group label.long {
+    line-height: 1.2;
+}
+
+#editpost-form .btn {
+    min-width: 110px;
+}
+
+.roster-form {
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+.roster-form .sticky {
+    position: sticky;
+    top: 0;
+    background-color: white;
+}
+
+.roster-form .btn {
+    min-width: 100px;
+}

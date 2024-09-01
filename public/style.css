@@ -47,25 +47,25 @@
     border-bottom-right-radius: 0;
     background-color: white;
     z-index: 4; /* to appear in front of pagination nav */
+}
 
-    .btn i {
-        font-size: 1.25rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        width: 100%;
-        padding: 0;
-        margin: 0;
-    }
+.message-box .btn i {
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
 
-    textarea {
-        resize: none;
-    }
+.message-box textarea {
+    resize: none;
+}
 
-    input.btn {
-        width: 100%;
-    }
+.message-box input.btn {
+    width: 100%;
 }
 
 .message-header {
@@ -88,16 +88,61 @@ div.feedback {
 .feedback-action {
     display: flex;
     justify-content: center;
+}
 
-    button {
-        min-width: 100px;
-        margin: 0 10px;
-    }
+.feedback-action button {
+    min-width: 100px;
+    margin: 0 10px;
 }
 
 .unread {
     font-weight: bold;
     background-color: lightyellow;
+}
+
+.form-center {
+    margin: auto;
+    width: 40%;
+}
+
+.form-center h1 {
+    text-align: center;
+}
+
+.form-center button {
+    min-width: 100px;
+    float: right;
+}
+
+.form-center a {
+    text-align: right;
+}
+
+.form-center .form-group {
+    align-items: center;
+}
+
+.form-center .form-group label.long {
+    line-height: 1.2;
+}
+
+#editpost-form .btn {
+    min-width: 110px;
+}
+
+.roster-form {
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+.roster-form .sticky {
+    position: sticky;
+    top: 0;
+    background-color: white;
+}
+
+.roster-form .btn {
+    min-width: 100px;
 }
 
 canvas {
@@ -118,24 +163,18 @@ canvas.piechart {
 
 .card-body {
     padding: 16px 16px 0;
-
-    h6 {
-        text-align: center;
-    }
 }
 
-#table-graph {
-    th, td {
-        border-width: 1px;
-    }
+.card-body h6 {
+    text-align: center;
+}
+
+#table-graph th, #table-graph td {
+    border-width: 1px;
 }
 
 .btn-warning {
     color: black; /* improve contrast */
-}
-
-#tablet, #mobile {
-    display: none;
 }
 
 section {
@@ -195,29 +234,28 @@ nav[aria-label] {
 table#post {
     width: 100%;
     table-layout: fixed;
+}
 
-    /* child elements under <table id="post"> */
-    th, td {
-        border: 1px solid black;
-        padding: 10px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+table#post th, table#post td {
+    border: 1px solid black;
+    padding: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
-    col#date {
-        width: 15%;
-    }
+table#post col#date {
+    width: 15%;
+}
 
-    col#title {
-        width: 30%;
-    }
+table#post col#title {
+    width: 30%;
+}
 
-    /* col#description takes up the rest of the width */
+/* col#description takes up the rest of the width */
 
-    col#action {
-        width: 13%;
-    }
+table#post col#action {
+    width: 13%;
 }
 
 th {
@@ -231,44 +269,12 @@ button.crud {
     margin-left: 20px;
 }
 
-.form-center {
-    margin: auto;
-    width: 40%;
-
-    h1 {
-        text-align: center;
-    }
-
-    button {
-        min-width: 100px;
-        float: right;
-    }
-
-    a {
-        text-align: right;
-    }
-
-    .form-group {
-        align-items: center;
-
-        label.long {
-            line-height: 1.2;
-        }
-    }
-}
-
 .spinner-border {
     display: none;
 }
 
 div#forgot{
     text-align: center;
-}
-
-#editpost-form {
-    .btn {
-        min-width: 110px;
-    }
 }
 
 .no-padding {
@@ -282,38 +288,23 @@ div#forgot{
 
 #roster {
     overflow-x: auto;
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        white-space: nowrap;
-    }
-
-    th, td {
-        border: 1px solid black;
-        padding: 10px;
-        text-align: left;
-    }
-
-    th {
-        position: sticky;
-        top: 0;
-    }
 }
 
-.roster-form {
-    max-height: 100vh;
-    overflow-y: auto;
+#roster table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
 
-    .sticky {
-        position: sticky;
-        top: 0;
-        background-color: white;
-    }
+#roster th, #roster td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: left;
+}
 
-    .btn {
-        min-width: 100px;
-    }
+#roster th {
+    position: sticky;
+    top: 0;
 }
 
 .img-btn img {
@@ -336,49 +327,53 @@ a.img-btn {
 table#feedback {
     width: 100%;
     table-layout: fixed;
+}
 
-    th, td {
-        border: 1px solid black;
-        padding: 10px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+table#feedback th, table#feedback td {
+    border: 1px solid black;
+    padding: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
-    col#select {
-        width: 34px;
-    }
+table#feedback col#select {
+    width: 34px;
+}
 
-    col#date {
-        width: 15%;
-    }
+table#feedback col#date {
+    width: 15%;
+}
 
-    col#name {
-        width: 18%;
-    }
+table#feedback col#name {
+    width: 18%;
+}
 
-    col#title {
-        width: 25%;
-    }
+table#feedback col#title {
+    width: 25%;
+}
 
-    /* col#description takes up the rest of the width */
+/* col#description takes up the rest of the width */
 
-    col#action {
-        width: 51px;
-    }
+table#feedback col#action {
+    width: 51px;
 }
 
 .feedback-list-action {
     display: flex;
     justify-content: flex-end;
-
-    button {
-        margin: 0 10px;
-    }
 }
 
-.rich-text-editor {
-    display: block;
+.feedback-list-action button {
+    margin: 0 10px;
+}
+
+.action {
+    text-align: center;
+}
+
+.action button {
+    margin: 0 5px;
 }
 
 footer {
@@ -395,6 +390,18 @@ body {
 /* isolate forms for proper responsive elements */
 body.form {
     display: block;
+}
+
+#tablet, #mobile {
+    display: none;
+}
+
+.action {
+    text-align: center;
+}
+
+.action button {
+    margin: 0 5px;
 }
 
 /* REMINDER: media query should be place at end of file, higher override priority*/
@@ -426,17 +433,18 @@ body.form {
         width: 65%;
     }
 
-    table#feedback {
-        col#date {
-            width: 16%;
-        }
+    table#feedback col#date {
+        width: 16%;
     }
 }
 
 /* This condition activates when preview screen is shorter than given max width. */
 /* This is generally for most smartphones */
 @media screen and (max-width: 479px) {
-    #PC, #tablet {
+    #PC, #tablet, col#description, table#feedback col#name,
+    table#post th:nth-child(3), table#post td:nth-child(3),
+    table#feedback th:nth-child(3), table#feedback td:nth-child(3),
+    table#feedback th:nth-child(5), table#feedback td:nth-child(5) {
         display: none;
     }
 
@@ -469,40 +477,20 @@ body.form {
         width: 70%;
     }
 
-    table#post {
-        th:nth-child(3), td:nth-child(3) {
-            display: none;
-        }
+    table#feedback col#select {
+        width: 5%;
     }
 
-    table#feedback {
-        th:nth-child(3), td:nth-child(3), th:nth-child(5), td:nth-child(5) {
-            display: none;
-        }
+    table#feedback col#date {
+        width: 16%;
+    }
 
-        col#select {
-            width: 5%;
-        }
-
-        col#date {
-            width: 16%;
-        }
-
-        col#name {
-            display: none;
-        }
-
-        col#action {
-            width: 7%;
-        }
+    table#feedback col#action {
+        width: 7%;
     }
 
     col#date {
         width: 30%;
-    }
-
-    col#description {
-        display: none;
     }
 
     #roster {
@@ -516,9 +504,9 @@ body.form {
 
     .feedback-list-action {
         justify-content: center;
+    }
 
-        .btn {
-            order: initial; /* Maintain initial order */
-        }
+    .feedback-list-action .btn {
+        order: initial; /* Maintain initial order */
     }
 }

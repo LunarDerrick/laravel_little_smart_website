@@ -9,25 +9,25 @@
     border-bottom-right-radius: 0;
     background-color: white;
     z-index: 4; /* to appear in front of pagination nav */
+}
 
-    .btn i {
-        font-size: 1.25rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        width: 100%;
-        padding: 0;
-        margin: 0;
-    }
+.message-box .btn i {
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
 
-    textarea {
-        resize: none;
-    }
+.message-box textarea {
+    resize: none;
+}
 
-    input.btn {
-        width: 100%;
-    }
+.message-box input.btn {
+    width: 100%;
 }
 
 .message-header {
@@ -50,11 +50,11 @@ div.feedback {
 .feedback-action {
     display: flex;
     justify-content: center;
+}
 
-    button {
-        min-width: 100px;
-        margin: 0 10px;
-    }
+.feedback-action button {
+    min-width: 100px;
+    margin: 0 10px;
 }
 
 .unread {

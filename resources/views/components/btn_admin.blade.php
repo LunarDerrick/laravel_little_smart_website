@@ -4,5 +4,5 @@
 <button type="button" class="btn btn-primary mobile" onclick="window.location='{{ route('post') }}'">Edit Post</button>
 <form method="POST" action="{{ route('logout') }}" id="logout">
     @csrf
-    <button type="submit" class="btn btn-primary mobile">Logout</button>
+    <button type="submit" class="btn btn-danger mobile">Logout</button>
 </form>

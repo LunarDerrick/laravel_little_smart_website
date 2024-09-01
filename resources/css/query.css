@@ -1,0 +1,110 @@
+#tablet, #mobile {
+    display: none;
+}
+
+/* REMINDER: media query should be place at end of file, higher override priority*/
+
+/* This condition activates when preview screen is shorter than given max width. */
+/* This is exclusive for tablets */
+@media screen and (max-width: 768px) {
+    #PC, #mobile {
+        display: none;
+    }
+
+    #tablet {
+        display: block;
+    }
+
+    button.tablet {
+        display: block;
+        width: 100%;
+        margin: 5px auto;
+        /* to fix some misaligned text */
+        padding: 10px;
+    }
+
+    .form-center {
+        width: 50%;
+    }
+
+    .form-center.extend {
+        width: 65%;
+    }
+
+    table#feedback col#date {
+        width: 16%;
+    }
+}
+
+/* This condition activates when preview screen is shorter than given max width. */
+/* This is generally for most smartphones */
+@media screen and (max-width: 479px) {
+    #PC, #tablet, col#description, table#feedback col#name,
+    table#post th:nth-child(3), table#post td:nth-child(3),
+    table#feedback th:nth-child(3), table#feedback td:nth-child(3),
+    table#feedback th:nth-child(5), table#feedback td:nth-child(5) {
+        display: none;
+    }
+
+    #mobile {
+        display: block;
+    }
+
+    .center {
+        margin: auto;
+        width: 97%;
+    }
+
+    .slick-slide {
+        padding: 0 1px;
+    }
+
+    button.mobile {
+        display: block;
+        width: 100%;
+        margin: 5px auto;
+        /* to fix some misaligned text */
+        padding: 10px;
+    }
+
+    .line_break {
+        white-space: initial;
+    }
+
+    .form-center {
+        width: 70%;
+    }
+
+    table#feedback col#select {
+        width: 5%;
+    }
+
+    table#feedback col#date {
+        width: 16%;
+    }
+
+    table#feedback col#action {
+        width: 7%;
+    }
+
+    col#date {
+        width: 30%;
+    }
+
+    #roster {
+        width: 95vw;
+    }
+
+    .modal-dialog {
+        max-width: 90%;
+        margin: 1.75rem auto;
+    }
+
+    .feedback-list-action {
+        justify-content: center;
+    }
+
+    .feedback-list-action .btn {
+        order: initial; /* Maintain initial order */
+    }
+}

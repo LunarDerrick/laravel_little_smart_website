@@ -2,10 +2,6 @@
     color: black; /* improve contrast */
 }
 
-#tablet, #mobile {
-    display: none;
-}
-
 section {
     margin: 10px;
 }
@@ -63,29 +59,28 @@ nav[aria-label] {
 table#post {
     width: 100%;
     table-layout: fixed;
+}
 
-    /* child elements under <table id="post"> */
-    th, td {
-        border: 1px solid black;
-        padding: 10px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+table#post th, table#post td {
+    border: 1px solid black;
+    padding: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
-    col#date {
-        width: 15%;
-    }
+table#post col#date {
+    width: 15%;
+}
 
-    col#title {
-        width: 30%;
-    }
+table#post col#title {
+    width: 30%;
+}
 
-    /* col#description takes up the rest of the width */
+/* col#description takes up the rest of the width */
 
-    col#action {
-        width: 13%;
-    }
+table#post col#action {
+    width: 13%;
 }
 
 th {
@@ -99,44 +94,12 @@ button.crud {
     margin-left: 20px;
 }
 
-.form-center {
-    margin: auto;
-    width: 40%;
-
-    h1 {
-        text-align: center;
-    }
-
-    button {
-        min-width: 100px;
-        float: right;
-    }
-
-    a {
-        text-align: right;
-    }
-
-    .form-group {
-        align-items: center;
-
-        label.long {
-            line-height: 1.2;
-        }
-    }
-}
-
 .spinner-border {
     display: none;
 }
 
 div#forgot{
     text-align: center;
-}
-
-#editpost-form {
-    .btn {
-        min-width: 110px;
-    }
 }
 
 .no-padding {
@@ -150,38 +113,23 @@ div#forgot{
 
 #roster {
     overflow-x: auto;
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        white-space: nowrap;
-    }
-
-    th, td {
-        border: 1px solid black;
-        padding: 10px;
-        text-align: left;
-    }
-
-    th {
-        position: sticky;
-        top: 0;
-    }
 }
 
-.roster-form {
-    max-height: 100vh;
-    overflow-y: auto;
+#roster table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
 
-    .sticky {
-        position: sticky;
-        top: 0;
-        background-color: white;
-    }
+#roster th, #roster td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: left;
+}
 
-    .btn {
-        min-width: 100px;
-    }
+#roster th {
+    position: sticky;
+    top: 0;
 }
 
 .img-btn img {
@@ -204,49 +152,53 @@ a.img-btn {
 table#feedback {
     width: 100%;
     table-layout: fixed;
+}
 
-    th, td {
-        border: 1px solid black;
-        padding: 10px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+table#feedback th, table#feedback td {
+    border: 1px solid black;
+    padding: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
-    col#select {
-        width: 34px;
-    }
+table#feedback col#select {
+    width: 34px;
+}
 
-    col#date {
-        width: 15%;
-    }
+table#feedback col#date {
+    width: 15%;
+}
 
-    col#name {
-        width: 18%;
-    }
+table#feedback col#name {
+    width: 18%;
+}
 
-    col#title {
-        width: 25%;
-    }
+table#feedback col#title {
+    width: 25%;
+}
 
-    /* col#description takes up the rest of the width */
+/* col#description takes up the rest of the width */
 
-    col#action {
-        width: 51px;
-    }
+table#feedback col#action {
+    width: 51px;
 }
 
 .feedback-list-action {
     display: flex;
     justify-content: flex-end;
-
-    button {
-        margin: 0 10px;
-    }
 }
 
-.rich-text-editor {
-    display: block;
+.feedback-list-action button {
+    margin: 0 10px;
+}
+
+.action {
+    text-align: center;
+}
+
+.action button {
+    margin: 0 5px;
 }
 
 footer {
@@ -263,130 +215,4 @@ body {
 /* isolate forms for proper responsive elements */
 body.form {
     display: block;
-}
-
-/* REMINDER: media query should be place at end of file, higher override priority*/
-
-/* This condition activates when preview screen is shorter than given max width. */
-/* This is exclusive for tablets */
-@media screen and (max-width: 768px) {
-    #PC, #mobile {
-        display: none;
-    }
-
-    #tablet {
-        display: block;
-    }
-
-    button.tablet {
-        display: block;
-        width: 100%;
-        margin: 5px auto;
-        /* to fix some misaligned text */
-        padding: 10px;
-    }
-
-    .form-center {
-        width: 50%;
-    }
-
-    .form-center.extend {
-        width: 65%;
-    }
-
-    table#feedback {
-        col#date {
-            width: 16%;
-        }
-    }
-}
-
-/* This condition activates when preview screen is shorter than given max width. */
-/* This is generally for most smartphones */
-@media screen and (max-width: 479px) {
-    #PC, #tablet {
-        display: none;
-    }
-
-    #mobile {
-        display: block;
-    }
-
-    .center {
-        margin: auto;
-        width: 97%;
-    }
-
-    .slick-slide {
-        padding: 0 1px;
-    }
-
-    button.mobile {
-        display: block;
-        width: 100%;
-        margin: 5px auto;
-        /* to fix some misaligned text */
-        padding: 10px;
-    }
-
-    .line_break {
-        white-space: initial;
-    }
-
-    .form-center {
-        width: 70%;
-    }
-
-    table#post {
-        th:nth-child(3), td:nth-child(3) {
-            display: none;
-        }
-    }
-
-    table#feedback {
-        th:nth-child(3), td:nth-child(3), th:nth-child(5), td:nth-child(5) {
-            display: none;
-        }
-
-        col#select {
-            width: 5%;
-        }
-
-        col#date {
-            width: 16%;
-        }
-
-        col#name {
-            display: none;
-        }
-
-        col#action {
-            width: 7%;
-        }
-    }
-
-    col#date {
-        width: 30%;
-    }
-
-    col#description {
-        display: none;
-    }
-
-    #roster {
-        width: 95vw;
-    }
-
-    .modal-dialog {
-        max-width: 90%;
-        margin: 1.75rem auto;
-    }
-
-    .feedback-list-action {
-        justify-content: center;
-
-        .btn {
-            order: initial; /* Maintain initial order */
-        }
-    }
 }
