@@ -57,4 +57,18 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        // Fetch the current authenticated user
+        $user = Auth::user();
+
+        // pass an empty variable
+        // $user = null;
+
+        return view('profile', compact('user'));
+    }
 }

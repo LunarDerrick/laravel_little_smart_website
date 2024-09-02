@@ -215,6 +215,10 @@ nav[aria-label] {
     width: 45%;
 }
 
+.center.text {
+    text-align: center;
+}
+
 .slick-carousel {
     max-width: 600px;
 }

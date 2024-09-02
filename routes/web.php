@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AnalysisController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\LoginController;
@@ -13,11 +13,12 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Middleware\CheckRole;
 use App\Http\Middleware\CheckSessionTimeout;
 use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\SingleSessionRedirect;
 
 require __DIR__.'/auth.php';
 
 // Session timeout check wrapper
-Route::middleware([CheckSessionTimeout::class])->group(function () {
+Route::middleware([CheckSessionTimeout::class, SingleSessionRedirect::class])->group(function () {
 
     // landing page reference
     // Route::get('/', function () {
@@ -53,6 +54,9 @@ Route::middleware([CheckSessionTimeout::class])->group(function () {
          * if a page needs to pass variable/fetch from database, include controller in routing like below
          * index is function name, and the function will be in charge of returning relevant view
         */
+        Route::get('/profile', [ProfileController::class, 'index']
+        )->name('profile');
+
         Route::middleware([CheckRole::class . ':teacher'])->group(function () {
             Route::get('/roster', [RosterController::class, 'index']
             )->name('roster');
@@ -129,15 +133,17 @@ Route::middleware([CheckSessionTimeout::class])->group(function () {
             Route::delete('/post/{id}', [PostController::class, 'destroy']
             )->name('post.delete');
         });
-
-        Route::get('/profile', function () {
-            return view('profile');
-        })->name('profile');
-
-        Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']
-        )->name('logout');
     });
 
+});
+
+Route::middleware([CheckSessionTimeout::class, 'auth'])->group(function () {
+    Route::get('/session_conflict', function () {
+        return view('session_conflict');
+    })->name('session_conflict');
+
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']
+    )->name('logout');
 });
 
 // Ensure only unauthenticated users may access these
