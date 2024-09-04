@@ -1,6 +1,32 @@
 ### 小聪明网站 Little Smart Website 
 This project is to create an exclusive website for Little Smart Day Care Center(小聪明安亲班). It also serves as WIA3002 Academic Project I's final year project.
 
+### Features:
+# Homepage/Announcement
+![Homepage](https://github.com/LunarDerrick/laravel_little_smart_website/blob/main/storage/showcase/homepage.png)
+Simple landing page to view recent news that supports basic images and video embeds, feedback section to send your ideas to us, and AI Chatbot to answer your FAQs powered by [Tidio](https://www.tidio.com/).
+<br><br><br>
+
+# Login
+![Forgot Password](https://github.com/LunarDerrick/laravel_little_smart_website/blob/main/storage/showcase/forgot.png)
+Forgot your password? This module allows you to provide email that matches your account, which will subsequently send a password reset link to your inbox.
+<br><br><br>
+
+# Exam Analysis
+![Exam Analysis](https://github.com/LunarDerrick/laravel_little_smart_website/blob/main/storage/showcase/analysis.png)
+Once you have populated Name List with enough data, you can view the most demanded infographics, updated real-time based on your records.
+<br><br><br>
+
+# Table Sorting
+![Table Sort](https://github.com/LunarDerrick/laravel_little_smart_website/blob/main/storage/showcase/sort.png)
+Your tables getting too clustered and wish to sort in ascending or descending order? We got you covered.
+<br><br><br>
+
+# Utilised Form
+![Edit Form](https://github.com/LunarDerrick/laravel_little_smart_website/blob/main/storage/showcase/edit.png)
+We use rich text editor toolbar powered by [CKEditor](https://ckeditor.com/) to provide you minimal effort to spice up your content, the option to preview your images before uploading, the option to choose what media you no longer need.
+<br><br><br>
+
 To learn more about the stakeholder:\
 Facebook: [Little Smart Day Care Centre](https://www.facebook.com/p/%E5%B0%8F%E8%81%AA%E6%98%8ELittle-Smart-Day-Care-Centre-100064129656590) <br />
 E-mail: littlesmartdaycare@gmail.com\
