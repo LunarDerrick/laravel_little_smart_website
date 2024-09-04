@@ -111,6 +111,26 @@
     </section>
 
     @include('components.footer')
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const phoneInput = document.getElementById('telno');
+
+            phoneInput.addEventListener('input', function(e) {
+                let value = phoneInput.value;
+
+                // Remove existing dashes to prevent repeated dashes
+                value = value.replace(/-/g, '');
+
+                // Insert a dash after the third digit
+                if (value.length > 3) {
+                    value = value.slice(0, 3) + '-' + value.slice(3);
+                }
+
+                phoneInput.value = value;
+            });
+        });
+    </script>
 </body>
 
 </html>

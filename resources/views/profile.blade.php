@@ -2,7 +2,7 @@
 <html lang="en">
 
 @php
-use App\Helpers\roleHelper;
+use App\Http\Helpers\roleHelper;
 @endphp
 
 <head>
