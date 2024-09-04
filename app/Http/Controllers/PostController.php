@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Post;
 use App\Services\FileSyncService;
+use App\Services\VideoConversionService;
 use HTMLPurifier;
 use HTMLPurifier_Config;
 
@@ -51,25 +52,33 @@ class PostController extends Controller
     }
 
     // validate input then add to database
-    public function store(Request $request)
+    public function store(Request $request, VideoConversionService $videoConversionService)
     {
         // validate input
         $validated = $request->validate([
             'title' => 'required|string',
             'description' => 'nullable|string',
-            'images.*' => 'nullable|mimes:jpeg,png,gif|max:5120' // accept jpg, png, gif max 5mb
+            'images.*' => 'nullable|mimes:jpeg,png,gif|max:5120', // accept jpg, png, gif max 5mb
+            'video' => 'nullable|url',
         ]);
 
         try {
             // Start transaction
             DB::beginTransaction();
 
+            $mediaPaths = [];
+
+            // Process video URLs
+            if ($request->has('video') && !empty($request->video)) {
+                $embedUrl = $videoConversionService->convertVideoToEmbed($request->video);
+                $mediaPaths[] = ['type' => 'video', 'url' => $embedUrl];
+            }
+
             // Handle multiple file uploads
-            $imagePaths = [];
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $image) {
                     $imagePath = $image->store('public/uploads'); // images are stored in storage/app/imagePath
-                    $imagePaths[] = basename($imagePath);
+                    $mediaPaths[] = ['type' => 'image', 'url' => basename($imagePath)];
                     // replace symbolic link
                     $this->fileSyncService->sync(basename($imagePath));
                 }
@@ -85,7 +94,7 @@ class PostController extends Controller
                 'userid' => Auth::id(), // Fetch current user's id
                 'title' => $validated['title'],
                 'description' => $sanitizedDescription,
-                'images' => json_encode($imagePaths), // Store JSON-encoded array
+                'media' => json_encode($mediaPaths), // Store JSON-encoded array
                 'createdtime' => now(),
             ]);
 
@@ -111,13 +120,14 @@ class PostController extends Controller
     }
 
     // CRUD update
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, VideoConversionService $videoConversionService)
     {
         // Validate input
         $validated = $request->validate([
             'title' => 'required|string',
             'description' => 'nullable|string',
-            'images.*' => 'nullable|mimes:jpeg,png,gif|max:5120' // accept jpg, png, gif max 5mb
+            'images.*' => 'nullable|mimes:jpeg,png,gif|max:5120', // accept jpg, png, gif max 5mb
+            'video' => 'nullable|url',
         ]);
 
         try {
@@ -127,29 +137,42 @@ class PostController extends Controller
             // Update posts table
             $post = Post::findOrFail($id);
 
-            // Decode the existing image paths
-            $imagePaths = $post->images;
+            // Decode the existing media paths
+            $mediaPaths = $post->media;
 
             // Handle file upload
-            if ($request->has('delete-selected-img')) {
-                $selectedImages = explode(',', $request->input('delete-selected-img'));
+            if ($request->has('delete-selected-media')) {
+                $selectedMedia = explode(',', $request->input('delete-selected-media'));
 
                 // Delete selected images
-                foreach ($selectedImages as $image) {
-                    if (($key = array_search($image, $imagePaths)) !== false) {
-                        Storage::delete('public/uploads/' . $image);
-                        // replace symbolic link
-                        $this->fileSyncService->delete($image);
-                        unset($imagePaths[$key]);
+                foreach ($selectedMedia as $select) {
+                    foreach ($mediaPaths as $key => $media) {
+                        if ($media['url'] === $select) {
+                            // if image, extra step of deleting in /storage
+                            if ($media['type'] === 'image') {
+                                Storage::delete('public/uploads/' . $media['url']);
+                                // replace symbolic link
+                                $this->fileSyncService->delete($media['url']);
+                            }
+                            // if video, delete from database directly
+                            unset($mediaPaths[$key]);
+                            break;
+                        }
                     }
                 }
-                $imagePaths = array_values($imagePaths); // Reindex array
+                $mediaPaths = array_values($mediaPaths); // Reindex array
+            }
+
+            // Process video URLs
+            if ($request->has('video') && !empty($request->video)) {
+                $embedUrl = $videoConversionService->convertVideoToEmbed($request->video);
+                $mediaPaths[] = ['type' => 'video', 'url' => $embedUrl];
             }
 
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $image) {
                     $imagePath = $image->store('public/uploads');
-                    $imagePaths[] = basename($imagePath);
+                    $mediaPaths[] = ['type' => 'image', 'url' => basename($imagePath)];
                     // replace symbolic link
                     $this->fileSyncService->sync(basename($imagePath));
                 }
@@ -163,7 +186,7 @@ class PostController extends Controller
             $post->update([
                 'title' => $validated['title'],
                 'description' => $sanitizedDescription,
-                'images' => $imagePaths, // Store JSON-encoded array [Eloquent no need encode, DB raw need encode]
+                'media' => $mediaPaths, // Store JSON-encoded array [Eloquent no need encode, DB raw need encode]
             ]);
 
             // Commit the transaction
@@ -189,10 +212,12 @@ class PostController extends Controller
 
         if ($post) {
             // Delete image from storage
-            foreach ($post->images as $image) {
-                Storage::delete('public/uploads/' . $image);
-                // replace symbolic link
-                $this->fileSyncService->delete($image);
+            foreach ($post->media as $media) {
+                if ($media['type'] === 'image') {
+                    Storage::delete('public/uploads/' . $media['url']);
+                    // replace symbolic link
+                    $this->fileSyncService->delete($media['url']);
+                }
             }
 
             $post->delete();

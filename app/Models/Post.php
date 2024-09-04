@@ -19,12 +19,12 @@ class Post extends Model
     protected $primaryKey = 'postid';
 
     // table fields
-    protected $fillable = ['title', 'description', 'images', 'userid', 'createdtime'];
+    protected $fillable = ['title', 'description', 'media', 'userid', 'createdtime'];
 
     // conversion automation
     protected $casts = [
         'createdtime' => 'datetime',
-        'images' => 'array',
+        'media' => 'array',
     ];
 
     // define one-to-many relationship

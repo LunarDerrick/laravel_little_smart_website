@@ -191,6 +191,11 @@ img.no-record {
     height: auto;
 }
 
+iframe {
+    width: 100%;
+    height: calc(100vh * 9 / 16); /*to ensure 16:9 ratio*/
+}
+
 .navbar {
     padding-left: 15px;
     padding-right: 15px;

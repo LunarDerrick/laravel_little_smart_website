@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');
             $table->string('title', 255);
             $table->longText('description')->nullable();
-            $table->json('images')->nullable();
+            $table->json('media')->nullable();
             $table->timestamp('createdtime')->useCurrent();
         });
     }

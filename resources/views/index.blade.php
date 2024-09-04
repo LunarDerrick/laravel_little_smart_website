@@ -4,8 +4,8 @@
 <head>
     <title>Little Smart Day Care Centre</title>
 
-    <!-- Slick Carousel CSS -->
     <!-- ensure libraries before custom css which is stored in header -->
+    <!-- Slick Carousel CSS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
@@ -50,10 +50,16 @@
                 <section>
                     <p>{{ $post->createdtime->format('Y-m-d H:i') }}</p>
                     {{-- <p>Posted by: {{ $post->user->name }}</p> --}}
-                    @if (!empty($post->images))
+                    @if (!empty($post->media))
                         <div class="slick-carousel">
-                            @foreach ($post->images as $image)
-                                <div><img src="{{ asset('storage/uploads/' . $image) }}" alt="{{ $post->title }}" /></div>
+                            @foreach ($post->media as $media)
+                                @if ($media['type'] === 'image')
+                                    <div><img src="{{ asset('storage/uploads/' . $media['url']) }}" alt="{{ $post->title }}" /></div>
+                                @elseif ($media['type'] === 'video')
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <iframe class="embed-responsive-item" src="{{ $media['url'] }}" allowfullscreen></iframe>
+                                    </div>
+                                @endif
                             @endforeach
                         </div>
                     @endif

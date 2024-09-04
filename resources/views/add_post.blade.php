@@ -49,7 +49,14 @@
                             <div class="col-md-5">
                                 <div class="row mt-2">
                                     <div class="col">
-                                        <label for="image"><b>Image</b></label>
+                                        <label for="video"><b>Video URL</b></label>
+                                        <input type="url" id="video" name="video" class="form-control" aria-describedby="videoHelp" placeholder="Enter video URL...">
+                                        <small id="videoHelp" class="form-text text-muted">Please ensure full URL is provided to prevent errors.</small>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        <label for="images"><b>Image</b></label>
                                         <input type="file" accept="image/*" id="images" name="images[]" class="form-control" multiple>
                                         <div id="preview-container">
                                             <img id="img-preview" src="{{ asset('media/placeholder.png') }}" class="img-fluid card-img-top" alt="...">

@@ -48,7 +48,10 @@ class PostFactory extends Factory
             'userid' => fake()->randomElement($userIds),
             'title' => fake()->sentence,
             'description' => fake()->paragraph,
-            'images' => [$imageName], // Store JSON-encoded array
+            'media' => [[ // Store JSON-encoded array
+                    'type' => 'image',
+                    'url' => $imageName
+            ]],
             'createdtime' => fake()->dateTimeBetween($startDate = '2018-12-17', $endDate = 'now', $timezone),
         ];
     }
