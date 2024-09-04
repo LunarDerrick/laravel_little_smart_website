@@ -405,14 +405,6 @@ body.form {
     display: none;
 }
 
-.action {
-    text-align: center;
-}
-
-.action button {
-    margin: 0 5px;
-}
-
 /* REMINDER: media query should be place at end of file, higher override priority*/
 
 /* This condition activates when preview screen is shorter than given max width. */
