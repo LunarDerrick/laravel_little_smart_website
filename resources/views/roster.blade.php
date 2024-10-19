@@ -35,6 +35,7 @@
                         <th>Malay</th>
                         <th>Mathematics</th>
                         <th>Science</th>
+                        <th>History</th>
                     </tr>
                     @foreach($students as $student)
                         <tr translate="no">
@@ -58,6 +59,7 @@
                                 <td>{{ $score->malay }}</td>
                                 <td>{{ $score->math }}</td>
                                 <td>{{ $score->science }}</td>
+                                <td>{{ $score->history }}</td>
                             @endforeach
                         </tr>
                     @endforeach

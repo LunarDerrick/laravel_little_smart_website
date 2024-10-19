@@ -98,6 +98,12 @@
                             <input type="number" min="0" max="100" step="0.1" id="science" name="science" class="form-control" required>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col form-label">
+                            <label for="history"><b>History</b></label>
+                            <input type="number" min="0" max="100" step="0.1" id="history" name="history" class="form-control">
+                        </div>
+                    </div>
                     <div class="row mt-4">
                         <div class="col">
                             <input type="submit" value="Save" class="btn btn-primary">

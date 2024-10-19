@@ -89,6 +89,7 @@ Route::middleware([CheckSessionTimeout::class, SingleSessionRedirect::class])->g
             Route::get('/chart-data-5', [AnalysisController::class, 'getMalayGrade']);
             Route::get('/chart-data-6', [AnalysisController::class, 'getMathGrade']);
             Route::get('/chart-data-7', [AnalysisController::class, 'getScienceGrade']);
+            Route::get('/chart-data-8', [AnalysisController::class, 'getHistoryGrade']);
 
             Route::get('/inbox', [FeedbackController::class, 'index']
             )->name('feedback.list');

@@ -201,9 +201,9 @@ iframe {
     padding-right: 15px;
 }
 
-.navbar.bg-custom {
+/* .navbar.bg-custom {
     background-color: #D9D9D9;
-}
+} */
 
 .navbar-brand {
     width: 90px;
@@ -400,6 +400,36 @@ body {
 body.form {
     display: block;
 }
+
+/* UI 2.0: change color only */
+body {
+    background-color: lightyellow;
+}
+
+.navbar.bg-custom {
+    background-color: tan;
+}
+
+.message-header {
+    background-color: peru;
+}
+
+table th {
+    background-color: tan;
+}
+
+div.card {
+    background-color: transparent;
+}
+
+.unread {
+    background-color: lightcyan;
+}
+
+.roster-form .sticky {
+    background-color: lightyellow;
+}
+/* UI 2.0 end here */
 
 #tablet, #mobile {
     display: none;

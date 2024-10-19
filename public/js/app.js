@@ -9137,6 +9137,7 @@ $(document).ready(function () {
   showChart5();
   showChart6();
   showChart7();
+  showChart8();
 });
 var showChart1 = function showChart1() {
   // browser "localhost:8000/chart-data-1" to check if js receives datatable
@@ -9430,6 +9431,44 @@ var showChart7 = function showChart7() {
     }
   }).fail(function () {
     showNoData('#piechart_gradescience');
+  });
+};
+var showChart8 = function showChart8() {
+  // browser "localhost:8000/chart-data-8" to check if js receives datatable
+  $.get(chart_data_8, function (data) {
+    if (!hasData(data)) {
+      showNoData('#piechart_gradehistory');
+    } else {
+      // importing datalabel plugin
+      Chart.register(ChartDataLabels);
+      new Chart("piechart_gradehistory", {
+        type: "pie",
+        data: data,
+        options: {
+          plugins: {
+            legend: {
+              display: false
+            },
+            datalabels: {
+              color: 'black',
+              labels: {
+                title: {
+                  font: {
+                    weight: 'bold'
+                  }
+                }
+              },
+              formatter: function formatter(value, ctx) {
+                var label = ctx.chart.data.labels[ctx.dataIndex];
+                return label + ': ' + value;
+              }
+            }
+          }
+        }
+      });
+    }
+  }).fail(function () {
+    showNoData('#piechart_gradehistory');
   });
 };
 

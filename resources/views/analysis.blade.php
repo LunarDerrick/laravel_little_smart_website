@@ -17,7 +17,24 @@
         <h1>Exam Analysis</h1>
         <br>
 
-        <section>
+        <div class="dropdown">
+            <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Sort by
+                <span id="selected-option" class="ms-2">Overall</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#" onclick="updateSelection('Overall')">Overall</a></li>
+                <li><a class="dropdown-item" href="#" onclick="updateSelection('Standard')">Standard</a></li>
+                <li><a class="dropdown-item" href="#" onclick="updateSelection('Subject')">Subject</a></li>
+                <li><a class="dropdown-item" href="#" onclick="updateSelection('Specific Student')">Specific Student</a></li>
+            </ul>
+        </div>
+
+        <section class="standard"></section>
+        <section class="subject"></section>
+        <section class="specific student"></section>
+
+        <section class="overall">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-lg-4">
@@ -117,6 +134,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card border-0">
+                            <picture>
+                                <canvas id="piechart_gradehistory" class="piechart"></canvas>
+                            </picture>
+                            <div class="card-body">
+                                <h6>Grade Distribution for History</h6>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -128,6 +155,8 @@
 
     <!-- jQuery library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- JS chart library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0/chartjs-plugin-datalabels.min.js"></script>
@@ -141,7 +170,12 @@
         var chart_data_5 = "{{ url('/chart-data-5') }}";
         var chart_data_6 = "{{ url('/chart-data-6') }}";
         var chart_data_7 = "{{ url('/chart-data-7') }}";
+        var chart_data_8 = "{{ url('/chart-data-8') }}";
         var no_record = "{{ url('/no-record') }}";
+
+        function updateSelection(option) {
+            document.getElementById('selected-option').innerText = option;
+        }
     </script>
     <script src="{{ mix('js/app.js') }}"></script>
 </body>

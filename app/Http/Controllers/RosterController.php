@@ -38,6 +38,7 @@ class RosterController extends Controller
             'malay' => 'required|integer|min:0|max:100',
             'math' => 'required|integer|min:0|max:100',
             'science' => 'required|integer|min:0|max:100',
+            'history' => 'nullable|integer|min:0|max:100',
         ]);
 
         try {
@@ -72,6 +73,7 @@ class RosterController extends Controller
                 'malay' => $validated['malay'],
                 'math' => $validated['math'],
                 'science' => $validated['science'],
+                'history' => $validated['history'],
             ]);
 
             // Commit the transaction
@@ -109,6 +111,7 @@ class RosterController extends Controller
             'malay' => 'required|integer|min:0|max:100',
             'math' => 'required|integer|min:0|max:100',
             'science' => 'required|integer|min:0|max:100',
+            'history' => 'nullable|integer|min:0|max:100',
         ]);
 
         try {
@@ -135,6 +138,7 @@ class RosterController extends Controller
                     'malay' => $validated['malay'],
                     'math' => $validated['math'],
                     'science' => $validated['science'],
+                    'history' => $validated['history'],
                 ]);
             }
 

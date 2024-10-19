@@ -25,6 +25,7 @@ class Score extends Model
         'malay',
         'math',
         'science',
+        'history',
     ];
 
     public function user()

@@ -99,6 +99,12 @@ include_once(app_path('Http/Helpers/helper_list_roster.php'));
                                 <input type="number" min="0" max="100" step="0.1" id="science" name="science" class="form-control" value="{{ $score->science }}" required>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col form-label">
+                                <label for="history"><b>History</b></label>
+                                <input type="number" min="0" max="100" step="0.1" id="history" name="history" class="form-control" value="{{ $score->history }}">
+                            </div>
+                        </div>
                     @endforeach
                     <div class="row mt-4">
                         <div class="col">

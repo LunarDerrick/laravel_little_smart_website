@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('malay')->length(3);
             $table->integer('math')->length(3);
             $table->integer('science')->length(3);
+            $table->integer('history')->nullable()->length(3);
         });
     }
 
