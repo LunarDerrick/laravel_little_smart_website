@@ -331,4 +331,10 @@ class AnalysisController extends Controller
 
         return response()->json($chartData);
     }
+
+    public function nodata() {
+        $chartData = [];
+
+        return response()->json($chartData);
+    }
 }

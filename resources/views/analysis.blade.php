@@ -20,12 +20,11 @@
         <div class="dropdown">
             <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Sort by
-                <span id="selected-option" class="ms-2">Overall</span>
+                <span id="selected-option" class="ms-2">Subject</span>
             </button>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#" onclick="updateSelection('Overall')">Overall</a></li>
-                <li><a class="dropdown-item" href="#" onclick="updateSelection('Standard')">Standard</a></li>
                 <li><a class="dropdown-item" href="#" onclick="updateSelection('Subject')">Subject</a></li>
+                <li><a class="dropdown-item" href="#" onclick="updateSelection('Standard')">Standard</a></li>
                 <li><a class="dropdown-item" href="#" onclick="updateSelection('Specific Student')">Specific Student</a></li>
             </ul>
         </div>
@@ -40,7 +39,7 @@
                     <div class="col-md-6 col-lg-4">
                         <div class="card border-0">
                             <picture>
-                                <canvas id="barchart_passingrate"></canvas>
+                                <canvas id="chartjs_01"></canvas>
                             </picture>
                             <div class="card-body">
                                 <h6>Passing Rate of All Subjects</h6>
@@ -50,7 +49,7 @@
                     <div class="col-md-6 col-lg-4">
                         <div class="card border-0">
                             <picture>
-                                <canvas id="barchart_avgscore"></canvas>
+                                <canvas id="chartjs_02"></canvas>
                             </picture>
                             <div class="card-body">
                                 <h6>Average Score of All Subjects</h6>
@@ -87,7 +86,7 @@
                     <div class="col-md-6 col-lg-4">
                         <div class="card border-0">
                             <picture>
-                                <canvas id="piechart_grademandarin" class="piechart"></canvas>
+                                <canvas id="chartjs_03" class='piechart'></canvas>
                             </picture>
                             <div class="card-body">
                                 <h6>Grade Distribution for Mandarin</h6>
@@ -97,7 +96,7 @@
                     <div class="col-md-6 col-lg-4">
                         <div class="card border-0">
                             <picture>
-                                <canvas id="piechart_gradeenglish" class="piechart"></canvas>
+                                <canvas id="chartjs_04" class='piechart'></canvas>
                             </picture>
                             <div class="card-body">
                                 <h6>Grade Distribution for English</h6>
@@ -107,7 +106,7 @@
                     <div class="col-md-6 col-lg-4">
                         <div class="card border-0">
                             <picture>
-                                <canvas id="piechart_grademalay" class="piechart"></canvas>
+                                <canvas id="chartjs_05" class='piechart'></canvas>
                             </picture>
                             <div class="card-body">
                                 <h6>Grade Distribution for Malay</h6>
@@ -117,7 +116,7 @@
                     <div class="col-md-6 col-lg-4">
                         <div class="card border-0">
                             <picture>
-                                <canvas id="piechart_grademath" class="piechart"></canvas>
+                                <canvas id="chartjs_06" class='piechart'></canvas>
                             </picture>
                             <div class="card-body">
                                 <h6>Grade Distribution for Math</h6>
@@ -127,7 +126,7 @@
                     <div class="col-md-6 col-lg-4">
                         <div class="card border-0">
                             <picture>
-                                <canvas id="piechart_gradescience" class="piechart"></canvas>
+                                <canvas id="chartjs_07" class='piechart'></canvas>
                             </picture>
                             <div class="card-body">
                                 <h6>Grade Distribution for Science</h6>
@@ -137,7 +136,7 @@
                     <div class="col-md-6 col-lg-4">
                         <div class="card border-0">
                             <picture>
-                                <canvas id="piechart_gradehistory" class="piechart"></canvas>
+                                <canvas id="chartjs_08" class='piechart'></canvas>
                             </picture>
                             <div class="card-body">
                                 <h6>Grade Distribution for History</h6>
@@ -171,11 +170,23 @@
         var chart_data_6 = "{{ url('/chart-data-6') }}";
         var chart_data_7 = "{{ url('/chart-data-7') }}";
         var chart_data_8 = "{{ url('/chart-data-8') }}";
+        var chart_data_9 = "{{ url('/chart-data-9') }}";
+        var chart_data_10 = "{{ url('/chart-data-10') }}";
+        var chart_data_11 = "{{ url('/chart-data-11') }}";
+        var chart_data_12 = "{{ url('/chart-data-12') }}";
+        var chart_data_13 = "{{ url('/chart-data-13') }}";
+        var chart_data_14 = "{{ url('/chart-data-14') }}";
+        var chart_data_15 = "{{ url('/chart-data-15') }}";
+        var chart_data_16 = "{{ url('/chart-data-16') }}";
+        var chart_data_17 = "{{ url('/chart-data-17') }}";
+        var chart_data_18 = "{{ url('/chart-data-18') }}";
+        var chart_data_19 = "{{ url('/chart-data-19') }}";
+        var chart_data_20 = "{{ url('/chart-data-20') }}";
+        var chart_data_21 = "{{ url('/chart-data-21') }}";
+        var chart_data_22 = "{{ url('/chart-data-22') }}";
+        var chart_data_23 = "{{ url('/chart-data-23') }}";
+        var chart_data_24 = "{{ url('/chart-data-24') }}";
         var no_record = "{{ url('/no-record') }}";
-
-        function updateSelection(option) {
-            document.getElementById('selected-option').innerText = option;
-        }
     </script>
     <script src="{{ mix('js/app.js') }}"></script>
 </body>

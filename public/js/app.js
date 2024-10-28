@@ -9129,6 +9129,7 @@ module.exports = axios;
 "use strict";
 
 
+// initial set of charts loading
 $(document).ready(function () {
   showChart1();
   showChart2();
@@ -9143,11 +9144,11 @@ var showChart1 = function showChart1() {
   // browser "localhost:8000/chart-data-1" to check if js receives datatable
   $.get(chart_data_1, function (data) {
     if (!hasData(data)) {
-      showNoData('#barchart_passingrate');
+      showNoData('#chartjs_01');
     } else {
       // importing datalabel plugin
       Chart.register(ChartDataLabels);
-      new Chart("barchart_passingrate", {
+      new Chart("chartjs_01", {
         type: 'bar',
         data: data,
         options: {
@@ -9190,20 +9191,20 @@ var showChart1 = function showChart1() {
       });
     }
   }).fail(function () {
-    showNoData('#barchart_passingrate');
+    showNoData('#chartjs_01');
   });
 };
 var showChart2 = function showChart2() {
   // browser "localhost:8000/chart-data-2" to check if js receives datatable
   $.get(chart_data_2, function (data) {
     if (!hasData(data)) {
-      showNoData('#barchart_avgscore');
+      showNoData('#chartjs_02');
     } else {
       // importing datalabel plugin
       Chart.register(ChartDataLabels);
 
       // draw vertical bar chart
-      new Chart("barchart_avgscore", {
+      new Chart("chartjs_02", {
         type: "bar",
         data: data,
         options: {
@@ -9240,18 +9241,18 @@ var showChart2 = function showChart2() {
       });
     }
   }).fail(function () {
-    showNoData('#barchart_avgscore');
+    showNoData('#chartjs_02');
   });
 };
 var showChart3 = function showChart3() {
   // browser "localhost:8000/chart-data-3" to check if js receives datatable
   $.get(chart_data_3, function (data) {
     if (!hasData(data)) {
-      showNoData('#piechart_grademandarin');
+      showNoData('#chartjs_03');
     } else {
       // importing datalabel plugin
       Chart.register(ChartDataLabels);
-      new Chart("piechart_grademandarin", {
+      new Chart("chartjs_03", {
         type: "pie",
         data: data,
         options: {
@@ -9278,18 +9279,18 @@ var showChart3 = function showChart3() {
       });
     }
   }).fail(function () {
-    showNoData('#piechart_grademandarin');
+    showNoData('#chartjs_03');
   });
 };
 var showChart4 = function showChart4() {
   // browser "localhost:8000/chart-data-4" to check if js receives datatable
   $.get(chart_data_4, function (data) {
     if (!hasData(data)) {
-      showNoData('#piechart_gradeenglish');
+      showNoData('#chartjs_04');
     } else {
       // importing datalabel plugin
       Chart.register(ChartDataLabels);
-      new Chart("piechart_gradeenglish", {
+      new Chart("chartjs_04", {
         type: "pie",
         data: data,
         options: {
@@ -9316,18 +9317,18 @@ var showChart4 = function showChart4() {
       });
     }
   }).fail(function () {
-    showNoData('#piechart_gradeenglish');
+    showNoData('#chartjs_04');
   });
 };
 var showChart5 = function showChart5() {
   // browser "localhost:8000/chart-data-5" to check if js receives datatable
   $.get(chart_data_5, function (data) {
     if (!hasData(data)) {
-      showNoData('#piechart_grademalay');
+      showNoData('#chartjs_05');
     } else {
       // importing datalabel plugin
       Chart.register(ChartDataLabels);
-      new Chart("piechart_grademalay", {
+      new Chart("chartjs_05", {
         type: "pie",
         data: data,
         options: {
@@ -9354,18 +9355,18 @@ var showChart5 = function showChart5() {
       });
     }
   }).fail(function () {
-    showNoData('#piechart_grademalay');
+    showNoData('#chartjs_05');
   });
 };
 var showChart6 = function showChart6() {
   // browser "localhost:8000/chart-data-6" to check if js receives datatable
   $.get(chart_data_6, function (data) {
     if (!hasData(data)) {
-      showNoData('#piechart_grademath');
+      showNoData('#chartjs_06');
     } else {
       // importing datalabel plugin
       Chart.register(ChartDataLabels);
-      new Chart("piechart_grademath", {
+      new Chart("chartjs_06", {
         type: "pie",
         data: data,
         options: {
@@ -9392,18 +9393,18 @@ var showChart6 = function showChart6() {
       });
     }
   }).fail(function () {
-    showNoData('#piechart_grademath');
+    showNoData('#chartjs_06');
   });
 };
 var showChart7 = function showChart7() {
   // browser "localhost:8000/chart-data-7" to check if js receives datatable
   $.get(chart_data_7, function (data) {
     if (!hasData(data)) {
-      showNoData('#piechart_gradescience');
+      showNoData('#chartjs_07');
     } else {
       // importing datalabel plugin
       Chart.register(ChartDataLabels);
-      new Chart("piechart_gradescience", {
+      new Chart("chartjs_07", {
         type: "pie",
         data: data,
         options: {
@@ -9430,18 +9431,18 @@ var showChart7 = function showChart7() {
       });
     }
   }).fail(function () {
-    showNoData('#piechart_gradescience');
+    showNoData('#chartjs_07');
   });
 };
 var showChart8 = function showChart8() {
   // browser "localhost:8000/chart-data-8" to check if js receives datatable
   $.get(chart_data_8, function (data) {
     if (!hasData(data)) {
-      showNoData('#piechart_gradehistory');
+      showNoData('#chartjs_08');
     } else {
       // importing datalabel plugin
       Chart.register(ChartDataLabels);
-      new Chart("piechart_gradehistory", {
+      new Chart("chartjs_08", {
         type: "pie",
         data: data,
         options: {
@@ -9468,14 +9469,194 @@ var showChart8 = function showChart8() {
       });
     }
   }).fail(function () {
-    showNoData('#piechart_gradehistory');
+    showNoData('#chartjs_08');
   });
 };
+var showChart9 = function showChart9() {
+  $.get(chart_data_9, function (data) {
+    if (!hasData(data)) {
+      showNoData('#chartjs_01');
+    }
+  }).fail(function () {
+    showNoData('#chartjs_01');
+  });
+};
+var showChart10 = function showChart10() {
+  $.get(chart_data_10, function (data) {
+    if (!hasData(data)) {
+      showNoData('#chartjs_02');
+    }
+  }).fail(function () {
+    showNoData('#chartjs_02');
+  });
+};
+var showChart11 = function showChart11() {
+  $.get(chart_data_11, function (data) {
+    if (!hasData(data)) {
+      showNoData('#chartjs_03');
+    }
+  }).fail(function () {
+    showNoData('#chartjs_03');
+  });
+};
+var showChart12 = function showChart12() {
+  $.get(chart_data_12, function (data) {
+    if (!hasData(data)) {
+      showNoData('#chartjs_04');
+    }
+  }).fail(function () {
+    showNoData('#chartjs_04');
+  });
+};
+var showChart13 = function showChart13() {
+  $.get(chart_data_13, function (data) {
+    if (!hasData(data)) {
+      showNoData('#chartjs_05');
+    }
+  }).fail(function () {
+    showNoData('#chartjs_05');
+  });
+};
+var showChart14 = function showChart14() {
+  $.get(chart_data_14, function (data) {
+    if (!hasData(data)) {
+      showNoData('#chartjs_06');
+    }
+  }).fail(function () {
+    showNoData('#chartjs_06');
+  });
+};
+var showChart15 = function showChart15() {
+  $.get(chart_data_15, function (data) {
+    if (!hasData(data)) {
+      showNoData('#chartjs_07');
+    }
+  }).fail(function () {
+    showNoData('#chartjs_07');
+  });
+};
+var showChart16 = function showChart16() {
+  $.get(chart_data_16, function (data) {
+    if (!hasData(data)) {
+      showNoData('#chartjs_08');
+    }
+  }).fail(function () {
+    showNoData('#chartjs_08');
+  });
+};
+var showChart17 = function showChart17() {
+  $.get(chart_data_17, function (data) {
+    if (!hasData(data)) {
+      showNoData('#chartjs_01');
+    }
+  }).fail(function () {
+    showNoData('#chartjs_01');
+  });
+};
+var showChart18 = function showChart18() {
+  $.get(chart_data_18, function (data) {
+    if (!hasData(data)) {
+      showNoData('#chartjs_02');
+    }
+  }).fail(function () {
+    showNoData('#chartjs_02');
+  });
+};
+var showChart19 = function showChart19() {
+  $.get(chart_data_19, function (data) {
+    if (!hasData(data)) {
+      showNoData('#chartjs_03');
+    }
+  }).fail(function () {
+    showNoData('#chartjs_03');
+  });
+};
+var showChart20 = function showChart20() {
+  $.get(chart_data_20, function (data) {
+    if (!hasData(data)) {
+      showNoData('#chartjs_04');
+    }
+  }).fail(function () {
+    showNoData('#chartjs_04');
+  });
+};
+var showChart21 = function showChart21() {
+  $.get(chart_data_21, function (data) {
+    if (!hasData(data)) {
+      showNoData('#chartjs_05');
+    }
+  }).fail(function () {
+    showNoData('#chartjs_05');
+  });
+};
+var showChart22 = function showChart22() {
+  $.get(chart_data_22, function (data) {
+    if (!hasData(data)) {
+      showNoData('#chartjs_06');
+    }
+  }).fail(function () {
+    showNoData('#chartjs_06');
+  });
+};
+var showChart23 = function showChart23() {
+  $.get(chart_data_23, function (data) {
+    if (!hasData(data)) {
+      showNoData('#chartjs_07');
+    }
+  }).fail(function () {
+    showNoData('#chartjs_07');
+  });
+};
+var showChart24 = function showChart24() {
+  $.get(chart_data_24, function (data) {
+    if (!hasData(data)) {
+      showNoData('#chartjs_08');
+    }
+  }).fail(function () {
+    showNoData('#chartjs_08');
+  });
+};
+var chartContainers = ['chartjs_01', 'chartjs_02', 'chartjs_03', 'chartjs_04', 'chartjs_05', 'chartjs_06', 'chartjs_07', 'chartjs_08'];
+var charts = {
+  Subject: [showChart1, showChart2, showChart3, showChart4, showChart5, showChart6, showChart7, showChart8],
+  Standard: [showChart9, showChart10, showChart11, showChart12, showChart13, showChart14, showChart15, showChart16],
+  'Specific Student': [showChart17, showChart18, showChart19, showChart20, showChart21, showChart22, showChart23, showChart24]
+};
+function updateSelection(option) {
+  // update dropdown text
+  document.getElementById('selected-option').innerText = option;
+
+  // update chart
+  charts[option].forEach(function (chartFunc, i) {
+    var chartContainer = document.getElementById(chartContainers[i]);
+
+    // clear existing content first
+    var oldChart = Chart.getChart(chartContainer);
+    if (oldChart) oldChart.destroy();
+    $(chartContainer).show();
+    $(chartContainer).siblings('.text-center').remove();
+
+    // populate new content
+    chartFunc();
+    $(chartContainer).removeClass('piechart');
+    if (option != 'Spcific Student') {
+      if (i > 1) {
+        $(chartContainer).addClass('piechart');
+      } else {
+        $(chartContainer).removeClass('piechart');
+      }
+    }
+  });
+}
 
 // placeholder when fetched no data
 var showNoData = function showNoData(selector) {
   var chartContainer = $(selector).parent();
-  chartContainer.empty(); // clear container before appending
+  var oldChart = Chart.getChart($(selector));
+  // destroy previous chart and hide container
+  if (oldChart) oldChart.destroy();
+  $(selector).hide();
+  // append content to indicate fail to load
   $.get(no_record, function (data) {
     chartContainer.append(data);
   });
@@ -9487,6 +9668,9 @@ var hasData = function hasData(data) {
     return value !== null;
   });
 };
+
+// ensure JS variables are passed to HTML
+window.updateSelection = updateSelection;
 
 /***/ }),
 
