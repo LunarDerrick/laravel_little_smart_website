@@ -354,9 +354,53 @@ const showChart8 = () => {
 }
 
 const showChart9 = () => {
+    // browser "localhost:8000/chart-data-9" to check if js receives datatable
     $.get(chart_data_9, function(data) {
         if (!hasData(data)) {
             showNoData('#chartjs_01');
+        } else {
+            // importing datalabel plugin
+            Chart.register(ChartDataLabels);
+
+            new Chart("chartjs_01", {
+                type: 'bar',
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                // Convert decimal to percentage
+                                label: function(tooltipItem) {
+                                    var value = Math.round(tooltipItem.raw * 100);
+                                    return value + '%';
+                                }
+                            }
+                        },
+                        datalabels: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            suggestedMin: 0, // Minimum value for the y-axis
+                            suggestedMax: 1, // Maximum value for the y-axis
+                            title: {
+                                display: true,
+                                text: 'Percentage(%)'
+                            },
+                            ticks: {
+                                // convert decimal to percentage
+                                callback: function(value, index, values) {
+                                    return (value * 100) + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
         }
     }).fail(function() {
         showNoData('#chartjs_01');
@@ -447,6 +491,36 @@ const showChart18 = () => {
     $.get(chart_data_18, function(data) {
         if (!hasData(data)) {
             showNoData('#chartjs_02');
+        } else {
+            // importing datalabel plugin
+            Chart.register(ChartDataLabels);
+
+            new Chart("chartjs_02", {
+                type: "radar",
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        datalabels: {
+                            display: false
+                        }
+                    },
+                    elements: {
+                        line: {
+                            borderWidth: 3
+                        }
+                    },
+                    scales: {
+                        r: {
+                            ticks: {
+                               backdropColor: "transparent"
+                            }
+                        }
+                    }
+                }
+            });
         }
     }).fail(function() {
         showNoData('#chartjs_02');
@@ -530,6 +604,12 @@ const charts = {
     'Specific Student': [showChart17, showChart18, showChart19, showChart20, showChart21, showChart22, showChart23, showChart24],
 };
 
+const chartTitles = {
+    Subject: ["Passing Rate of All Subjects", "Average Score of All Subjects", "Grade Distribution for Mandarin", "Grade Distribution for English", "Grade Distribution for Malay", "Grade Distribution for Math", "Grade Distribution for Science", "Grade Distribution for History", "Top Scorer for Each Subject"],
+    Standard: ["Passing Rate of All Standard", "Average Score of All Standard", "Grade Distribution for Standard 1", "Grade Distribution for Standard 2", "Grade Distribution for Standard 3", "Grade Distribution for Standard 4", "Grade Distribution for Standard 5", "Grade Distribution for Standard 6", "Top Average Scorer for Each Standard"],
+    'Specific Student': ["Average Score Over Time", "Score of All Subjects", "Mandarin Score Over Time", "English Score Over Time", "Malay Score Over Time", "Math Score Over Time", "Science Score Over Time", "History Score Over Time", "Score of All Subjects"],
+};
+
 function updateSelection(option) {
     // update dropdown text
     document.getElementById('selected-option').innerText = option;
@@ -544,7 +624,13 @@ function updateSelection(option) {
         $(chartContainer).show();
         $(chartContainer).siblings('.text-center').remove();
 
-        // populate new content
+        // rename title
+        const titleElement = chartContainer.closest('.card').querySelector('.card-body h6');
+        if (titleElement) {
+            titleElement.innerText = chartTitles[option][i] || "Title";
+        }
+
+        // populate new chart
         chartFunc();
 
         // resizing for piecharts
@@ -557,6 +643,12 @@ function updateSelection(option) {
             }
         }
     });
+
+    // Update table title
+    const tableTitle = document.querySelector('#table-graph').closest('.card').querySelector('.card-body h6');
+    if (tableTitle) {
+        tableTitle.innerText = chartTitles[option][chartTitles[option].length - 1] || "Title";
+    }
 }
 
 // placeholder when fetched no data

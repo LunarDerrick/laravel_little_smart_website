@@ -90,7 +90,7 @@ Route::middleware([CheckSessionTimeout::class, SingleSessionRedirect::class])->g
             Route::get('/chart-data-6', [AnalysisController::class, 'getMathGrade']);
             Route::get('/chart-data-7', [AnalysisController::class, 'getScienceGrade']);
             Route::get('/chart-data-8', [AnalysisController::class, 'getHistoryGrade']);
-            Route::get('/chart-data-9', [AnalysisController::class, 'nodata']);
+            Route::get('/chart-data-9', [AnalysisController::class, 'getPassingRateStandard']);
             Route::get('/chart-data-10', [AnalysisController::class, 'nodata']);
             Route::get('/chart-data-11', [AnalysisController::class, 'nodata']);
             Route::get('/chart-data-12', [AnalysisController::class, 'nodata']);
@@ -99,7 +99,7 @@ Route::middleware([CheckSessionTimeout::class, SingleSessionRedirect::class])->g
             Route::get('/chart-data-15', [AnalysisController::class, 'nodata']);
             Route::get('/chart-data-16', [AnalysisController::class, 'nodata']);
             Route::get('/chart-data-17', [AnalysisController::class, 'nodata']);
-            Route::get('/chart-data-18', [AnalysisController::class, 'nodata']);
+            Route::get('/chart-data-18/{id}', [AnalysisController::class, 'getScoreSpecific']);
             Route::get('/chart-data-19', [AnalysisController::class, 'nodata']);
             Route::get('/chart-data-20', [AnalysisController::class, 'nodata']);
             Route::get('/chart-data-21', [AnalysisController::class, 'nodata']);

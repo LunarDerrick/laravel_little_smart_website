@@ -179,7 +179,9 @@
         var chart_data_15 = "{{ url('/chart-data-15') }}";
         var chart_data_16 = "{{ url('/chart-data-16') }}";
         var chart_data_17 = "{{ url('/chart-data-17') }}";
-        var chart_data_18 = "{{ url('/chart-data-18') }}";
+        // var chart_data_18 = "{{ url('/chart-data-18') }}";
+        // temporarily using fixed id for demo
+        var chart_data_18 = "{{ url('/chart-data-18/505515') }}";
         var chart_data_19 = "{{ url('/chart-data-19') }}";
         var chart_data_20 = "{{ url('/chart-data-20') }}";
         var chart_data_21 = "{{ url('/chart-data-21') }}";
