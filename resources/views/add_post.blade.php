@@ -20,7 +20,7 @@
         <section>
             <div class="container">
                 <div class="container section-title ">
-                    <h1>New Post</h1>
+                    <h1><span>New Post</span></h1>
                 </div>
 
                 <form action="{{ route('post.add') }}" method="POST" enctype="multipart/form-data">
@@ -74,6 +74,7 @@
     </section>
 
     @include('components.footer')
+    @include('components.font-check')
 
     <!-- rich text editor, ckeditor5 builder -->
     <script type="importmap">

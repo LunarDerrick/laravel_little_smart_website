@@ -14,7 +14,7 @@
         @include('components.alert_notification')
         @include('components.btn_admin')
 
-        <h1>Feedback Inbox</h1>
+        <h1><span>Feedback Inbox</span></h1>
         <br>
 
         @if ($feedbacks->isEmpty())
@@ -96,6 +96,7 @@
     </section>
 
     @include('components.footer')
+    @include('components.font-check')
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

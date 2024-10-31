@@ -15,7 +15,7 @@
 
         <div class="container form-center extend">
             <div class="row mt-5 pb-3">
-                <h1>Reset password</h1>
+                <h1><span>Reset password</span></h1>
             </div>
             <div class="row">
                 <form action="{{ route('password.edit') }}" method="POST" id="resetForm">
@@ -55,6 +55,7 @@
 
     @include('components.send_feedback')
     @include('components.footer')
+    @include('components.font-check')
 
     <!-- items for notification toast -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">

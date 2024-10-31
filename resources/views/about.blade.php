@@ -15,7 +15,7 @@
     <section>
         @include('components.alert_notification')
 
-        <h1>About Us</h1>
+        <h1><span>About Us</span></h1>
         <br>
 
         <div class="container">
@@ -73,6 +73,7 @@
 
     @include('components.send_feedback')
     @include('components.footer')
+    @include('components.font-check')
 </body>
 
 </html>

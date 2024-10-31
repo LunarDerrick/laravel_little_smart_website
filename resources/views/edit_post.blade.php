@@ -20,7 +20,7 @@
         <section>
             <div class="container">
                 <div class="container section-title ">
-                    <h1>Edit Post</h1>
+                    <h1><span>Edit Post</span></h1>
                 </div>
 
                 @isset($post)
@@ -115,6 +115,7 @@
     </section>
 
     @include('components.footer')
+    @include('components.font-check')
 
     <!-- rich text editor, ckeditor5 builder -->
     <script type="importmap">

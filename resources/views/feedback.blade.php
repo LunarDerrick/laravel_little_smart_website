@@ -13,7 +13,7 @@
     <section>
         @include('components.alert_notification')
 
-        <h1>Feedback</h1>
+        <h1><span>Feedback</span></h1>
         <a href="{{ route('feedback.list', ['page' => request()->query('page', 1)]) }}">Go Back</a>
         <br><br>
 
@@ -45,6 +45,7 @@
     </section>
 
     @include('components.footer')
+    @include('components.font-check')
 </body>
 
 </html>

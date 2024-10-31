@@ -10,6 +10,7 @@ mix.js('resources/js/app.js', 'public/js')
         // remember to add directory for every new css file
         // and do "npm run dev" in terminal to compile these changes
        'resources/css/bootstrap.min.css',
+       'resources/css/c_font.css',
        'resources/css/ckeditor.css',
        'resources/css/feedback.css',
        'resources/css/form.css',

@@ -23,7 +23,7 @@ include_once(app_path('Http/Helpers/helper_list_roster.php'));
             <div class="container roster-form">
                 <div class="row sticky">
                     <div class="col">
-                        <h1>Edit Entry</h1>
+                        <h1><span>Edit Entry</span></h1>
                     </div>
                 </div>
                 <form action="{{ route('roster.update', ['id' => $student->id]) }}" method="POST">
@@ -119,6 +119,7 @@ include_once(app_path('Http/Helpers/helper_list_roster.php'));
     </section>
 
     @include('components.footer')
+    @include('components.font-check')
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

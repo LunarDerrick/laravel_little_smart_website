@@ -408,9 +408,48 @@ const showChart9 = () => {
 }
 
 const showChart10 = () => {
+    // browser "localhost:8000/chart-data-10" to check if js receives datatable
     $.get(chart_data_10, function(data) {
         if (!hasData(data)) {
             showNoData('#chartjs_02');
+        } else {
+            // importing datalabel plugin
+            Chart.register(ChartDataLabels);
+
+            // draw vertical bar chart
+            new Chart("chartjs_02", {
+                type: "bar",
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                // round to nearest 1 decimal place
+                                label: function(tooltipItem) {
+                                    var value = (Math.round(tooltipItem.raw * 10) /10).toFixed(1);
+                                    return value;
+                                }
+                            }
+                        },
+                        datalabels: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            suggestedMin: 0, // Minimum value for the y-axis
+                            suggestedMax: 100, // Maximum value for the y-axis
+                            title: {
+                                display: true,
+                                text: "Score"
+                            },
+                        }
+                    }
+                }
+            });
         }
     }).fail(function() {
         showNoData('#chartjs_02');
@@ -418,9 +457,39 @@ const showChart10 = () => {
 }
 
 const showChart11 = () => {
+    // browser "localhost:8000/chart-data-11" to check if js receives datatable
     $.get(chart_data_11, function(data) {
         if (!hasData(data)) {
             showNoData('#chartjs_03');
+        } else {
+            // importing datalabel plugin
+            Chart.register(ChartDataLabels);
+
+            new Chart("chartjs_03", {
+                type: "pie",
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        datalabels: {
+                            color: 'black',
+                            labels: {
+                                title: {
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                }
+                            },
+                            formatter: (value, ctx) => {
+                                let label = ctx.chart.data.labels[ctx.dataIndex];
+                                return label + ': ' + value;
+                            }
+                        }
+                    }
+                }
+            });
         }
     }).fail(function() {
         showNoData('#chartjs_03');
@@ -428,9 +497,39 @@ const showChart11 = () => {
 }
 
 const showChart12 = () => {
+    // browser "localhost:8000/chart-data-12" to check if js receives datatable
     $.get(chart_data_12, function(data) {
         if (!hasData(data)) {
             showNoData('#chartjs_04');
+        } else {
+            // importing datalabel plugin
+            Chart.register(ChartDataLabels);
+
+            new Chart("chartjs_04", {
+                type: "pie",
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        datalabels: {
+                            color: 'black',
+                            labels: {
+                                title: {
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                }
+                            },
+                            formatter: (value, ctx) => {
+                                let label = ctx.chart.data.labels[ctx.dataIndex];
+                                return label + ': ' + value;
+                            }
+                        }
+                    }
+                }
+            });
         }
     }).fail(function() {
         showNoData('#chartjs_04');
@@ -438,9 +537,39 @@ const showChart12 = () => {
 }
 
 const showChart13 = () => {
+    // browser "localhost:8000/chart-data-13" to check if js receives datatable
     $.get(chart_data_13, function(data) {
         if (!hasData(data)) {
             showNoData('#chartjs_05');
+        } else {
+            // importing datalabel plugin
+            Chart.register(ChartDataLabels);
+
+            new Chart("chartjs_05", {
+                type: "pie",
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        datalabels: {
+                            color: 'black',
+                            labels: {
+                                title: {
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                }
+                            },
+                            formatter: (value, ctx) => {
+                                let label = ctx.chart.data.labels[ctx.dataIndex];
+                                return label + ': ' + value;
+                            }
+                        }
+                    }
+                }
+            });
         }
     }).fail(function() {
         showNoData('#chartjs_05');
@@ -448,9 +577,39 @@ const showChart13 = () => {
 }
 
 const showChart14 = () => {
+    // browser "localhost:8000/chart-data-14" to check if js receives datatable
     $.get(chart_data_14, function(data) {
         if (!hasData(data)) {
             showNoData('#chartjs_06');
+        } else {
+            // importing datalabel plugin
+            Chart.register(ChartDataLabels);
+
+            new Chart("chartjs_06", {
+                type: "pie",
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        datalabels: {
+                            color: 'black',
+                            labels: {
+                                title: {
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                }
+                            },
+                            formatter: (value, ctx) => {
+                                let label = ctx.chart.data.labels[ctx.dataIndex];
+                                return label + ': ' + value;
+                            }
+                        }
+                    }
+                }
+            });
         }
     }).fail(function() {
         showNoData('#chartjs_06');
@@ -458,9 +617,39 @@ const showChart14 = () => {
 }
 
 const showChart15 = () => {
+    // browser "localhost:8000/chart-data-15" to check if js receives datatable
     $.get(chart_data_15, function(data) {
         if (!hasData(data)) {
             showNoData('#chartjs_07');
+        } else {
+            // importing datalabel plugin
+            Chart.register(ChartDataLabels);
+
+            new Chart("chartjs_07", {
+                type: "pie",
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        datalabels: {
+                            color: 'black',
+                            labels: {
+                                title: {
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                }
+                            },
+                            formatter: (value, ctx) => {
+                                let label = ctx.chart.data.labels[ctx.dataIndex];
+                                return label + ': ' + value;
+                            }
+                        }
+                    }
+                }
+            });
         }
     }).fail(function() {
         showNoData('#chartjs_07');
@@ -468,9 +657,39 @@ const showChart15 = () => {
 }
 
 const showChart16 = () => {
+    // browser "localhost:8000/chart-data-16" to check if js receives datatable
     $.get(chart_data_16, function(data) {
         if (!hasData(data)) {
             showNoData('#chartjs_08');
+        } else {
+            // importing datalabel plugin
+            Chart.register(ChartDataLabels);
+
+            new Chart("chartjs_08", {
+                type: "pie",
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        datalabels: {
+                            color: 'black',
+                            labels: {
+                                title: {
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                }
+                            },
+                            formatter: (value, ctx) => {
+                                let label = ctx.chart.data.labels[ctx.dataIndex];
+                                return label + ': ' + value;
+                            }
+                        }
+                    }
+                }
+            });
         }
     }).fail(function() {
         showNoData('#chartjs_08');
@@ -478,9 +697,48 @@ const showChart16 = () => {
 }
 
 const showChart17 = () => {
+    // browser "localhost:8000/chart-data-17" to check if js receives datatable
     $.get(chart_data_17, function(data) {
         if (!hasData(data)) {
             showNoData('#chartjs_01');
+        } else {
+            // importing datalabel plugin
+            Chart.register(ChartDataLabels);
+
+            // draw vertical bar chart
+            new Chart("chartjs_01", {
+                type: "bar",
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                // round to nearest 1 decimal place
+                                label: function(tooltipItem) {
+                                    var value = (Math.round(tooltipItem.raw * 10) /10).toFixed(1);
+                                    return value;
+                                }
+                            }
+                        },
+                        datalabels: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            suggestedMin: 0, // Minimum value for the y-axis
+                            suggestedMax: 100, // Maximum value for the y-axis
+                            title: {
+                                display: true,
+                                text: "Score"
+                            },
+                        }
+                    }
+                }
+            });
         }
     }).fail(function() {
         showNoData('#chartjs_01');
@@ -528,9 +786,48 @@ const showChart18 = () => {
 }
 
 const showChart19 = () => {
+    // browser "localhost:8000/chart-data-19" to check if js receives datatable
     $.get(chart_data_19, function(data) {
         if (!hasData(data)) {
             showNoData('#chartjs_03');
+        } else {
+            // importing datalabel plugin
+            Chart.register(ChartDataLabels);
+
+            // draw line chart
+            new Chart("chartjs_03", {
+                type: "line",
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                // round to nearest 1 decimal place
+                                label: function(tooltipItem) {
+                                    var value = (Math.round(tooltipItem.raw * 10) /10).toFixed(1);
+                                    return value;
+                                }
+                            }
+                        },
+                        datalabels: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            suggestedMin: 0, // Minimum value for the y-axis
+                            suggestedMax: 100, // Maximum value for the y-axis
+                            title: {
+                                display: true,
+                                text: "Score"
+                            },
+                        }
+                    }
+                }
+            });
         }
     }).fail(function() {
         showNoData('#chartjs_03');
@@ -538,9 +835,48 @@ const showChart19 = () => {
 }
 
 const showChart20 = () => {
+    // browser "localhost:8000/chart-data-20" to check if js receives datatable
     $.get(chart_data_20, function(data) {
         if (!hasData(data)) {
             showNoData('#chartjs_04');
+        } else {
+            // importing datalabel plugin
+            Chart.register(ChartDataLabels);
+
+            // draw line chart
+            new Chart("chartjs_04", {
+                type: "line",
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                // round to nearest 1 decimal place
+                                label: function(tooltipItem) {
+                                    var value = (Math.round(tooltipItem.raw * 10) /10).toFixed(1);
+                                    return value;
+                                }
+                            }
+                        },
+                        datalabels: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            suggestedMin: 0, // Minimum value for the y-axis
+                            suggestedMax: 100, // Maximum value for the y-axis
+                            title: {
+                                display: true,
+                                text: "Score"
+                            },
+                        }
+                    }
+                }
+            });
         }
     }).fail(function() {
         showNoData('#chartjs_04');
@@ -548,9 +884,48 @@ const showChart20 = () => {
 }
 
 const showChart21 = () => {
+    // browser "localhost:8000/chart-data-21" to check if js receives datatable
     $.get(chart_data_21, function(data) {
         if (!hasData(data)) {
             showNoData('#chartjs_05');
+        } else {
+            // importing datalabel plugin
+            Chart.register(ChartDataLabels);
+
+            // draw line chart
+            new Chart("chartjs_05", {
+                type: "line",
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                // round to nearest 1 decimal place
+                                label: function(tooltipItem) {
+                                    var value = (Math.round(tooltipItem.raw * 10) /10).toFixed(1);
+                                    return value;
+                                }
+                            }
+                        },
+                        datalabels: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            suggestedMin: 0, // Minimum value for the y-axis
+                            suggestedMax: 100, // Maximum value for the y-axis
+                            title: {
+                                display: true,
+                                text: "Score"
+                            },
+                        }
+                    }
+                }
+            });
         }
     }).fail(function() {
         showNoData('#chartjs_05');
@@ -558,9 +933,48 @@ const showChart21 = () => {
 }
 
 const showChart22 = () => {
+    // browser "localhost:8000/chart-data-22" to check if js receives datatable
     $.get(chart_data_22, function(data) {
         if (!hasData(data)) {
             showNoData('#chartjs_06');
+        } else {
+            // importing datalabel plugin
+            Chart.register(ChartDataLabels);
+
+            // draw line chart
+            new Chart("chartjs_06", {
+                type: "line",
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                // round to nearest 1 decimal place
+                                label: function(tooltipItem) {
+                                    var value = (Math.round(tooltipItem.raw * 10) /10).toFixed(1);
+                                    return value;
+                                }
+                            }
+                        },
+                        datalabels: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            suggestedMin: 0, // Minimum value for the y-axis
+                            suggestedMax: 100, // Maximum value for the y-axis
+                            title: {
+                                display: true,
+                                text: "Score"
+                            },
+                        }
+                    }
+                }
+            });
         }
     }).fail(function() {
         showNoData('#chartjs_06');
@@ -568,9 +982,48 @@ const showChart22 = () => {
 }
 
 const showChart23 = () => {
+    // browser "localhost:8000/chart-data-23" to check if js receives datatable
     $.get(chart_data_23, function(data) {
         if (!hasData(data)) {
             showNoData('#chartjs_07');
+        } else {
+            // importing datalabel plugin
+            Chart.register(ChartDataLabels);
+
+            // draw line chart
+            new Chart("chartjs_07", {
+                type: "line",
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                // round to nearest 1 decimal place
+                                label: function(tooltipItem) {
+                                    var value = (Math.round(tooltipItem.raw * 10) /10).toFixed(1);
+                                    return value;
+                                }
+                            }
+                        },
+                        datalabels: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            suggestedMin: 0, // Minimum value for the y-axis
+                            suggestedMax: 100, // Maximum value for the y-axis
+                            title: {
+                                display: true,
+                                text: "Score"
+                            },
+                        }
+                    }
+                }
+            });
         }
     }).fail(function() {
         showNoData('#chartjs_07');
@@ -578,9 +1031,48 @@ const showChart23 = () => {
 }
 
 const showChart24 = () => {
+    // browser "localhost:8000/chart-data-24" to check if js receives datatable
     $.get(chart_data_24, function(data) {
         if (!hasData(data)) {
             showNoData('#chartjs_08');
+        } else {
+            // importing datalabel plugin
+            Chart.register(ChartDataLabels);
+
+            // draw line chart
+            new Chart("chartjs_08", {
+                type: "line",
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                // round to nearest 1 decimal place
+                                label: function(tooltipItem) {
+                                    var value = (Math.round(tooltipItem.raw * 10) /10).toFixed(1);
+                                    return value;
+                                }
+                            }
+                        },
+                        datalabels: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            suggestedMin: 0, // Minimum value for the y-axis
+                            suggestedMax: 100, // Maximum value for the y-axis
+                            title: {
+                                display: true,
+                                text: "Score"
+                            },
+                        }
+                    }
+                }
+            });
         }
     }).fail(function() {
         showNoData('#chartjs_08');
@@ -635,7 +1127,7 @@ function updateSelection(option) {
 
         // resizing for piecharts
         $(chartContainer).removeClass('piechart');
-        if (option != 'Spcific Student') {
+        if (option != 'Specific Student') {
             if (i > 1) {
                 $(chartContainer).addClass('piechart');
             } else {

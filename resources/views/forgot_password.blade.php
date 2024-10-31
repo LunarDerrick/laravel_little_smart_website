@@ -24,7 +24,7 @@
 
         <div class="container form-center">
             <div class="row mt-5 pb-3">
-                <h1>Forgot password</h1>
+                <h1><span>Forgot password</span></h1>
             </div>
             <div class="row">
                 <form action="{{ route('password.email_link') }}" method="POST" id="forgotForm">
@@ -50,6 +50,7 @@
 
     @include('components.send_feedback')
     @include('components.footer')
+    @include('components.font-check')
 
     <script>
         document.getElementById('forgotForm').addEventListener('submit', function() {

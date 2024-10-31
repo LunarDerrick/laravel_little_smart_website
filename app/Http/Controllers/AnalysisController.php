@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 // use App\Models\Score;
-// use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Log;
 
 class AnalysisController extends Controller
 {
@@ -336,6 +336,7 @@ class AnalysisController extends Controller
     public function getPassingRateStandard()
     {
         // Construct the query block as a single string
+        // only std 4-6 take history, extra case to handle omission
         $query = "
             standard,
             COUNT(*) AS total_students,
@@ -344,8 +345,14 @@ class AnalysisController extends Controller
             SUM(CASE WHEN malay >= 40 THEN 1 ELSE 0 END) +
             SUM(CASE WHEN math >= 40 THEN 1 ELSE 0 END) +
             SUM(CASE WHEN science >= 40 THEN 1 ELSE 0 END) +
-            SUM(CASE WHEN history >= 40 THEN 1 ELSE 0 END) AS total_passed_subjects,
-            6 AS total_subjects
+            CASE
+                WHEN users.standard >= 4 THEN SUM(CASE WHEN history >= 40 THEN 1 ELSE 0 END)
+                ELSE 0
+            END AS total_passed_subjects,
+            CASE
+                WHEN users.standard >= 4 THEN 6
+                ELSE 5
+            END AS total_subjects
         ";
 
         // Perform the query using Laravel's query builder
@@ -371,7 +378,7 @@ class AnalysisController extends Controller
                     'standard' => $standard,
                     'total_students' => 0,
                     'total_passed_subjects' => "0",
-                    'total_subjects' => 6
+                    'total_subjects' => $standard < 4 ? 5 : 6
                 ]);
             }
         }
@@ -394,6 +401,559 @@ class AnalysisController extends Controller
         return response()->json($chartData);
     }
 
+    public function getAvgScoreStandard()
+    {
+        // Construct the query block as a single string
+        // COALESCE is to check for NULL value and replace with another, as NULL in any calculation renders final result always NULL
+        $query = "
+            standard,
+            (SUM(
+                CASE
+                    WHEN users.standard BETWEEN 1 AND 3 THEN
+                        COALESCE(mandarin, 0) + COALESCE(english, 0) + COALESCE(malay, 0) +
+                        COALESCE(math, 0) + COALESCE(science, 0)
+                    WHEN users.standard BETWEEN 4 AND 6 THEN
+                        COALESCE(mandarin, 0) + COALESCE(english, 0) + COALESCE(malay, 0) +
+                        COALESCE(math, 0) + COALESCE(science, 0) + COALESCE(history, 0)
+                END
+            ) / (COUNT(*) * 100 *
+                CASE
+                    WHEN users.standard BETWEEN 1 AND 3 THEN 5
+                    ELSE 6
+                END
+            )) * 100 AS avg_score_percentage
+        ";
+
+        // Perform the query using Laravel's query builder
+        $result = DB::table('scores')
+        ->join('users', 'users.id', '=', 'scores.userid')
+        ->select(DB::raw($query))
+        ->whereBetween('users.standard', [1, 6]) // Filter for standards 1 through 6
+        ->groupBy('users.standard')
+        ->orderBy('users.standard')
+        ->get();
+
+        // logging to view the results obtain
+        // Log::info('Query result:', $result->toArray());
+
+        // Check for possible missing row and plug the gaps
+        // eg. zero std 2 students, need to plug "std 2: 0" to make sure chart didn't squeeze to left
+        $finalResult = collect();
+
+        for ($standard = 1; $standard <= 6; $standard++) {
+            $existingRow = $result->firstWhere('standard', $standard);
+
+            if ($existingRow) {
+                $finalResult->push($existingRow);
+            } else {
+                $finalResult->push((object)[
+                    'standard' => $standard,
+                    'avg_score_percentage' => 0
+                ]);
+            }
+        }
+
+        // Prepare the data for Chart.js
+        $chartData = [
+            'labels' => ['Std 1', 'Std 2', 'Std 3', 'Std 4', 'Std 5', 'Std 6'],
+            'datasets' => [
+                [
+                    'backgroundColor' => ["#fd7f6f", "#ffee65", "#bd7ebe", "#7eb0d5", "#b2e061", "#ffb55a"],
+                    'data' => $finalResult->map(fn($result) =>
+                        isset($result->avg_score_percentage)
+                            ? (float)$result->avg_score_percentage
+                            : 0 // Handle cases where there are no students
+                    )->all()
+                ]
+            ]
+        ];
+
+        return response()->json($chartData);
+    }
+
+    public function getStd1Grade()
+    {
+        // Construct the query block as a single string
+        $query = "
+            standard,
+            SUM(
+                CASE WHEN mandarin >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 80 THEN 1 ELSE 0 END
+            ) AS A,
+            SUM(
+                CASE WHEN mandarin >= 60 AND mandarin < 80 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 60 AND english < 80 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 60 AND malay < 80 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 60 AND math < 80 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 60 AND science < 80 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 60 AND COALESCE(history, 0) < 80 THEN 1 ELSE 0 END
+            ) AS B,
+            SUM(
+                CASE WHEN mandarin >= 40 AND mandarin < 60 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 40 AND english < 60 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 40 AND malay < 60 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 40 AND math < 60 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 40 AND science < 60 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 40 AND COALESCE(history, 0) < 60 THEN 1 ELSE 0 END
+            ) AS C,
+            SUM(
+                CASE WHEN mandarin >= 20 AND mandarin < 40 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 20 AND english < 40 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 20 AND malay < 40 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 20 AND math < 40 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 20 AND science < 40 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 20 AND COALESCE(history, 0) < 40 THEN 1 ELSE 0 END
+            ) AS D,
+            SUM(
+                CASE WHEN mandarin < 20 THEN 1 ELSE 0 END +
+                CASE WHEN english < 20 THEN 1 ELSE 0 END +
+                CASE WHEN malay < 20 THEN 1 ELSE 0 END +
+                CASE WHEN math < 20 THEN 1 ELSE 0 END +
+                CASE WHEN science < 20 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 21) < 20 THEN 1 ELSE 0 END
+            ) AS E
+        ";
+
+        // Perform the query using Laravel's query builder
+        $result = DB::table('scores')
+        ->join('users', 'users.id', '=', 'scores.userid')
+        ->select(DB::raw($query))
+        ->where('users.standard', 1)
+        ->groupBy('users.standard')
+        ->first();
+
+        // log for non-group query results
+        // Log::info('Query result:', [$result]);
+
+        // Prepare the data for Chart.js
+        $chartData = [
+            'labels' => ['A', 'B', 'C', 'D', 'E'],
+            'datasets' => [
+                [
+                    'backgroundColor' => ["lightpink", "indianred", "lightcoral", "lightsalmon", "#fa5e50"],
+                    'data' => [
+                        $result->A,
+                        $result->B,
+                        $result->C,
+                        $result->D,
+                        $result->E,
+                    ]
+                ]
+            ]
+        ];
+
+        return response()->json($chartData);
+    }
+
+    public function getStd2Grade()
+    {
+        // Construct the query block as a single string
+        $query = "
+            standard,
+            SUM(
+                CASE WHEN mandarin >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 80 THEN 1 ELSE 0 END
+            ) AS A,
+            SUM(
+                CASE WHEN mandarin >= 60 AND mandarin < 80 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 60 AND english < 80 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 60 AND malay < 80 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 60 AND math < 80 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 60 AND science < 80 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 60 AND COALESCE(history, 0) < 80 THEN 1 ELSE 0 END
+            ) AS B,
+            SUM(
+                CASE WHEN mandarin >= 40 AND mandarin < 60 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 40 AND english < 60 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 40 AND malay < 60 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 40 AND math < 60 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 40 AND science < 60 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 40 AND COALESCE(history, 0) < 60 THEN 1 ELSE 0 END
+            ) AS C,
+            SUM(
+                CASE WHEN mandarin >= 20 AND mandarin < 40 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 20 AND english < 40 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 20 AND malay < 40 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 20 AND math < 40 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 20 AND science < 40 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 20 AND COALESCE(history, 0) < 40 THEN 1 ELSE 0 END
+            ) AS D,
+            SUM(
+                CASE WHEN mandarin < 20 THEN 1 ELSE 0 END +
+                CASE WHEN english < 20 THEN 1 ELSE 0 END +
+                CASE WHEN malay < 20 THEN 1 ELSE 0 END +
+                CASE WHEN math < 20 THEN 1 ELSE 0 END +
+                CASE WHEN science < 20 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 21) < 20 THEN 1 ELSE 0 END
+            ) AS E
+        ";
+
+        // Perform the query using Laravel's query builder
+        $result = DB::table('scores')
+        ->join('users', 'users.id', '=', 'scores.userid')
+        ->select(DB::raw($query))
+        ->where('users.standard', 2)
+        ->groupBy('users.standard')
+        ->first();
+
+        // Prepare the data for Chart.js
+        $chartData = [
+            'labels' => ['A', 'B', 'C', 'D', 'E'],
+            'datasets' => [
+                [
+                    'backgroundColor' => ["burlywood", "darkkhaki", "khaki", "palegoldenrod", "wheat"],
+                    'data' => [
+                        $result->A,
+                        $result->B,
+                        $result->C,
+                        $result->D,
+                        $result->E,
+                    ]
+                ]
+            ]
+        ];
+
+        return response()->json($chartData);
+    }
+
+    public function getStd3Grade()
+    {
+        // Construct the query block as a single string
+        $query = "
+            standard,
+            SUM(
+                CASE WHEN mandarin >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 80 THEN 1 ELSE 0 END
+            ) AS A,
+            SUM(
+                CASE WHEN mandarin >= 60 AND mandarin < 80 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 60 AND english < 80 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 60 AND malay < 80 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 60 AND math < 80 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 60 AND science < 80 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 60 AND COALESCE(history, 0) < 80 THEN 1 ELSE 0 END
+            ) AS B,
+            SUM(
+                CASE WHEN mandarin >= 40 AND mandarin < 60 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 40 AND english < 60 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 40 AND malay < 60 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 40 AND math < 60 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 40 AND science < 60 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 40 AND COALESCE(history, 0) < 60 THEN 1 ELSE 0 END
+            ) AS C,
+            SUM(
+                CASE WHEN mandarin >= 20 AND mandarin < 40 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 20 AND english < 40 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 20 AND malay < 40 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 20 AND math < 40 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 20 AND science < 40 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 20 AND COALESCE(history, 0) < 40 THEN 1 ELSE 0 END
+            ) AS D,
+            SUM(
+                CASE WHEN mandarin < 20 THEN 1 ELSE 0 END +
+                CASE WHEN english < 20 THEN 1 ELSE 0 END +
+                CASE WHEN malay < 20 THEN 1 ELSE 0 END +
+                CASE WHEN math < 20 THEN 1 ELSE 0 END +
+                CASE WHEN science < 20 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 21) < 20 THEN 1 ELSE 0 END
+            ) AS E
+        ";
+
+        // Perform the query using Laravel's query builder
+        $result = DB::table('scores')
+        ->join('users', 'users.id', '=', 'scores.userid')
+        ->select(DB::raw($query))
+        ->where('users.standard', 3)
+        ->groupBy('users.standard')
+        ->first();
+
+        // Prepare the data for Chart.js
+        $chartData = [
+            'labels' => ['A', 'B', 'C', 'D', 'E'],
+            'datasets' => [
+                [
+                    'backgroundColor' => ["#a45ee5", "#e39ff6", "#b65fcf", "mediumpurple", "plum"],
+                    'data' => [
+                        $result->A,
+                        $result->B,
+                        $result->C,
+                        $result->D,
+                        $result->E,
+                    ]
+                ]
+            ]
+        ];
+
+        return response()->json($chartData);
+    }
+
+    public function getStd4Grade()
+    {
+        // Construct the query block as a single string
+        $query = "
+            standard,
+            SUM(
+                CASE WHEN mandarin >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 80 THEN 1 ELSE 0 END
+            ) AS A,
+            SUM(
+                CASE WHEN mandarin >= 60 AND mandarin < 80 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 60 AND english < 80 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 60 AND malay < 80 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 60 AND math < 80 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 60 AND science < 80 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 60 AND COALESCE(history, 0) < 80 THEN 1 ELSE 0 END
+            ) AS B,
+            SUM(
+                CASE WHEN mandarin >= 40 AND mandarin < 60 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 40 AND english < 60 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 40 AND malay < 60 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 40 AND math < 60 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 40 AND science < 60 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 40 AND COALESCE(history, 0) < 60 THEN 1 ELSE 0 END
+            ) AS C,
+            SUM(
+                CASE WHEN mandarin >= 20 AND mandarin < 40 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 20 AND english < 40 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 20 AND malay < 40 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 20 AND math < 40 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 20 AND science < 40 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 20 AND COALESCE(history, 0) < 40 THEN 1 ELSE 0 END
+            ) AS D,
+            SUM(
+                CASE WHEN mandarin < 20 THEN 1 ELSE 0 END +
+                CASE WHEN english < 20 THEN 1 ELSE 0 END +
+                CASE WHEN malay < 20 THEN 1 ELSE 0 END +
+                CASE WHEN math < 20 THEN 1 ELSE 0 END +
+                CASE WHEN science < 20 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 21) < 20 THEN 1 ELSE 0 END
+            ) AS E
+        ";
+
+        // Perform the query using Laravel's query builder
+        $result = DB::table('scores')
+        ->join('users', 'users.id', '=', 'scores.userid')
+        ->select(DB::raw($query))
+        ->where('users.standard', 4)
+        ->groupBy('users.standard')
+        ->first();
+
+        // Prepare the data for Chart.js
+        $chartData = [
+            'labels' => ['A', 'B', 'C', 'D', 'E'],
+            'datasets' => [
+                [
+                    'backgroundColor' => ["cornflowerblue", "lightskyblue", "darkturquoise", "deepskyblue", "dodgerblue"],
+                    'data' => [
+                        $result->A,
+                        $result->B,
+                        $result->C,
+                        $result->D,
+                        $result->E,
+                    ]
+                ]
+            ]
+        ];
+
+        return response()->json($chartData);
+    }
+
+    public function getStd5Grade()
+    {
+        // Construct the query block as a single string
+        $query = "
+            standard,
+            SUM(
+                CASE WHEN mandarin >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 80 THEN 1 ELSE 0 END
+            ) AS A,
+            SUM(
+                CASE WHEN mandarin >= 60 AND mandarin < 80 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 60 AND english < 80 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 60 AND malay < 80 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 60 AND math < 80 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 60 AND science < 80 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 60 AND COALESCE(history, 0) < 80 THEN 1 ELSE 0 END
+            ) AS B,
+            SUM(
+                CASE WHEN mandarin >= 40 AND mandarin < 60 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 40 AND english < 60 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 40 AND malay < 60 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 40 AND math < 60 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 40 AND science < 60 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 40 AND COALESCE(history, 0) < 60 THEN 1 ELSE 0 END
+            ) AS C,
+            SUM(
+                CASE WHEN mandarin >= 20 AND mandarin < 40 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 20 AND english < 40 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 20 AND malay < 40 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 20 AND math < 40 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 20 AND science < 40 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 20 AND COALESCE(history, 0) < 40 THEN 1 ELSE 0 END
+            ) AS D,
+            SUM(
+                CASE WHEN mandarin < 20 THEN 1 ELSE 0 END +
+                CASE WHEN english < 20 THEN 1 ELSE 0 END +
+                CASE WHEN malay < 20 THEN 1 ELSE 0 END +
+                CASE WHEN math < 20 THEN 1 ELSE 0 END +
+                CASE WHEN science < 20 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 21) < 20 THEN 1 ELSE 0 END
+            ) AS E
+        ";
+
+        // Perform the query using Laravel's query builder
+        $result = DB::table('scores')
+        ->join('users', 'users.id', '=', 'scores.userid')
+        ->select(DB::raw($query))
+        ->where('users.standard', 5)
+        ->groupBy('users.standard')
+        ->first();
+
+        // Prepare the data for Chart.js
+        $chartData = [
+            'labels' => ['A', 'B', 'C', 'D', 'E'],
+            'datasets' => [
+                [
+                    'backgroundColor' => ["#0e6573", "#008e89", "#00b680", "#73da5d", "#e0f420"],
+                    'data' => [
+                        $result->A,
+                        $result->B,
+                        $result->C,
+                        $result->D,
+                        $result->E,
+                    ]
+                ]
+            ]
+        ];
+
+        return response()->json($chartData);
+    }
+
+    public function getStd6Grade()
+    {
+        // Construct the query block as a single string
+        $query = "
+            standard,
+            SUM(
+                CASE WHEN mandarin >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 80 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 80 THEN 1 ELSE 0 END
+            ) AS A,
+            SUM(
+                CASE WHEN mandarin >= 60 AND mandarin < 80 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 60 AND english < 80 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 60 AND malay < 80 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 60 AND math < 80 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 60 AND science < 80 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 60 AND COALESCE(history, 0) < 80 THEN 1 ELSE 0 END
+            ) AS B,
+            SUM(
+                CASE WHEN mandarin >= 40 AND mandarin < 60 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 40 AND english < 60 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 40 AND malay < 60 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 40 AND math < 60 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 40 AND science < 60 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 40 AND COALESCE(history, 0) < 60 THEN 1 ELSE 0 END
+            ) AS C,
+            SUM(
+                CASE WHEN mandarin >= 20 AND mandarin < 40 THEN 1 ELSE 0 END +
+                CASE WHEN english >= 20 AND english < 40 THEN 1 ELSE 0 END +
+                CASE WHEN malay >= 20 AND malay < 40 THEN 1 ELSE 0 END +
+                CASE WHEN math >= 20 AND math < 40 THEN 1 ELSE 0 END +
+                CASE WHEN science >= 20 AND science < 40 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 0) >= 20 AND COALESCE(history, 0) < 40 THEN 1 ELSE 0 END
+            ) AS D,
+            SUM(
+                CASE WHEN mandarin < 20 THEN 1 ELSE 0 END +
+                CASE WHEN english < 20 THEN 1 ELSE 0 END +
+                CASE WHEN malay < 20 THEN 1 ELSE 0 END +
+                CASE WHEN math < 20 THEN 1 ELSE 0 END +
+                CASE WHEN science < 20 THEN 1 ELSE 0 END +
+                CASE WHEN COALESCE(history, 21) < 20 THEN 1 ELSE 0 END
+            ) AS E
+        ";
+
+        // Perform the query using Laravel's query builder
+        $result = DB::table('scores')
+        ->join('users', 'users.id', '=', 'scores.userid')
+        ->select(DB::raw($query))
+        ->where('users.standard', 6)
+        ->groupBy('users.standard')
+        ->first();
+
+        // Prepare the data for Chart.js
+        $chartData = [
+            'labels' => ['A', 'B', 'C', 'D', 'E'],
+            'datasets' => [
+                [
+                    'backgroundColor' => ["#b56727", "#fc6a03", "#ec9706", "#be5504", "#ed820e"],
+                    'data' => [
+                        $result->A,
+                        $result->B,
+                        $result->C,
+                        $result->D,
+                        $result->E,
+                    ]
+                ]
+            ]
+        ];
+
+        return response()->json($chartData);
+    }
+
+    // line graph query will be flawed until "score by year" feature is implemented
+    public function getAvgScoreSpecific($userId)
+    {
+        // Perform the query using Laravel's query builder
+        $result = DB::table('scores')
+        ->select('scores.*')
+        ->where('scores.userid', $userId)
+        ->first();
+
+        // Prepare the data for Chart.js
+        $chartData = [
+            'labels' => ['Std 1', 'Std 2', 'Std 3', 'Std 4', 'Std 5', 'Std 6'],
+            'datasets' => [
+                [
+                    'backgroundColor' => ["#fd7f6f", "#ffee65", "#bd7ebe", "#7eb0d5", "#b2e061", "#ffb55a"],
+                    'data' => [
+                        $result->mandarin,
+                        $result->english,
+                        $result->malay,
+                        $result->math,
+                        $result->science,
+                        $result->history,
+                    ]
+                ]
+            ]
+        ];
+
+        return response()->json($chartData);
+    }
+
     public function getScoreSpecific($userId)
     {
         // Perform the query using Laravel's query builder
@@ -409,6 +969,186 @@ class AnalysisController extends Controller
                 [
                     'borderColor' => "#36a2eb",
                     'backgroundColor' => "rgba(54, 162, 235, 0.2)",
+                    'data' => [
+                        $result->mandarin,
+                        $result->english,
+                        $result->malay,
+                        $result->math,
+                        $result->science,
+                        $result->history,
+                    ]
+                ]
+            ]
+        ];
+
+        return response()->json($chartData);
+    }
+
+    public function getMandarinSpecific($userId)
+    {
+        // Perform the query using Laravel's query builder
+        $result = DB::table('scores')
+        ->select('scores.*')
+        ->where('scores.userid', $userId)
+        ->first();
+
+        // Prepare the data for Chart.js
+        $chartData = [
+            'labels' => ['Std 1', 'Std 2', 'Std 3', 'Std 4', 'Std 5', 'Std 6'],
+            'datasets' => [
+                [
+                    'borderColor' => "lightpink",
+                    'backgroundColor' => "#fa5e50",
+                    'data' => [
+                        $result->mandarin,
+                        $result->english,
+                        $result->malay,
+                        $result->math,
+                        $result->science,
+                        $result->history,
+                    ]
+                ]
+            ]
+        ];
+
+        return response()->json($chartData);
+    }
+
+    public function getEnglishSpecific($userId)
+    {
+        // Perform the query using Laravel's query builder
+        $result = DB::table('scores')
+        ->select('scores.*')
+        ->where('scores.userid', $userId)
+        ->first();
+
+        // Prepare the data for Chart.js
+        $chartData = [
+            'labels' => ['Std 1', 'Std 2', 'Std 3', 'Std 4', 'Std 5', 'Std 6'],
+            'datasets' => [
+                [
+                    'borderColor' => "palegoldenrod",
+                    'backgroundColor' => "darkkhaki",
+                    'data' => [
+                        $result->mandarin,
+                        $result->english,
+                        $result->malay,
+                        $result->math,
+                        $result->science,
+                        $result->history,
+                    ]
+                ]
+            ]
+        ];
+
+        return response()->json($chartData);
+    }
+
+    public function getMalaySpecific($userId)
+    {
+        // Perform the query using Laravel's query builder
+        $result = DB::table('scores')
+        ->select('scores.*')
+        ->where('scores.userid', $userId)
+        ->first();
+
+        // Prepare the data for Chart.js
+        $chartData = [
+            'labels' => ['Std 1', 'Std 2', 'Std 3', 'Std 4', 'Std 5', 'Std 6'],
+            'datasets' => [
+                [
+                    'borderColor' => "plum",
+                    'backgroundColor' => "#a45ee5",
+                    'data' => [
+                        $result->mandarin,
+                        $result->english,
+                        $result->malay,
+                        $result->math,
+                        $result->science,
+                        $result->history,
+                    ]
+                ]
+            ]
+        ];
+
+        return response()->json($chartData);
+    }
+
+    public function getMathSpecific($userId)
+    {
+        // Perform the query using Laravel's query builder
+        $result = DB::table('scores')
+        ->select('scores.*')
+        ->where('scores.userid', $userId)
+        ->first();
+
+        // Prepare the data for Chart.js
+        $chartData = [
+            'labels' => ['Std 1', 'Std 2', 'Std 3', 'Std 4', 'Std 5', 'Std 6'],
+            'datasets' => [
+                [
+                    'borderColor' => "lightskyblue",
+                    'backgroundColor' => "dodgerblue",
+                    'data' => [
+                        $result->mandarin,
+                        $result->english,
+                        $result->malay,
+                        $result->math,
+                        $result->science,
+                        $result->history,
+                    ]
+                ]
+            ]
+        ];
+
+        return response()->json($chartData);
+    }
+
+    public function getScienceSpecific($userId)
+    {
+        // Perform the query using Laravel's query builder
+        $result = DB::table('scores')
+        ->select('scores.*')
+        ->where('scores.userid', $userId)
+        ->first();
+
+        // Prepare the data for Chart.js
+        $chartData = [
+            'labels' => ['Std 1', 'Std 2', 'Std 3', 'Std 4', 'Std 5', 'Std 6'],
+            'datasets' => [
+                [
+                    'borderColor' => "#73da5d",
+                    'backgroundColor' => "#00b680",
+                    'data' => [
+                        $result->mandarin,
+                        $result->english,
+                        $result->malay,
+                        $result->math,
+                        $result->science,
+                        $result->history,
+                    ]
+                ]
+            ]
+        ];
+
+        return response()->json($chartData);
+    }
+
+    public function getHistorySpecific($userId)
+    {
+        // Perform the query using Laravel's query builder
+        $result = DB::table('scores')
+        ->select('scores.*')
+        ->where('scores.userid', $userId)
+        ->first();
+
+        // Prepare the data for Chart.js
+        $chartData = [
+            'labels' => ['Std 1', 'Std 2', 'Std 3', 'Std 4', 'Std 5', 'Std 6'],
+            'datasets' => [
+                [
+                    'borderColor' => "#ec9706",
+                    'backgroundColor' => "#fc6a03",
                     'data' => [
                         $result->mandarin,
                         $result->english,

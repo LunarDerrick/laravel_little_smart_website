@@ -15,7 +15,7 @@
 
         <div class="container form-center">
             <div class="row mt-5 pb-3">
-                <h1>Teacher Login</h1>
+                <h1><span>Teacher Login</span></h1>
             </div>
             <div class="row pb-3">
                 <form action="{{ route('login.submit') }}" method="POST">
@@ -49,6 +49,7 @@
 
     @include('components.send_feedback')
     @include('components.footer')
+    @include('components.font-check')
 
     <!-- items for notification toast -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">

@@ -14,7 +14,7 @@
         @include('components.alert_notification')
         @include('components.btn_admin')
 
-        <h1>Tuition Roster</h1>
+        <h1><span>Tuition Roster</span></h1>
         <br>
 
         @if ($students->isEmpty())
@@ -98,6 +98,7 @@
     <br><br>
 
     @include('components.footer')
+    @include('components.font-check')
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

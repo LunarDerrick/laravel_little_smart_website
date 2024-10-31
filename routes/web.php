@@ -91,21 +91,21 @@ Route::middleware([CheckSessionTimeout::class, SingleSessionRedirect::class])->g
             Route::get('/chart-data-7', [AnalysisController::class, 'getScienceGrade']);
             Route::get('/chart-data-8', [AnalysisController::class, 'getHistoryGrade']);
             Route::get('/chart-data-9', [AnalysisController::class, 'getPassingRateStandard']);
-            Route::get('/chart-data-10', [AnalysisController::class, 'nodata']);
-            Route::get('/chart-data-11', [AnalysisController::class, 'nodata']);
-            Route::get('/chart-data-12', [AnalysisController::class, 'nodata']);
-            Route::get('/chart-data-13', [AnalysisController::class, 'nodata']);
-            Route::get('/chart-data-14', [AnalysisController::class, 'nodata']);
-            Route::get('/chart-data-15', [AnalysisController::class, 'nodata']);
-            Route::get('/chart-data-16', [AnalysisController::class, 'nodata']);
-            Route::get('/chart-data-17', [AnalysisController::class, 'nodata']);
+            Route::get('/chart-data-10', [AnalysisController::class, 'getAvgScoreStandard']);
+            Route::get('/chart-data-11', [AnalysisController::class, 'getStd1Grade']);
+            Route::get('/chart-data-12', [AnalysisController::class, 'getStd2Grade']);
+            Route::get('/chart-data-13', [AnalysisController::class, 'getStd3Grade']);
+            Route::get('/chart-data-14', [AnalysisController::class, 'getStd4Grade']);
+            Route::get('/chart-data-15', [AnalysisController::class, 'getStd5Grade']);
+            Route::get('/chart-data-16', [AnalysisController::class, 'getStd6Grade']);
+            Route::get('/chart-data-17/{id}', [AnalysisController::class, 'getAvgScoreSpecific']);
             Route::get('/chart-data-18/{id}', [AnalysisController::class, 'getScoreSpecific']);
-            Route::get('/chart-data-19', [AnalysisController::class, 'nodata']);
-            Route::get('/chart-data-20', [AnalysisController::class, 'nodata']);
-            Route::get('/chart-data-21', [AnalysisController::class, 'nodata']);
-            Route::get('/chart-data-22', [AnalysisController::class, 'nodata']);
-            Route::get('/chart-data-23', [AnalysisController::class, 'nodata']);
-            Route::get('/chart-data-24', [AnalysisController::class, 'nodata']);
+            Route::get('/chart-data-19/{id}', [AnalysisController::class, 'getMandarinSpecific']);
+            Route::get('/chart-data-20/{id}', [AnalysisController::class, 'getEnglishSpecific']);
+            Route::get('/chart-data-21/{id}', [AnalysisController::class, 'getMalaySpecific']);
+            Route::get('/chart-data-22/{id}', [AnalysisController::class, 'getMathSpecific']);
+            Route::get('/chart-data-23/{id}', [AnalysisController::class, 'getScienceSpecific']);
+            Route::get('/chart-data-24/{id}', [AnalysisController::class, 'getHistorySpecific']);
 
             Route::get('/inbox', [FeedbackController::class, 'index']
             )->name('feedback.list');

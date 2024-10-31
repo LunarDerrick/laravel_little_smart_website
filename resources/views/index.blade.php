@@ -81,6 +81,7 @@
 
     @include('components.send_feedback')
     @include('components.footer')
+    @include('components.font-check')
 
     <!-- Slick Carousel JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>

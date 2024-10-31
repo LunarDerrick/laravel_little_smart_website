@@ -14,7 +14,7 @@
         @include('components.alert_notification')
         @include('components.btn_admin')
 
-        <h1>Exam Analysis</h1>
+        <h1><span>Exam Analysis</span></h1>
         <br>
 
         <div class="dropdown">
@@ -151,6 +151,7 @@
     <br><br>
 
     @include('components.footer')
+    @include('components.font-check')
 
     <!-- jQuery library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
@@ -178,16 +179,16 @@
         var chart_data_14 = "{{ url('/chart-data-14') }}";
         var chart_data_15 = "{{ url('/chart-data-15') }}";
         var chart_data_16 = "{{ url('/chart-data-16') }}";
-        var chart_data_17 = "{{ url('/chart-data-17') }}";
-        // var chart_data_18 = "{{ url('/chart-data-18') }}";
         // temporarily using fixed id for demo
+        // var chart_data_17 = "{{ url('/chart-data-17') }}";
+        var chart_data_17 = "{{ url('/chart-data-17/505515') }}";
         var chart_data_18 = "{{ url('/chart-data-18/505515') }}";
-        var chart_data_19 = "{{ url('/chart-data-19') }}";
-        var chart_data_20 = "{{ url('/chart-data-20') }}";
-        var chart_data_21 = "{{ url('/chart-data-21') }}";
-        var chart_data_22 = "{{ url('/chart-data-22') }}";
-        var chart_data_23 = "{{ url('/chart-data-23') }}";
-        var chart_data_24 = "{{ url('/chart-data-24') }}";
+        var chart_data_19 = "{{ url('/chart-data-19/505515') }}";
+        var chart_data_20 = "{{ url('/chart-data-20/505515') }}";
+        var chart_data_21 = "{{ url('/chart-data-21/505515') }}";
+        var chart_data_22 = "{{ url('/chart-data-22/505515') }}";
+        var chart_data_23 = "{{ url('/chart-data-23/505515') }}";
+        var chart_data_24 = "{{ url('/chart-data-24/505515') }}";
         var no_record = "{{ url('/no-record') }}";
     </script>
     <script src="{{ mix('js/app.js') }}"></script>

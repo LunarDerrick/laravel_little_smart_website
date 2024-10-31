@@ -19,7 +19,7 @@ use App\Helpers\roleHelper;
     <section>
         @include('components.alert_notification')
 
-        <h1>Multiple Login Detected</h1>
+        <h1><span>Multiple Login Detected</span></h1>
         <br>
 
         <div class="center text">
@@ -39,6 +39,7 @@ use App\Helpers\roleHelper;
     </section>
 
     @include('components.footer')
+    @include('components.font-check')
 </body>
 
 </html>

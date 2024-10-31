@@ -19,7 +19,7 @@ use App\Http\Helpers\roleHelper;
     <section>
         @include('components.alert_notification')
 
-        <h1>Profile</h1>
+        <h1><span>Profile</span></h1>
         <br>
 
         <div class="container">
@@ -62,6 +62,7 @@ use App\Http\Helpers\roleHelper;
 
     @include('components.send_feedback')
     @include('components.footer')
+    @include('components.font-check')
 </body>
 
 </html>

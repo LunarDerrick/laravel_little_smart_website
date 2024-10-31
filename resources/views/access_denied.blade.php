@@ -15,7 +15,7 @@
     <section>
         @include('components.alert_notification')
 
-        <h1>Access Denied</h1>
+        <h1><span>Access Denied</span></h1>
         <br>
 
         You do not have the required permission to this page.
@@ -24,6 +24,7 @@
 
     @include('components.send_feedback')
     @include('components.footer')
+    @include('components.font-check')
 </body>
 
 </html>

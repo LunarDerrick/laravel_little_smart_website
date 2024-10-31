@@ -19,7 +19,7 @@
             <div class="container roster-form">
                 <div class="row sticky">
                     <div class="col">
-                        <h1>New Entry</h1>
+                        <h1><span>New Entry</span></h1>
                     </div>
                 </div>
                 <form action="{{ route('roster.add') }}" method="POST">
@@ -117,6 +117,7 @@
     </section>
 
     @include('components.footer')
+    @include('components.font-check')
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
