@@ -10207,6 +10207,11 @@ function updateSelection(option) {
   // update dropdown text
   document.getElementById('selected-option').innerText = option;
 
+  // unload table data
+  document.querySelectorAll('#data-body').forEach(function (body) {
+    body.style.display = 'none';
+  });
+
   // update chart
   charts[option].forEach(function (chartFunc, i) {
     var chartContainer = document.getElementById(chartContainers[i]);
@@ -10237,10 +10242,22 @@ function updateSelection(option) {
     }
   });
 
-  // Update table title
-  var tableTitle = document.querySelector('#table-graph').closest('.card').querySelector('.card-body h6');
+  // Update table
+  var tableTitle = document.querySelector('#table-container').querySelector('.card-body h6');
   if (tableTitle) {
     tableTitle.innerText = chartTitles[option][chartTitles[option].length - 1] || "Title";
+  }
+  var headerName = document.getElementById('table-header');
+  if (option === 'Standard') {
+    headerName.textContent = 'Standard';
+  } else {
+    headerName.textContent = 'Subject';
+  }
+
+  // load new table data
+  var selectedBody = document.querySelector("#data-body[data-type=\"".concat(option, "\"]"));
+  if (selectedBody) {
+    selectedBody.style.display = 'table-row-group';
   }
 }
 

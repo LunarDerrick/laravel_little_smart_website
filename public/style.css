@@ -457,6 +457,10 @@ canvas.piechart {
     border-width: 1px;
 }
 
+#data-body[data-type="Standard"], #data-body[data-type="Specific Student"] {
+    display: none;
+}
+
 .btn-warning {
     color: black; /* improve contrast */
 }

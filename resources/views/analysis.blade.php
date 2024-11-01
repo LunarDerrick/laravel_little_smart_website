@@ -57,17 +57,17 @@
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-4">
-                        <div class="card border-0">
-                            @if (empty($topScores))
+                        <div class="card border-0" id="table-container">
+                            @if (empty($topScores) && empty($topAvgScoreStandard) && empty($allScores))
                                 @include('components.no_records')
                             @else
                                 <table id="table-graph">
                                     <tr>
                                         <th>Name</th>
-                                        <th>Subject</th>
+                                        <th id="table-header">Subject</th>
                                         <th>Score</th>
                                     </tr>
-                                    @isset($topScores)
+                                    <tbody id="data-body" data-type="Subject">
                                         @foreach($topScores as $topScore)
                                         <tr translate="no">
                                             <td>{{ $topScore['name'] }}</td>
@@ -75,7 +75,25 @@
                                             <td>{{ $topScore['score'] }}</td>
                                         </tr>
                                         @endforeach
-                                    @endisset
+                                    </tbody>
+                                    <tbody id="data-body" data-type="Standard">
+                                        @foreach($topAvgScoreStandard as $score)
+                                        <tr translate="no">
+                                            <td>{{ $score['name'] }}</td>
+                                            <td>{{ $score['standard'] }}</td>
+                                            <td>{{ $score['score'] }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                    <tbody id="data-body" data-type="Specific Student">
+                                        @foreach($allScores as $allScore)
+                                        <tr translate="no">
+                                            <td>{{ $allScore['name'] }}</td>
+                                            <td>{{ $allScore['subject'] }}</td>
+                                            <td>{{ $allScore['score'] }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
                                 </table>
                             @endif
                             <div class="card-body">

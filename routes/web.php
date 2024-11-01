@@ -77,7 +77,7 @@ Route::middleware([CheckSessionTimeout::class, SingleSessionRedirect::class])->g
             Route::delete('/roster/{id}', [RosterController::class, 'destroy']
             )->name('roster.delete');
 
-            Route::get('/analysis', [AnalysisController::class, 'topScore']
+            Route::get('/analysis', [AnalysisController::class, 'tableData']
             )->name('analysis');
 
             Route::get('/no-record', [AnalysisController::class, 'showNoRecords']);

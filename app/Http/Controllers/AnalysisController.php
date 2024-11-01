@@ -93,14 +93,15 @@ class AnalysisController extends Controller
         return response()->json($chartData);
     }
 
-    public function topScore()
+    public function tableData()
     {
+        // sort by subject
         $subjects = ['mandarin', 'english', 'malay', 'math', 'science', 'history'];
         $topScores = [];
 
         // comment 'foreach' to simulate pass no variable
         foreach ($subjects as $subject) {
-            $topScore = User::select('users.name', 'scores.'.$subject.' as score')
+            $topScore = User::select('users.name', 'users.standard', 'scores.'.$subject.' as score')
                 ->join('scores', 'users.id', '=', 'scores.userid')
                 ->orderBy('scores.'.$subject, 'desc')
                 ->first();
@@ -109,12 +110,60 @@ class AnalysisController extends Controller
                 $topScores[] = [
                     'subject' => ucfirst($subject), // Capitalize first letter
                     'name' => $topScore->name,
+                    'standard' => $topScore->standard,
                     'score' => $topScore->score
                 ];
             }
         }
 
-        return view('analysis', ['topScores' => $topScores]);
+        // sort by standard
+        $topAvgScoreStandard = User::select('users.name', 'users.standard',
+            DB::raw("
+                ROUND(
+                    AVG(
+                        (scores.mandarin + scores.english + scores.malay + scores.math + scores.science +
+                        CASE WHEN users.standard >= 4 THEN COALESCE(scores.history, 0) ELSE 0 END) /
+                        CASE WHEN users.standard BETWEEN 1 AND 3 THEN 5 ELSE 6 END
+                    ), 1
+                ) as score
+            "))
+            ->join('scores', 'users.id', '=', 'scores.userid')
+            ->groupBy('users.standard', 'users.id', 'users.name') // retabulate fetched data for further arrangment
+            ->orderBy('users.standard', 'asc')
+            ->get()
+            ->groupBy('standard') // group all occurences to respective groups
+            ->map(function ($group) {
+                return $group->sortByDesc('score')->first(); // finally fetch highest average scorers
+            })
+            ->values() // Reset keys to 0-based index for clean output (convert key-pair to regular array)
+            ->toArray();
+
+        // sort by specific student
+        $allScore = User::select('users.name',
+                'scores.mandarin', 'scores.english', 'scores.malay',
+                'scores.math', 'scores.science', 'scores.history')
+            ->join('scores', 'users.id', '=', 'scores.userid')
+            ->where('users.id', 505515) // temp fixed data
+            ->first();
+
+        $allScores = [];
+        if ($allScore) {
+            foreach ($subjects as $subject) {
+                if ($allScore->$subject !== null) {
+                    $allScores[] = [
+                        'name' => $allScore->name,
+                        'subject' => ucfirst($subject),
+                        'score' => $allScore->$subject
+                    ];
+                }
+            }
+        }
+
+        return view('analysis', [
+            'topScores' => $topScores,
+            'topAvgScoreStandard' => $topAvgScoreStandard,
+            'allScores' => $allScores,
+        ]);
     }
 
     public function getMandarinGrade()
@@ -470,6 +519,31 @@ class AnalysisController extends Controller
 
         return response()->json($chartData);
     }
+
+    // public function topAvgScoreStandard()
+    // {
+    //     $subjects = ['mandarin', 'english', 'malay', 'math', 'science', 'history'];
+    //     $topScores = [];
+
+    //     // comment 'foreach' to simulate pass no variable
+    //     foreach ($subjects as $subject) {
+    //         $topScore = User::select('users.name', 'users.standard', 'scores.'.$subject.' as score')
+    //             ->join('scores', 'users.id', '=', 'scores.userid')
+    //             ->orderBy('scores.'.$subject, 'asc')
+    //             ->first();
+
+    //         if ($topScore) {
+    //             $topScores[] = [
+    //                 'subject' => ucfirst($subject), // Capitalize first letter
+    //                 'name' => $topScore->name,
+    //                 'standard' => $topScore->standard,
+    //                 'score' => $topScore->score
+    //             ];
+    //         }
+    //     }
+
+    //     return view('analysis', ['topScores' => $topScores]);
+    // }
 
     public function getStd1Grade()
     {
