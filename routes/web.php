@@ -26,8 +26,14 @@ Route::middleware([CheckSessionTimeout::class, SingleSessionRedirect::class])->g
     // });
 
     // true landing page
-    Route::get('/', [PostController::class, 'indexHome']
-    )->name('index');
+    Route::get('/', function () {
+        return view('index');
+    })->name('index');
+        // Route::get('/', [PostController::class, 'indexHome']
+    // )->name('index');
+
+    Route::get('/news', [PostController::class, 'indexHome']
+    )->name('news');
 
     Route::get('/about', function () {
         return view('about');

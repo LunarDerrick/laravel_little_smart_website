@@ -37,7 +37,7 @@ class PostController extends Controller
         // pass an empty variable
         // $posts = collect();
 
-        return view('index', compact('posts'));
+        return view('news', compact('posts'));
     }
 
     // CRUD read 2

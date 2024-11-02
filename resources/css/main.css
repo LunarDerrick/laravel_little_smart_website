@@ -226,7 +226,7 @@ body.form {
     display: block;
 }
 
-/* UI 2.0: change color only */
+/* UI 2.0: onwards */
 body {
     background-color: lightyellow;
 }
@@ -254,4 +254,66 @@ div.card {
 .roster-form .sticky {
     background-color: lightyellow;
 }
-/* UI 2.0 end here */
+
+.divider {
+    background-image: url('/media/pattern.png');
+    background-repeat: repeat-x;
+    background-size: contain;
+    height: 12vw;
+    width: 100%;
+    margin-top: -8%;
+}
+
+/* Container for the image and overlay */
+.hero-section {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Style for the image */
+.hero-section img {
+    width: 100vw;
+}
+
+/* Translucent overlay with centered text */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 55%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* trapezium      topL  topR  btmR       btmL*/
+    clip-path: polygon(0 0, 60% 0, 100% 100%, 0 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    color: white;
+    text-align: left;
+    padding: 0 16% 8% 2%;
+}
+
+h1.large-text.en {
+    font-size: 2.9rem;
+}
+
+p.large-text.en {
+    font-size: 1.2rem;
+}
+
+h1.large-text.ch {
+    font-size: 4rem;
+}
+
+p.large-text.ch {
+    font-size: 1.2rem;
+}
+
+.hidden {
+    display: none;
+}
