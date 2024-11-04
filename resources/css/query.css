@@ -5,6 +5,18 @@
 /* REMINDER: media query should be place at end of file, higher override priority*/
 
 /* This condition activates when preview screen is shorter than given max width. */
+/* This is for monitors to scale up space usage appropriately */
+@media screen and (min-width: 769px) {
+    section .container {
+        max-width: 85%;
+    }
+
+    #news table {
+        margin: 0 auto;
+        width: 90%;
+    }
+}
+
 /* This is exclusive for tablets */
 @media screen and (max-width: 768px) {
     #PC, #mobile {

@@ -10247,6 +10247,8 @@ function updateSelection(option) {
   if (tableTitle) {
     tableTitle.innerText = chartTitles[option][chartTitles[option].length - 1] || "Title";
   }
+
+  // Update table header
   var headerName = document.getElementById('table-header');
   if (option === 'Standard') {
     headerName.textContent = 'Standard';
