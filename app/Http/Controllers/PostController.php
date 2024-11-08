@@ -29,7 +29,7 @@ class PostController extends Controller
      * Retrieves all records from 'posts' table, split into several pages,
      * pass final data to blade view.
      */
-    public function indexHome()
+    public function indexNews()
     {
         // Cut-off point for page nav btn is 15 pages (ellipsis will appear)
         $posts = Post::orderBy('createdtime', 'desc')->paginate(5); // number of records per page
@@ -49,6 +49,14 @@ class PostController extends Controller
 
         // Pass the posts data to the view
         return view('post', compact('posts'));
+    }
+
+    // CRUD read 3
+    public function indexHome()
+    {
+        $posts = Post::orderBy('createdtime', 'desc')->take(3)->get();
+
+        return view('index', compact('posts'));
     }
 
     // validate input then add to database

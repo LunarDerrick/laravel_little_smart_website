@@ -5,13 +5,13 @@
     <title>Little Smart Day Care Centre</title>
 
     @include('components.header')
-    {{-- <!--chatbot-->
-    <script src="https://code.tidio.co/0i12wozmwajexcywukm95pjuqf8tphpx.js" async></script> --}}
+    <!--chatbot-->
+    <script src="https://code.tidio.co/0i12wozmwajexcywukm95pjuqf8tphpx.js" async></script>
 </head>
 
 <body>
     @include('components.navbar')
-    {{-- top section --}}
+
     <div class="hero-section">
         <img src="{{ asset('media/group_photo_2.jpg') }}" alt="day care group photo" />
         <div class="overlay">
@@ -31,37 +31,38 @@
     </div>
     <div class="divider"></div>
 
-    {{-- middle 1 section --}}
+    {{-- @include('components.no_records') --}}
     <section id="news">
         <div class="container rounded-3 bg-body mt-4 mx-auto">
             <div class="row py-2">
                 <h1><span>ANNOUNCEMENT</span></h1>
             </div>
             <div class="row py-2 px-4">
-                <table>
-                    <tr>
-                        <td>27-10-2024</td>
-                        <td>Upcoming Preparations for UASA: What is to be expected</td>
-                    </tr>
-                    <tr>
-                        <td>09-09-2024</td>
-                        <td>Notice of Closure: Deepavali Holiday</td>
-                    </tr>
-                    <tr>
-                        <td>31-08-2024</td>
-                        <td>Happy Merdeka to Everyone! A Warm Greetings from Little Smart</td>
-                    </tr>
-                </table>
+                @if ($posts->isEmpty())
+                    @include('components.no_records')
+                @else
+                    <table>
+                        <colgroup>
+                            <col id="date">
+                            <col id="title">
+                        </colgroup>
+                        @foreach ($posts as $post)
+                            <tr>
+                                <td>{{ $post->createdtime->format('d-m-Y') }}</td>
+                                <td>{{ $post->title }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                @endif
             </div>
             <div class="row py-2 pe-4">
-                <a href="#">Older post...</a>
+                <a href="{{ route('news') }}">Older post...</a>
             </div>
         </div>
     </section>
 
-    {{-- middle 2 section --}}
     <section id="about">
-        <div class="container mt-4 ">
+        <div class="container mt-4">
             <div class="row">
                 <h1><span>WHY CHOOSE US?</span></h1>
             </div>
@@ -73,9 +74,9 @@
                     </div>
                     <div class="row px-4 pt-3"><h4>Friendly Classmates</h4></div>
                     <div class="row px-4 py-3">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Our daycare fosters a friendly, supportive environment where students help
+                        each other learn and form lasting friendships. During holidays, they also
+                        enjoy non-academic classes that promote community and fun.
                     </div>
                 </div>
                 <div class="col-md-3 rounded-3 bg-body flex-grow px-0 mx-md-4 my-3 my-md-0 position-relative">
@@ -85,9 +86,9 @@
                     </div>
                     <div class="row px-4 pt-3"><h4>Good Teachers</h4></div>
                     <div class="row px-4 py-3">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Our team of dedicated educators includes experienced primary school teachers
+                        working part-time alongside university students, all committed to providing
+                        quality care and learning in our 3 classrooms.
                     </div>
                 </div>
                 <div class="col-md-3 rounded-3 bg-body flex-grow px-0 me-md-0 position-relative">
@@ -97,24 +98,57 @@
                     </div>
                     <div class="row px-4 pt-3"><h4>Clean Classrooms</h4></div>
                     <div class="row px-4 py-3">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Our classrooms are organized by age groups 7-8, 9-10, and 11-12; ensuring
+                        age-appropriate learning experiences. A spacious lobby provides a relaxing
+                        space for students to enjoy their snacks during breaks.
                     </div>
                 </div>
             </div>
             <div class="row mt-3">
-                <a href="#">Learn more in <b>About Us</b></a>
+                <a href="{{ route('about') }}">Learn more in <b>About Us</b></a>
             </div>
         </div>
     </section>
-    {{-- bottom section --}}
-    <section>
-        @include('components.alert_notification')
-        @include('components.no_records')
+
+    <section id="contact">
+        <div class="container my-4 ">
+            <div class="row">
+                <h1><span>READY TO JOIN OUR BIG FAMILY?</span></h1>
+            </div>
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-7 flex-grow ms-md-0 px-0">
+                    <img src="{{ asset('media/banner.jpg') }}" alt="banner contact information" />
+                </div>
+                <div class="col-md-4 rounded-3 bg-body flex-grow ms-md-4 me-md-0 my-3 my-md-0" id="icon">
+                    <div class="row p-4">
+                        Contact Us:
+                    </div>
+                    <div class="row px-4">
+                        <div class="col-2"><img src="{{ asset('media/Whatsapp.png') }}" alt="Whatsapp" /></div>
+                        <div class="col-10">+6012-2751398 (Novy)</div>
+                    </div>
+                    <div class="row p-4">
+                        <div class="col-2"><img src="{{ asset('media/FaceBook.png') }}" alt="FaceBook" /></div>
+                        <div class="col-10"><a href="https://www.facebook.com/p/%E5%B0%8F%E8%81%AA%E6%98%8ELittle-Smart-Day-Care-Centre-100064129656590" target="_blank">LittleSmartDayCareFB</a></div>
+                    </div>
+                    <div class="row px-4">
+                        <div class="col-2"><img src="{{ asset('media/E-mail.png') }}" alt="E-mail" /></div>
+                        <div class="col-10"><a href= "mailto: littlesmartdaycare@gmail.com">littlesmartdaycare@gmail.com</a></div>
+                    </div>
+                    <div class="row p-4">
+                        <div class="col-2"><img src="{{ asset('media/Address.png') }}" alt="Address" /></div>
+                        <div class="col-10">
+                            1-63, Jalan PUJ 3/9,<br>
+                            Taman Puncak Jalil,<br>
+                            43300 Seri Kembangan, Selangor.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    {{-- @include('components.send_feedback') --}}
+    @include('components.send_feedback')
     @include('components.footer')
     @include('components.font-check')
 

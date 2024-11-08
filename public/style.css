@@ -725,6 +725,7 @@ div.card {
     height: 12vw;
     width: 100%;
     margin-top: -8%;
+    z-index: 1;
 }
 
 /* Container for the image and overlay */
@@ -786,12 +787,26 @@ p.large-text.ch {
     text-decoration: underline;
 }
 
-#news td {
-    padding: 0 1rem 0.5em 0;
+#news table {
+    table-layout: fixed;
+}
+
+#news #date {
+    width: 18%;
 }
 
 #news a {
     text-align: end;
+}
+
+#news td {
+    padding: 0 1rem 0.5em 0;
+}
+
+#news td:nth-child(2) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .flex-grow {
@@ -815,20 +830,27 @@ p.large-text.ch {
     top: -60px;
 }
 
-/* may push out whitespace */
 .right {
-    /* right: -15px; */
-    right: -70px;
+    left: -110px;
     bottom: -60px;
 }
 
-#about h1, #about h4, #about a {
+#about h1, #about h4, #about a, #contact h1 {
     text-align: center;
 }
 
 .clip {
     overflow: hidden;
     height: 35vh;
+}
+
+#icon img {
+    min-width: 30px;
+    max-width: 70%;
+}
+
+#contact .col-10 {
+    overflow-wrap: break-word;
 }
 
 #tablet, #mobile {
