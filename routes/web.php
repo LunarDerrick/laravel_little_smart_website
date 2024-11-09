@@ -113,6 +113,9 @@ Route::middleware([CheckSessionTimeout::class, SingleSessionRedirect::class])->g
             Route::get('/inbox', [FeedbackController::class, 'index']
             )->name('feedback.list');
 
+            Route::get('/unread_count', [FeedbackController::class, 'getUnreadCount']
+            )->name('feedback.unread_count');
+
             Route::get('/feedback/{id}', [FeedbackController::class, 'show']
             )->name('feedback');
 

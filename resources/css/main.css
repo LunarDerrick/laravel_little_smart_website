@@ -389,3 +389,7 @@ p.large-text.ch {
 #contact .col-10 {
     overflow-wrap: break-word;
 }
+
+.badge {
+    padding: 0.6em;
+}

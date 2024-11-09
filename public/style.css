@@ -853,6 +853,10 @@ p.large-text.ch {
     overflow-wrap: break-word;
 }
 
+.badge {
+    padding: 0.6em;
+}
+
 #tablet, #mobile {
     display: none;
 }

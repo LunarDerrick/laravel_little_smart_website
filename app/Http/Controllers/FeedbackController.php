@@ -68,6 +68,16 @@ class FeedbackController extends Controller
     }
 
     /**
+     * Fetch the count for unread feedbacks.
+     * This method handles the AJAX request for the unread message count.
+     */
+    public function getUnreadCount()
+    {
+        $unreadCount = Feedback::where('is_read', false)->count();
+        return response()->json(['unread_count' => $unreadCount]);
+    }
+
+    /**
      * Show the full information of the selected feedback.
      */
     public function show($id)
