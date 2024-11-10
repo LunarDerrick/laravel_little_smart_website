@@ -857,6 +857,30 @@ p.large-text.ch {
     padding: 0.6em;
 }
 
+#profile .row {
+    min-height: 39px;
+}
+
+#profile button img {
+    height: 23px;
+    width: auto;
+    object-fit: contain;
+}
+
+.overflow {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.btn-fb {
+    background-color: #0866ff;
+}
+
+.btn-fb:hover {
+    background-color: #0750c7;
+}
+
 #tablet, #mobile {
     display: none;
 }
@@ -873,6 +897,10 @@ p.large-text.ch {
     #news table {
         margin: 0 auto;
         width: 90%;
+    }
+
+    #profile .col-4 button {
+        min-width: 146px;
     }
 }
 
@@ -924,6 +952,13 @@ p.large-text.ch {
 
     p.large-text {
         font-size: 1rem !important;
+    }
+
+    #profile .col-4 button {
+        padding-top: 0.2rem;
+        padding-bottom: 0.2rem;
+        line-height: 1.1;
+        height: 39px;
     }
 }
 

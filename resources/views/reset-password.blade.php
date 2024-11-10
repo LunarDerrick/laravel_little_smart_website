@@ -25,19 +25,19 @@
                     <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
                     <div class="form-group row pb-2">
-                        <label for="email" class="col-sm-2 col-form-label">Email:</label>
+                        <label for="email" class="col-sm-2 col-md-3 col-form-label">Email:</label>
                         <div class="col-sm">
                             <input type="email" class="form-control" id="email" name="email" placeholder="type here..." value="{{ old('email', $request->email) }}" required>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="password" class="col-sm-2 col-form-label long">New Password:</label>
+                        <label for="password" class="col-sm-2 col-md-3 col-form-label long">New Password:</label>
                         <div class="col-sm">
                             <input type="password" class="form-control" id="password" name="password" placeholder="type here..." required>
                         </div>
                     </div>
                     <div class="form-group row pb-3">
-                        <label for="password_confirmation" class="col-sm-2 col-form-label long">Confirm Password:</label>
+                        <label for="password_confirmation" class="col-sm-2 col-md-3 col-form-label long">Confirm Password:</label>
                         <div class="col-sm">
                             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="type here..." required>
                         </div>

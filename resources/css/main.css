@@ -393,3 +393,27 @@ p.large-text.ch {
 .badge {
     padding: 0.6em;
 }
+
+#profile .row {
+    min-height: 39px;
+}
+
+#profile button img {
+    height: 23px;
+    width: auto;
+    object-fit: contain;
+}
+
+.overflow {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.btn-fb {
+    background-color: #0866ff;
+}
+
+.btn-fb:hover {
+    background-color: #0750c7;
+}

@@ -51,18 +51,9 @@
     @include('components.send_feedback')
     @include('components.footer')
     @include('components.font-check')
+    @include('components.spinner')
 
-    <script>
-        document.getElementById('forgotForm').addEventListener('submit', function() {
-            var button = document.getElementById('submit-btn');
-            var spinner = button.querySelector('.spinner-border');
-            var buttonText = document.getElementById('button-text');
-
-            button.disabled = true;
-            spinner.style.display = 'inline-block';
-            buttonText.textContent = 'Loading...';
-        });
-    </script>
+    <script>loadingPrompt('forgotForm', 'submit-btn')</script>
 </body>
 
 </html>
