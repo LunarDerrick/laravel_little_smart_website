@@ -9,8 +9,6 @@ use App\Http\Helpers\roleHelper;
     <title>Profile - Little Smart Day Care Centre</title>
 
     @include('components.header')
-    <!--chatbot-->
-    <script src="https://code.tidio.co/0i12wozmwajexcywukm95pjuqf8tphpx.js" async></script>
 </head>
 
 <body>
@@ -52,7 +50,7 @@ use App\Http\Helpers\roleHelper;
                 <div class="row mb-4">
                     <div class="col-3 col-md-2"><b>Facebook</b></div>
                     <div class="col-1"><b>:</b></div>
-                    <div class="col-8 col-md overflow">-</div>
+                    <div class="col-8 col-md overflow" id="fb-name">-</div>
                     <div class="col-8 d-block d-md-none"></div>
                     <div class="col-4 col-md-2 col-lg-4">
                         <button class="btn btn-info btn-fb d-flex align-items-center px-0">
@@ -124,6 +122,55 @@ use App\Http\Helpers\roleHelper;
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 
     <script>loadingPrompt('modalChangeBtn', 'submit-btn')</script>
+
+    <!-- Facebook SDK for JS -->
+    <!-- requires HTTPS testing -->
+    <script>
+        if (typeof FB === 'undefined') {
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appId      : {{ $facebookAppId }},
+                    cookie     : true,
+                    xfbml      : true,
+                    version    : 'v21.0'
+                });
+            };
+
+            // equivalent to
+            // <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js">
+            (function(d, script) {
+                script = d.createElement("script");
+                script.type = "text/javascript";
+                script.async = true;
+                script.src = "https://connect.facebook.net/en_US/sdk.js";
+                d.getElementsByTagName("head")[0].appendChild(script);
+            })(document);
+        } else {
+            console.log("Facebook SDK is already loaded.");
+        }
+
+        document.querySelector('.btn-fb').addEventListener('click', function() {
+            FB.login(function(response) {
+                if (response.authResponse) {
+                    FB.api('/me', function(response) {
+                        document.getElementById('fb-name').textContent = response.name;
+                    });
+                    // need to save "response" for variables to pass through sessions/page refresh
+                    // Send the response.authResponse to your backend to handle the token
+                } else {
+                    const notyf = new Notyf({
+                        duration: 0,
+                        dismissible: true,
+                    });
+                    notyf.error('User cancelled login or did not fully authorize.');
+                }
+            }, {
+                // Request required permissions here
+                scope:
+                    'public_profile'
+            });
+        });
+    </script>
 </body>
 
 </html>

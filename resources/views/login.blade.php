@@ -21,19 +21,19 @@
                 <form action="{{ route('login.submit') }}" method="POST">
                     @csrf
                     <div class="form-group row">
-                        <label for="username" class="col-sm-3 col-form-label">Username:</label>
-                        <div class="col-sm">
+                        <label for="username" class="col-12 col-md-3 col-form-label">Username:</label>
+                        <div class="col">
                             <input type="text" class="form-control login-field" id="username" name="username" placeholder="type here..." required>
                         </div>
                     </div>
                     <div class="form-group row pb-3">
-                        <label for="password" class="col-sm-3 col-form-label">Password&nbsp;:</label>
-                        <div class="col-sm">
+                        <label for="password" class="col-12 col-md-3 col-form-label">Password&nbsp;:</label>
+                        <div class="col">
                             <input type="password" class="form-control login-field" id="password" name="password" placeholder="type here..." required>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-sm">
+                        <div class="col">
                             <button type="submit" class="btn btn-primary">LOGIN</button>
                         </div>
                     </div>

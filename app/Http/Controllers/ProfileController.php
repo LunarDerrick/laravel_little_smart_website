@@ -66,9 +66,13 @@ class ProfileController extends Controller
         // Fetch the current authenticated user
         $user = Auth::user();
 
+        // Fetch the Facebook App ID from the config
+        $facebookAppId = config('facebook.app_id');
+
         // pass an empty variable
         // $user = null;
+        // $facebookAppId = null;
 
-        return view('profile', compact('user'));
+        return view('profile', compact('user', 'facebookAppId'));
     }
 }
