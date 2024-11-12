@@ -155,8 +155,8 @@
                     setTimeout(() => {
                         window.location.reload();
                     }, 2500);
-                } else {
-                    notyf.error('Unable to delete feedbacks.');
+                } else if (data.error) {
+                    notyf.error(data.error);
                 }
             })
             .catch(error => {

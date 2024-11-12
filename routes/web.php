@@ -61,6 +61,12 @@ Route::middleware([CheckSessionTimeout::class, SingleSessionRedirect::class])->g
         )->name('profile');
 
         Route::middleware([CheckRole::class . ':teacher'])->group(function () {
+            Route::post('/store_fb_profile', [ProfileController::class, 'storeFbProfile']
+            )->name('profile.store_fb');
+
+            Route::post('/unlink_fb_profile', [ProfileController::class, 'unlinkFb']
+            )->name('profile.unlink_fb');
+
             Route::get('/roster', [RosterController::class, 'index']
             )->name('roster');
 

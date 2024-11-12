@@ -147,6 +147,9 @@ class FeedbackController extends Controller
     {
         $ids = $request->input('ids');
         Feedback::whereIn('msgid', $ids)->delete();
-        return response()->json(['success' => 'Feedbacks deleted successfully.']);
+        return response()->json([
+            'success' => 'Feedbacks deleted successfully.',
+            'error' => 'Unable to delete feedbacks.',
+        ]);
     }
 }

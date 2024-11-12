@@ -50,12 +50,19 @@ use App\Http\Helpers\roleHelper;
                 <div class="row mb-4">
                     <div class="col-3 col-md-2"><b>Facebook</b></div>
                     <div class="col-1"><b>:</b></div>
-                    <div class="col-8 col-md overflow" id="fb-name">-</div>
+                    <div class="col-8 col-md overflow" id="fb-name">
+                        {{ session('fb_name', '-') }}
+                    </div>
                     <div class="col-8 d-block d-md-none"></div>
                     <div class="col-4 col-md-2 col-lg-4">
-                        <button class="btn btn-info btn-fb d-flex align-items-center px-0">
+                        <!-- link fb -->
+                        <button class="btn btn-info btn-fb align-items-center px-0 {{ session('fb_name') ? 'hidden' : 'd-flex' }}">
                             <div class="ps-2"><img src="{{ asset('media/Facebook_Logo_Primary.png') }}" alt="fb_logo" /></div>
                             <div class="ps-lg-1 pe-md-2 pe-lg-0">Link FaceBook</div>
+                        </button>
+                        <!-- unlink fb -->
+                        <button class="btn btn-secondary btn-unlink-fb align-items-center justify-content-center {{ session('fb_name') ? 'd-flex' : 'hidden' }}">
+                            Unlink FaceBook
                         </button>
                     </div>
                 </div>
@@ -152,11 +159,34 @@ use App\Http\Helpers\roleHelper;
         document.querySelector('.btn-fb').addEventListener('click', function() {
             FB.login(function(response) {
                 if (response.authResponse) {
+                    const accessToken = response.authResponse.accessToken;
                     FB.api('/me', function(response) {
+                        const notyf = new Notyf();
                         document.getElementById('fb-name').textContent = response.name;
+                        // need to save "response" for variables to pass through sessions/page refresh
+                        // Send the response.authResponse to your backend to handle the token
+                        fetch("{{ route('profile.store_fb') }}", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRF-Token": "{{ csrf_token() }}"
+                            },
+                            body: JSON.stringify({
+                                name: response.name,
+                                access_token: accessToken,
+                            })
+                        }).then(res => res.json()).then(data => {
+                            if (data.success) {
+                                notyf.success(data.success);
+                            } else if (data.error) {
+                                notyf.error(data.error);
+                            }
+                        });
                     });
-                    // need to save "response" for variables to pass through sessions/page refresh
-                    // Send the response.authResponse to your backend to handle the token
+                    document.querySelector('.btn-fb').classList.add('hidden');
+                    document.querySelector('.btn-fb').classList.remove('d-flex');
+                    document.querySelector('.btn-unlink-fb').classList.remove('hidden');
+                    document.querySelector('.btn-unlink-fb').classList.add('d-flex');
                 } else {
                     const notyf = new Notyf({
                         duration: 0,
@@ -167,7 +197,33 @@ use App\Http\Helpers\roleHelper;
             }, {
                 // Request required permissions here
                 scope:
-                    'public_profile'
+                    'public_profile',
+            });
+        });
+
+        document.querySelector('.btn-unlink-fb').addEventListener('click', function() {
+            const notyf = new Notyf();
+            FB.getLoginStatus(function(response) {
+                FB.logout(function(response) {
+                    fetch("{{ route('profile.unlink_fb') }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-Token": "{{ csrf_token() }}"
+                        }
+                    }).then(res => res.json()).then(data => {
+                        if (data.success) {
+                            notyf.success(data.success);
+                            document.getElementById('fb-name').textContent = '-';
+                            document.querySelector('.btn-fb').classList.add('d-flex');
+                            document.querySelector('.btn-fb').classList.remove('hidden');
+                            document.querySelector('.btn-unlink-fb').classList.remove('d-flex');
+                            document.querySelector('.btn-unlink-fb').classList.add('hidden');
+                        } else if (data.error) {
+                            notyf.error(data.error);
+                        }
+                    });
+                });
             });
         });
     </script>
