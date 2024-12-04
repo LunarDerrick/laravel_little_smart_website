@@ -150,6 +150,9 @@ Route::middleware([CheckSessionTimeout::class, SingleSessionRedirect::class])->g
                 return view('add_post');
             })->name('add_post');
 
+            // Route::get('/add_post', [PostController::class, 'indexFB']
+            // )->name('add_post');
+
             Route::post('/add_post', [PostController::class, 'store']
             )->name('post.add');
 

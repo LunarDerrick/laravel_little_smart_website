@@ -57,12 +57,12 @@ use App\Http\Helpers\roleHelper;
                     <div class="col-4 col-md-2 col-lg-4">
                         <!-- link fb -->
                         <button class="btn btn-info btn-fb align-items-center px-0 {{ session('fb_name') ? 'hidden' : 'd-flex' }}">
-                            <div class="ps-2"><img src="{{ asset('media/Facebook_Logo_Primary.png') }}" alt="fb_logo" /></div>
-                            <div class="ps-lg-1 pe-md-2 pe-lg-0">Link FaceBook</div>
+                            <div class="ps-2"><img src="{{ asset('media/facebook_logo.png') }}" alt="fb_logo" /></div>
+                            <div class="ps-lg-1 pe-md-2 pe-lg-0">Link Facebook</div>
                         </button>
                         <!-- unlink fb -->
                         <button class="btn btn-secondary btn-unlink-fb align-items-center justify-content-center {{ session('fb_name') ? 'd-flex' : 'hidden' }}">
-                            Unlink FaceBook
+                            Unlink Facebook
                         </button>
                     </div>
                 </div>
@@ -118,6 +118,7 @@ use App\Http\Helpers\roleHelper;
     </section>
 
     @include('components.send_feedback')
+    @include('components.facebook_plugin')
     @include('components.footer')
     @include('components.font-check')
     @include('components.spinner')
@@ -133,29 +134,6 @@ use App\Http\Helpers\roleHelper;
     <!-- Facebook SDK for JS -->
     <!-- requires HTTPS testing -->
     <script>
-        if (typeof FB === 'undefined') {
-            window.fbAsyncInit = function() {
-                FB.init({
-                    appId      : {{ $facebookAppId }},
-                    cookie     : true,
-                    xfbml      : true,
-                    version    : 'v21.0'
-                });
-            };
-
-            // equivalent to
-            // <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js">
-            (function(d, script) {
-                script = d.createElement("script");
-                script.type = "text/javascript";
-                script.async = true;
-                script.src = "https://connect.facebook.net/en_US/sdk.js";
-                d.getElementsByTagName("head")[0].appendChild(script);
-            })(document);
-        } else {
-            console.log("Facebook SDK is already loaded.");
-        }
-
         document.querySelector('.btn-fb').addEventListener('click', function() {
             FB.login(function(response) {
                 if (response.authResponse) {
@@ -196,8 +174,8 @@ use App\Http\Helpers\roleHelper;
                 }
             }, {
                 // Request required permissions here
-                scope:
-                    'public_profile',
+                scope: 'public_profile',
+                // scope: 'public_profile, pages_manage_posts',
             });
         });
 

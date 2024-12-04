@@ -861,7 +861,7 @@ p.large-text.ch {
     min-height: 39px;
 }
 
-#profile button img {
+button.btn-fb img  {
     height: 23px;
     width: auto;
     object-fit: contain;

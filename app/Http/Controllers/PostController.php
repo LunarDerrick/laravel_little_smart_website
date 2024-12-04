@@ -59,6 +59,18 @@ class PostController extends Controller
         return view('index', compact('posts'));
     }
 
+    // load FB SDK
+    public function indexFB()
+    {
+        // Fetch the Facebook App ID from the config
+        $facebookAppId = config('facebook.app_id');
+
+        // pass an empty variable
+        // $facebookAppId = null;
+
+        return view('add_post', compact('facebookAppId'));
+    }
+
     // validate input then add to database
     public function store(Request $request, VideoConversionService $videoConversionService)
     {

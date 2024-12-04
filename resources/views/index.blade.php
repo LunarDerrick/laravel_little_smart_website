@@ -31,7 +31,6 @@
     </div>
     <div class="divider"></div>
 
-    {{-- @include('components.no_records') --}}
     <section id="news">
         <div class="container rounded-3 bg-body mt-4 mx-auto">
             <div class="row py-2">

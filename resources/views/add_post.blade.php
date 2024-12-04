@@ -39,6 +39,7 @@
                             </div>
                         </div>
                         <div class="row">
+                            <!--<div class="col-md-3">-->
                             <div class="col-md-7">
                                 <div class="row mt-4">
                                     <div class="col-12">
@@ -46,6 +47,17 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- <div class="col-md-4">
+                                <div class="row mt-4">
+                                    <div class="col-auto">
+                                        <button type="button" class="btn btn-info btn-fb d-flex align-items-center ps-0">
+                                            <div class="ps-2"><img src="{ asset('media/facebook_logo.png') }}" alt="fb_logo" /></div>
+                                            <div class="ps-lg-1">Post to Both</div>
+                                        </button>
+                                        <small><i id="fb_prompt" class="hidden">Please sign-in to Facebook in profile page.</i></small>
+                                    </div>
+                                </div>
+                            </div> -->
                             <div class="col-md-5">
                                 <div class="row mt-2">
                                     <div class="col">
@@ -73,6 +85,7 @@
 
     </section>
 
+    @include('components.facebook_plugin')
     @include('components.footer')
     @include('components.font-check')
 
@@ -88,6 +101,8 @@
     <script type="module" src="{{ asset('js/ckeditor/main.js') }}"></script>
     <script type="module" src="{{ asset('js/ckeditor/init-addpost.js') }}"></script>
 
+    <!-- Facebook SDK for JS -->
+    <!-- requires HTTPS testing -->
     <script>
         document.getElementById('images').addEventListener('change', function(event) {
             // catch non-image file uploads
@@ -118,6 +133,24 @@
                 reader.readAsDataURL(file);
             });
         });
+
+        document.querySelector('.btn-fb').addEventListener('click', function(event) {
+            FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                    // User is logged in, proceed with post creation
+                    const accessToken = response.authResponse.accessToken;
+
+                    // Proceed with the post creation logic
+                    createPost(accessToken);
+                } else {
+                    document.getElementById('fb_prompt').classList.remove('hidden');
+                }
+            });
+        });
+
+        function createPost(accessToken) {
+            if (accessToken) console.log("access token loaded");
+        }
     </script>
 </body>
 
